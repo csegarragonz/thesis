@@ -15,13 +15,13 @@
 
 % Code Listings done right
 \usepackage{listings}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \definecolor{hblue}{HTML}{206899}		% Azul para enlaces
 \definecolor{cgreen}{rgb}{0,0.6,0}		% Verde para código
 \definecolor{cpurple}{rgb}{0.58,0,0.82}	% Violeta para código
 \definecolor{cgray}{rgb}{0.5,0.5,0.5}	% Gris para líneas de código
 \definecolor{cbg}{rgb}{0.975,0.975,0.975}	% Gris claro para fondo código
-\usepackage{color, colortbl}
+%\usepackage{color, colortbl}
 
 \hypersetup{
     colorlinks     = true,
@@ -92,293 +92,35 @@
 \date{\today}
 
 \maketitle
-%\begin{center}
-%    \includegraphics[width=.2\textwidth]{./img/unine-no-bg-no-letter.png}
-%\end{center}
-\tableofcontents
 
-\section{General Introduction}
-The aim of this document is to provide a general workflow/introduction to my Bachelor Thesis' Project. It is structured in the following manner. Section 1 provides a general introduction to the document and introduces some practical aspects. Section 2 goes over the main structure of the project and breaks it down into diferent work packages. Lastly, Section 3 poses the diferent Use Cases that we draw and that we will implement.
+This document aims to provide an \emph{orientative} schedule and roadmap for the last months of my thesis work, during which the main documents need to be produced. Table \ref{tab:dates} contains a summary of the suggested dates. The acronyms stand for: Carlos Segarra (CS), Ricard Delgado (RD), and Jose Adri\'an (JA).
 
-\subsection{Project Stakeholders}
-This project is a joint work by three diferent institutions. The \href{https://www.upc.edu/}{Universitat Politecnica de Catalunya}(UPC) is still the University I am enrolled with and, as a consequence, the end responsible of assessing and evaluating my work. In particular, the \href{https://cfis.upc.edu/}{Centre de Formacio Interdisciplinaria Superior} (CFIS) will take care of the evaluation. The contact person in the UPC is JA. The development of the project is done while on a mobility period in a Swiss enterprise, the \href{https://www.csem.ch}{Swiss Center for Electronics and Microtechnology}(CSEM), that is hosting me for a six-month period. RD is the person of contact there. Furhtermore, I have a mentor in the CSEM who acts as a tech lead inside the company. This is EM. Laslty, the project proposal, the hardware were the software will be initially deployed and further supervision is provided by the \href{https://www.unine.ch}{University of Neuchatel}(UniNe). The person of contact there is VS. Table \ref{table:distribution-list} summarizes the main stakeholders, with their acronym and the contact email.
+Apart from the specified deadlines, the project will be always accessible through two different GitHub repositories. One in the standard \href{https://github.com/csegarragonz/thesis}{website} (private, but RD \& JA have been added as collaborators), and one in CSEM's \href{https://github.csem.local/cse/thesis}{private} GitHub (only accessible for RD).
+
+Lastly, furhter information can be obtained through \href{https://cfis.upc.edu/ca/el-curs-actual/treballs-finals-de-grau/procediments-i-calendari-de-tfg}{CFIS's} website.
+
 \begin{table}[h!]
-\centering
-\begin{tabular}{llll}
-\hline
-\textbf{Acronym} & \textbf{Name} & \textbf{Institution} & \textbf{Contact} \\[3pt]
-\hline \hline
-CS & Carlos Segarra & CSEM & \href{mailto:carlos.segarra@csem.ch}{carlos.segarra@csem.ch} \\[3pt]
-EM & Enric Muntane & CSEM & \href{mailto:enric.muntanecalvo@csem.ch}{enric.muntanecalvo@csem.ch} \\[3pt]
-JA & Jose Adrian Rodriguez Fonollosa & UPC & \href{mailto:jose.fonollosa@upc.edu}{jose.fonollosa@upc.edu} \\[3pt]
-RD & Ricard Delgado & CSEM & \href{mailto:ricar.delgado@csem.ch}{ricard.delgado@csem.ch} \\[3pt]
-VS & Valerio Schiavoni & UniNe & \href{mailto:valerio.schiavoni@unine.ch}{valerio.schiavoni@unine.ch} \\[3pt]
-\hline
-\end{tabular}
-\caption{General Distribution List. \label{table:distribution-list}}
+    \centering
+    \rowcolors{1}{gray!20}{}
+    \begin{tabular}{p{5cm}p{2.5cm}p{2cm}p{6.5cm}}
+        \hline
+        \rowcolor{gray!40}
+        \textbf{Concept} & \textbf{Deadline} & \textbf{Responsible} & \textbf{Comments} \\[3pt]
+        \hline 
+        Deadline Proposal & 11/03/2019 & CS & Wait for ACK by JA \& RD \\[3pt]
+        Upload Papers as IM Work & 15/03/2019 & CS & Use \href{https://atenea-tfe.upc.edu/login/index.php}{Atenea-TFE} \\[3pt]
+        Table of Contents and Format Proposal & 15/03/2019 & CS & Wait for ACK by JA \& RD \\[3pt]
+        Assessment Formulaire & 12/04/2019 & CS & Email Toni Pascual\\[3pt]
+        First Draft Finished & 12/04/2019 & CS & Review Required by JA \& RD \\[3pt]
+        Provide Feedback on Draft & 28/04/2019 & RD \& JA & Flexible Deadline \\[3pt]
+        Final Version Distribution & 07/05/2019 & CS & Last comments corrected on the go. \\[3pt]
+        \textcolor{red}{Thesis Deposit} & [13-17]/05/2019 & CS & \\[3pt]
+        Draft Slides Distribution & 19/05/2019 & CS & Comments corrected on the go. \\[3pt]
+        Assessment by host institution & 20/05/2019 & RD & Assesment formulaire will be sent to RD. \\[3pt]
+        \textcolor{red}{Oral Defense} & [27-31]/05/2019 & CS \& JA & JA \emph{must} be part of the jury. \\[3pt]
+        \hline
+    \end{tabular}
+    \caption{Suggested deadlines for the different documents to hand in.\label{tab:dates}}
 \end{table}
-
-\subsection{Version Control and Software Hosting}
-Due to the fact that one of the stakeholders, and the one that is hosting me, is a private enterprise, there might be some issues regarding the free distribution of the content produced. To this extent, everything is hosted at CSEM's enterprise Github. We still have to discuss how will the other stakeholders outside CSEM access the resources here produced. If you have access to CSEM's 251 private repo, run:
-\begin{lstlisting}[numbers=none]
-git clone https://github.csem.local/251/csem-unine-tee.git
-\end{lstlisting}
-
-\subsection{Meeting Periodicity and Quality Assesment}
-
-The fact that the project has various and very diferent stakeholders means that I can have access to and receive assesment by many diferent experts. It will be a great mistake then not to do so. To establish some sort of protocol, I have already alocated the sessions for each meeting in Table \ref{table:meeting-periodicity}.
-\begin{table}[h!]
-\centering
-\begin{tabular}{lllp{8cm}}
-\hline
-\textbf{Venue} & \textbf{Attendees} & \textbf{Proposed Frequence} & \textbf{Proposed Dates} \\[3pt]
-\hline \hline
-CSEM & CS, EM, RD & Bi-Weekly & 23/10/18, 06/11/18, 20/11/18, 04/12/18, 18/12/18, 15/01/19, 29/01/19, 12/02/19, 26/02/19, 12/03/19, 26/03/19 \\[3pt]
-UniNe & CS, VS & Bi-Weekly & 17/10/18, 31/10/18, 14/11/18, 28/11/18, 12/12/18 09/01/19, 23/01/19, 06/02/19, 20/02/19, 06/03/19, 20/03/19 \\[3pt]
-UPC & CS, JA & Monthly & 11/10/18, 08/11/18, 13/12/18, 10/01/19, 14/02/19, 14/03/19 \\[3pt]
-\hline
-\end{tabular}
-\caption{Meeting Periodicity Proposal. \label{table:meeting-periodicity}}
-\end{table}
-
-Another factor that I consider radically important is the quality assesment protocols. By enforcing a given number of steps before any milestone is met I expect to raise the quality baseline of the work produced. Table \ref{table:quality-assesment} summarizes my proposal. I have distinguished between type \textbf{C} (Code) milestones, type \textbf{D} (Documents) and type \textbf{P} (Presentations) milestones. See Table \ref{table:milestones} for an explanation of each milestone.
-\begin{table}[h!]
-\centering
-\begin{tabular}{lll}
-\hline
-\textbf{Milestone Type} & \textbf{Reviewers} & \textbf{Proposed Protocol} \\[3pt]
-\hline \hline
-\textbf{C}ode & EM, RD, VS & DISCUSS \\[3pt]
-\textbf{D}ocuments & EM, JA, RD, VS & DISCUSS \\[3pt]
-\textbf{P}resentations & EM, JA, RD, VS & DISCUSS \\[3pt]
-\hline
-\end{tabular}
-\caption{Meeting Periodicity Proposal. \label{table:quality-assesment}}
-\end{table}
-
-
-
-\newpage
-
-\section{Structure of the Project}
-The aim of this section is to structure the thesis in diferent subprojects and to set several goals or \emph{milestones} to ensure that I end up doing everything planned to do and with a sufficient level of quality.
-
-\subsection{Work Packages}
-The easiest thing to start of is dividing all the work to do in Work Packages. Each one of them with a estimated starting and finishing date. These should be read as an orientative indicator of: how complex the WP is (proportional to the timespan allocated) and around what time should be finished. Table \ref{table:work-packages} summarizes the diferent Work Packages. In Table \ref{table:big-date-table} I break down the diferent WP in small and shorter tasks. Additionally, each week I plan to structure which parts of each subpackage I will like to work on, and expecting which results.
-\begin{table}[h!]
-\centering
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{m{3cm}m{7cm}llll}
-\hline
-\textbf{Work Package} & \textbf{Description} & \textbf{Milestones} & \textbf{Start Date} & \textbf{End Date} \\[3pt] \hline \hline
-\textbf{WP1: Introduction} & The aim of this work package is to cover the intial stages of the project and define/structure everything concerning it. & D1 & 8/10/18 & 12/10/18 \\[3pt] \hline
-\textbf{WP2: Implementation - UC1} & This work package covers Use Case 1 implementation, code coverage and documentation. (See Subsection \ref{subsection:use-case-1}) & C1, C2, C3 & 15/10/18 & 23/11/18 \\[3pt] \hline
-\textbf{WP3: Evaluation - UC1} & This work package covers Use Case 1 metric evaluation and documentation. (See Subsection \ref{subsection:use-case-1}) & D2 & 05/11/18 & 14/12/18 \\[3pt] \hline
-\textbf{WP4: Implementation - UC2} & This work package covers Use Case 2 implementation, code coverage and documentation. (See Subsection \ref{subsection:use-case-2}) & C4, C5, C6 & 07/01/19 & 15/02/19 \\[3pt] \hline
-\textbf{WP5: Evaluation - UC2} & This work package covers Use Case 2 metric evaluation and documentation. (See Subsection \ref{subsection:use-case-2}) & D? & 28/02/19 & 02/03/19 \\[3pt] \hline
-\textbf{WP6: Thesis Crafting} & This work package covers the writing, reviewing and presentation of the thesis. & D3 & 04/03/19 & 12/04/19 \\[3pt] \hline
-\end{tabular}
-\end{adjustbox}
-\caption{Definition of the diferent work packages that define the project together with a brief description and the \emph{expected} start and ending dates. An in-depth break-down of the projects is done in Table \ref{table:big-date-table}. \label{table:work-packages}}
-\end{table}
-The development should be goal-oriented. As a consequence it makes sense to define a set of goals or \emph{milestones} to highlight important points and steps in the whole development flow. I have divided the diferent milestones in: code, documents and presentations. Table \ref{table:milestones} summarizes them.
-\begin{table}[h!]
-\centering
-\begin{tabular}{llp{12cm}}
-\hline
-\textbf{Milestone Type} & \textbf{Name} & \textbf{Description} \\[3pt]
-\hline \hline
-\multirow{6}{*}{\textbf{Code}} & C1 & Implementation and execution of the application in Use Case 1 without TaLoS nor Spark-SGX. \\[3pt]
-& C2 & Implementation and execution of the application in Use Case 1 without TaLoS but with SGX-Spark. \\[3pt]
-& C3 & Implementation and execution of the application in Use Case 1 with TaLoS and with SGX-Spark. \\[3pt]
-& C4 & Implementation and execution of the application in Use Case 2 without TaLoS nor with SGX-Spark. \\[3pt]
-& C5 & Implementation and execution of the application in Use Case 2 without TaLoS but with SGX-Spark. \\[3pt]
-& C6 & Implementation and execution of the application in Use Case 2 with TaLoS and with SGX-Spark. \\[3pt] \hline
-\multirow{4}{*}{\textbf{Documents}} & D1 & Introduction document to present what we want to do, how we want to do it and by when it should be done. \\[3pt]
- & D2 & Consolidate a document aggregating all the results from WP2 and WP3. Hopefully enough to make a conference paper? \\[3pt]
- & D3 & Bachelor Thesis. This milestone covers the crafting of the document that I will have to hand in and defend. \\[3pt]
- & D? & Ideally from WP4 and WP5 I would do another document, maybe the paper mentioned in D2 can be joined with this one (maybe too long). \\[3pt] \hline
-\multirow{2}{*}{\textbf{Presentations}} & P1 & Discuss with RD, EM, JA and VS the diferent presentations I will have to make. \\[3pt]
- & & \\[3pt]
-\hline
-\end{tabular}
-\caption{List of the diferent project milestones together with their identifier. \label{table:milestones}}
-\end{table}
-
-\subsection{A small note on documetn styling and code guidelines}
-I would like to make some notes as to the style that I will follow in all the documents, reinforcing consistency and coherence throughought all the produced content.
-\begin{itemize}
-    \item Whenever in doubt, if there is a word that admits an expression in american and british english I will stick with the american one.
-    \item I will use the point as the decimal separator.
-    \item I will use Grammarly to cover each written document. TODO: ask for license?
-    \item For Tables, the structure will be the following:
-        \begin{longtable}{p{3cm}p{3cm}} \hline
-            \textbf{Head 1}  & \textbf{Head 2} \\[3pt] \lline{2} %The argument should be the number of columns
-            Thing 1 & Thing 2 \\[3pt]
-            Thing 3 & Thing 4 \\[3pt] \hline
-            \caption{This is the caption}
-        \end{longtable}
-    \item For Scala code, I will stick to the guidelines included in \href{https://docs.scala-lang.org/style/}{https://docs.scala-lang.org/style/}.
-    \item I will try and follow a Test Driven Development making use of ScalaTest for Scala testing. TODO: Look for a test suite compatible with CSEM's code coverage engine.
-    \item For bibliographic references I will use the style defaulted by BibTex.
-\end{itemize}
-
-\newpage
-\subsection{Work Package Break Down}
-%\begin{table}[h!]
-%\centering
-%\begin{adjustbox}{max width=\linewidth}
-\begin{longtable}{lm{5cm}m{7cm}c}
-\hline
-\textbf{WP} & \textbf{WSP} & \textbf{Element} & \textbf{Complete} \\[3pt] \lline{4}
-\textbf{WP1} & \multicolumn{2}{c}{Expected ending date: 12/10/18} & $100$ \% \\[3pt] \lline{4} %Increments of 15 %
-& \multicolumn{2}{l}{\textbf{WP1.1. Introductory Meetings}} & 3/3 \\[3pt] \hline
-& & Introductiory meeting with VS 8/10/18 & Y \\[3pt]
-& & Use-case definition with RD and EM 9/10/18 & Y \\[3pt]
-& & Introductiory meeting with JA 11/10/18 & Y \\[3pt] \hline
-& \multicolumn{2}{l}{\textbf{WP1.2. Environment Setup}} & 2/2 \\[3pt] \hline
-& & Set up the repository for the project & Y \\[3pt]
-& & \textbf{D1} Write the planning/organizatoin documentation. & Y \\[3pt] \hline
-& \multicolumn{2}{l}{\textbf{WP1.3. Planning Approval and KO}} & 4/4 \\[3pt] \hline
-& & \textbf{D1} approval by RD and EM & Y \\[3pt]
-& & \textbf{D1} approval by JA & Y \\[3pt]
-& & \textbf{D1} approval by VS & Y \\[3pt]
-& & Send my public keys to VS to start server-side work. & Y \\[6pt] \hline
-
-\textbf{WP2} & \multicolumn{2}{c}{Expected ending date: 23/11/18} & $86.66$ \% \\[3pt]\lline{4} %Increments of 8.33 %
-& \multicolumn{2}{l}{\textbf{WP2.1. Client Side Setup}} & 4/4 \\[3pt] \hline
-& & Choose the algorithm to be used and understand it. & Y \\[3pt]
-& & Run local execution in batch mode. & Y \\[3pt]
-& & Run local execution in streaming mode. & Y \\[3pt]
-& & Prepare Gateway Adaptor. & Y \\[3pt] \hline
-& \multicolumn{2}{l}{\textbf{WP2.2. Server Side Setup}} & 3/3 \\[3pt] \hline
-& & Test correct remote access to UniNe cluster & Y \\[3pt]
-& & Install Spark and Scala in the server (1 machine) & Y \\[3pt]
-& & Test the installation (1 machine) & Y \\[3pt] \hline
-& \multicolumn{2}{l}{\textbf{WP2.3. UC1 Implementation}} & 6/8 \\[3pt] \hline
-& & Implement chosen algorithm in Scala & Y \\[3pt]
-& & Test locally in batch mode & Y \\[3pt]
-& & Test locally in stream mode & Y \\[3pt]
-& & Implement testing suite & N \\[3pt]
-& & Document and correct according to Scaladoc & Y \\[3pt]
-& & \textbf{C1} Working Use Case and Non-Encrypted Data & Y \\[3pt]
-& & \textbf{C2} Working Use Case from Trust Zone & N \\[3pt]
-& & \textbf{C3} Extra Working Use Case & N \\[6pt] \hline
-
-\textbf{WP3} & \multicolumn{2}{c}{Expected ending date: 14/12/18} & $0$ \% \\[3pt] \lline{4} %Increments of 11.11 %
-& \multicolumn{2}{l}{\textbf{WP3.1. \textbf{C1} Evaluation}} & 0/3 \\[3pt] \hline
-& & Execution Time and Speed Up & N \\[3pt]
-& & Energy Consumption (Changing Number of Nodes) & N \\[3pt]
-& & Economical Cost Evaluation (Changing Number of Nodes) & N \\[3pt] \hline
-& \multicolumn{2}{l}{\textbf{WP3.2. \textbf{C2} Evaluation}} & 0/3 \\[3pt] \hline
-& & Execution Time and Speed Up & N \\[3pt]
-& & Energy Consumption (Changing Number of Nodes) & N \\[3pt]
-& & Economical Cost Evaluation (Changing Number of Nodes) & N \\[3pt] \hline
-& \multicolumn{2}{l}{\textbf{WP3.3. \textbf{C3} Evaluation}} & 0/3 \\[3pt] \hline
-& & Execution Time and Speed Up & N \\[3pt]
-& & Energy Consumption (Changing Number of Nodes) & N \\[3pt]
-& & Economical Cost Evaluation (Changing Number of Nodes) & N \\[3pt] \hline
-& \multicolumn{2}{l}{\textbf{WP3.4. Result Aggregation}} & 0/2 \\[3pt] \hline
-& & Aggregate, consolidate and analyze the results obtained & N \\[3pt]
-& & \textbf{D2} Consolidate a document covering \textbf{WP2} and \textbf{WP3}. Hopefully a conference paper? & N \\[6pt] \hline
-
-\textbf{WP4} & \multicolumn{2}{c}{Expected ending date: 15/02/19} & $0$ \% \\[3pt] \lline{4} %Increments of 11.11 %
-& \multicolumn{2}{l}{\textbf{WP4.1. Still TBD}} & 0/? \\[6pt] \hline
-
-\textbf{WP5} & \multicolumn{2}{c}{Expected ending date: 02/03/19} & $0$ \% \\[3pt] \lline{4} %Increments of 11.11 %
-& \multicolumn{2}{l}{\textbf{WP5.1. Still TBD}} & 0/? \\[6pt] \hline
-
-\textbf{WP6} & \multicolumn{2}{c}{Expected ending date: 12/04/19} & $0$ \% \\[3pt] \lline{4} %Increments of 11.11 %
-& \multicolumn{2}{l}{\textbf{WP6.1. D3 Write the thesis document}} & 0/2 \\[3pt] \hline
-& & Have the document skeleton with the structure somewhat defined. & N \\[3pt]
-& & Define more points when the Table of Contents is somewhat defined. & N \\[3pt] \hline
-& \multicolumn{2}{l}{\textbf{WP6.2. D3 Assesment}} & 0/5 \\[3pt] \hline
-& & Review by the CSEM side: RD, EM. & N \\[3pt]
-& & Review by the UPC side: JA. & N \\[3pt]
-& & Review by the UniNe side: VS. & N \\[3pt]
-& & Final review by CS. & N \\[3pt]
-& & Submit the document. & N \\[3pt] \hline
-& \multicolumn{2}{l}{\textbf{WP6.3. P1 Prepare Slide Presentation}} & 0/2 \\[3pt] \hline
-& & Define how many times will I present the project. & N \\[3pt]
-& & Obtain clear guidelines on the expected length. & N \\[3pt] \hline
-& \multicolumn{2}{l}{\textbf{WP6.4. P1 Presentation}} & 0/3 \\[3pt] \hline
-& & Present internally at the CSEM. & N \\[3pt]
-& & Present itnernally/externally at the UniNe. & N \\[3pt]
-& & Present itnernally at the UPC-CFIS. & N \\[3pt] \hline
-
-\caption{Work package breakdown. \label{table:big-date-table}}
-\end{longtable}
-%\end{adjustbox}
-%\end{table}
-
-\newpage
-
-\section{Contents of the Project}
-The aim of the project is to develop, deploy and benchmark a streaming platform for medical data that performs computations in Trusted Execution Environments using the \texttt{SGX-Spark} framework. In particular, cardiovascular data from a pulse wave signal derived from a photoplethysmograph (PPG) will be processed by algorithms to detect heart rate variations (HRV) in secured enclaves. Two diferent use cases are to be studied, further details on the whole flow are given in each.
-
-\subsection{Use Case 1: Single User (UC1)} \label{subsection:use-case-1}
-
-\begin{wrapfigure}{R}{.25\textwidth}
-\centering
-\includegraphics[width=.25\textwidth]{img/Use-Case-1-Diagram-w-BG-v2.png}
-\caption{Schematic of UC1. \label{fig:use-case-1}}
-\end{wrapfigure}
-\textbf{UC1: Topology}
-The first case considers a single gateway and a sinlge processing cluster. The gateway is, however, sensor unaware. This is, for our purposes, it does not make a diference which sensor is sending the cardiovascular data. The gateway then transfers the information to the cluster at UniNe. There, a toolbox for heart rate variability analysis processes the information and sends back the result to the gateway. The amount of nodes that carry out the computation will vary. A schematic of the data path can be seen in Figure \ref{fig:use-case-1}.
-
-\textbf{UC1: Chosen Algorithms}
-The set of algorithms chosen to be deployed at the cluster and process the stream of data are those contained in the \texttt{221/sleep\_analysis/hrv\_toolbox/rr\_processing.py} class\footnote{Available at CSEM's private Github, \url{https://github.csem.local/cse/sleep-analysis/blob/master/hrv_toolbox/rr_processing.py}.}. In order to ensure a fully secure processment within the enclave, all the code there contained must be compiled using the \texttt{SGX-Spark} compiler. As a consequence, not only the core algorithms must be translated to \texttt{Apache Spark}'s binding for \texttt{Scala}, but also all the wrappers, pre and post processing and intermediate scripts. The class takes a batch of data as an input and we will make use of \texttt{Spark}'s streaming capabilities. Following, a detailed list of the diferent core algorithms to be implemented and what are they used for. They are ordered in increasing level of complexity.
-\begin{itemize}
-    \item \textbf{\texttt{estimate\_hr}:} returns the heart rate signal from a sequence of RR intervals\footnote{Further contextualisation on ECG processing will be provided in the thesis but, in short, an RR interval is the time elapsed between two R's. An R is a point in time corresponding to the peak of the QRS complex of the ECG wave. See \url{https://en.wikipedia.org/wiki/Electrocardiography}.}.
-    \item \textbf{\texttt{estimate\_sdnn}:} returns the standard deviation of the NN intervals\footnote{NN intervals refer to \emph{normal} RR intervals. This is, without outliying RR intervals.}.
-    \item \textbf{\texttt{estimate\_rmssd}:} returns the root mean square of successive diferences from a sequence of RR intervals.
-    \item \textbf{\texttt{estimate\_hrv\_bands}:} returns the low frequency component, the high frequency component and their ratio of the HRV signal obtained from a sequence of RR intervals.
-    \item Further algorithms may be included to provide greater functionality.
-\end{itemize}
-
-\textbf{UC1: Benchmarking Scenarios}
-In order to provide a comprehensive and exhaustive benchmarking, three diferent configurations of the topology described are considered. They progressively increment the security of the whole pipeleine.
-\begin{itemize}
-    \item \textbf{Spark + No TaLoS:} In this scenario, data is transferred from the gateway to the cluster in clear and is then processed by the standard Spark implementation.
-    \item \textbf{SGX-Spark + No TaLoS:} In this second scenario, data is transferred as well in clear but within the cluster it is processed by the SGX-Spark implementation, making use of SGX enclaves.
-    \item \textbf{SGX-Spark + TaLoS:} The last scenario considers a secure data processing in enclaves and also a secure data transferring using TaLoS. TaLoS is a TLS library that allows to establish TLS connections between or into enclaves\footnote{Further analysis of the library will also be provided in the thesis. For this moment we reference the author's Github page, \url{https://github.com/lsds/TaLoS}.}.
-\end{itemize}
-
-\textbf{UC1: Evaluation Metrics}
-For each of the benchmarking scenarios described, we will evaluate four diferent metrics as we increment, for each evaluation criteria, the number of processors used to perform the computation.
-\begin{itemize}
-    \item \textbf{Execution Time in the Cluster:} we will measure the execution time of the algorithm in the cluster. We will compare it with the reference Python implementation, and the executions with and without SGX-Spark. We will also observe how does the execution time evolve as we increase the number of processors.
-    \item \textbf{System Latency:} we will measure the elapsed time from the instant the sensor caputres the signal to the moment the result is available for the user. This second metric will provide great insight to the user's perception of how immediate the system is.
-    \item \textbf{Energy Consumption:}  we will measure the energy consumed by the diferent scenarios. Using special sensors installed at UniNe's cluster we will be able to evaluate the increment of energy consumption adding each layer of security, and as a consequence of complexity, yields.
-    \item \textbf{Cost:} using the energy consumption data we will try to estimate the economical cost of each scenario and the pros and cons of using more secure and more powerful (computationally-wise) approaches.
-\end{itemize}
-
-\textbf{UC1: Success Criteria}
-When planning the use case and the evaluation scenarios, I would like to specify beforehand a set of objectives that, if I am able to complete (regardless of how the results obtained may look like), I will consider that UC1 has finished succesfully. Table \ref{table:success-criteria-uc1} summarizes them.
-%\begin{table}[h!]
-%    \centering
-    \begin{longtable}{p{10cm}l} \hline
-        \textbf{Description} & \textbf{Done} \\[3pt] \lline{0}
-        \textbf{Deployment of the pipeline} & \\[3pt] \hline
-        Deploy Spark in cluster mode at UniNe & \\[3pt]
-        Establish a connection (clear) between CSEM and UniNe & \\[3pt]
-        Establish CSEM-UniNe link using Talos & \\[3pt] \hline
-        \textbf{Implementation} & \\[3pt] \hline
-        Implement the HRV toolbox in \texttt{Apache Spark}'s \texttt{Scala} binding & \\[3pt]
-        Implement the adaptor for the gateway & \\[3pt]
-        Implement the adaptor for the cluster & \\[3pt]
-        Develop using a Trest Driven approach & \\[3pt] \hline
-        \textbf{Evaulation} & \\[3pt] \hline
-        Perform all runtime measures & \\[3pt]
-        Perform all latency measyres & \\[3pt]
-        Perform all energy measures & \\[3pt]
-        Give a cost estimate & \\[3pt] \hline
-    \caption{Success criterias for Use Case 1. \label{table:success-criteria-uc1}}
-    \end{longtable}
-%\end{table}
-
-
-\subsection{Use Case 2: Multi User (UC2)} \label{subsection:use-case-2}
-Still to be defined when the first use case is more advanced.
 
 \end{document}

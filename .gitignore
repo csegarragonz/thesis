@@ -4,4 +4,6 @@
 *.out
 *.pdf
 *.aux
+*.toc
 tags
+tags.lock
