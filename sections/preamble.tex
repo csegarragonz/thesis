@@ -17,22 +17,23 @@
 
 % Headers, Footers and page numeration
 \usepackage{fancyhdr}
-\pagestyle{fancy}
-% Rule width
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
 % This is currently the default, change when placeholders TODO
 \fancyhead[LE,RO]{\slshape \rightmark}
 \fancyhead[LO,RE]{\slshape \leftmark}
 \fancyfoot[C]{\thepage}
-
-% Blank Pages
-\usepackage{afterpage}
-\newcommand\blankpage{%
-    \null
-    \thispagestyle{empty}%
-    \addtocounter{page}{-1}%
-    \newpage}
+\fancypagestyle{frontmatter}{% Pagestyle for the frontmatter
+  \renewcommand{\headrulewidth}{0pt}% No header rule
+  \renewcommand{\footrulewidth}{0pt}% No footer rule
+  \fancyhf[R]{\thepage}% Top right page number
+  \fancyfoot{}%
+}
+\fancypagestyle{mainmatter}{%
+  \renewcommand{\headrulewidth}{.4pt}% Header rule
+  \renewcommand{\footrulewidth}{.4pt}% Footer rule
+  \fancyhf{}% Clear header/footer
+  \fancyhead[L]{\leftmark}% Chapter in header Left
+  \fancyhead[R]{\thepage}% Page number in header Right
+}
 
 % Epigraph Package (Book Citation)
 \usepackage{epigraph}

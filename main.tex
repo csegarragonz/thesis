@@ -1,7 +1,7 @@
 \documentclass[12pt, twoside]{book}
 
 % Document Preamble: basic definitions and packages.
-\input{preamble.tex}
+\input{sections/preamble.tex}
 
 \begin{document}
 \onehalfspacing
@@ -9,20 +9,65 @@
 \frontmatter
 
 % Title page
-\input{front-page.tex}
+\input{sections/front-page.tex}
 
 % Blank page after title
-\afterpage{\blankpage}
+\newpage
+\thispagestyle{empty}
+\null
+\vfill
+\pagebreak
 
 % Epigraph TODO choose citation
-\input{epigraph.tex}
-\thispagestyle{empty}
+\input{sections/epigraph.tex}
 
 % Blank page after epigraph
-\afterpage{\blankpage}
+\newpage
+\thispagestyle{empty}
+\null
+\vfill
+\pagebreak
+
+% Note from the author TODO necessary? correctly placed?
+\input{sections/note-from-author.tex}
+
+% Blank page after Note from Author
+\newpage
+\thispagestyle{empty}
+\null
+\vfill
+\pagebreak
+
+\input{sections/autorship.tex}
+
+% Blank page after Declaration of Autorship
+\newpage
+\thispagestyle{empty}
+\null
+\vfill
+\pagebreak
 
 % Acknowledgments
 \input{sections/acknowledgments.tex}
+
+% Blank page after Acknowledgments
+\newpage
+\thispagestyle{empty}
+\null
+\vfill
+\pagebreak
+
+\input{sections/abstract.tex}
+
+% Blank page after Abstract
+\newpage
+\thispagestyle{empty}
+\null
+\vfill
+\pagebreak
+
+% Table of contents
+\tableofcontents
 
 \mainmatter
 
