@@ -1,0 +1,796 @@
+% Encoding: UTF-8
+
+@InProceedings{barbosa2017safethings,
+  author    = {Barbosa, Manuel and Mokhtar, Sonia Ben and Felber, Pascal and Maia, Francisco and Matos, Miguel and Oliveira, Rui and Riviere, Etienne and Schiavoni, Valerio and Voulgaris, Spyros},
+  title     = {{SAFETHINGS}: {D}ata security by design in the {IoT}},
+  booktitle = {Proceedings of the 13th European Dependable Computing Conference ({EDCC'17})},
+  year      = {2017},
+  pages     = {117--120},
+}
+
+@misc{optee,
+  title = {{Open Portable Trusted Execution Environment}},
+  howpublished = {\url{https://www.op-tee.org}},
+  note = {Accessed: 2018-12-04}
+}
+
+@misc{sgx-driver,
+  title = {{Intel Software Guard Extension for Linux OS Driver} on {GitHub}},
+  howpublished = {\url{https://github.com/intel/linux-sgx-driver}},
+  note = {Accessed: 2019-02-05}
+}
+
+@misc{spark-rest-api,
+  title = {{Spark Documentation: REST API}},
+  howpublished = {\url{https://spark.apache.org/docs/latest/monitoring.html#rest-api}},
+  note = {Accessed: 2019-02-05}
+}
+
+@misc{azure-sgx,
+  title = {{Microsoft Azure Confidential Computing with Intel SGX}},
+  howpublished = {\url{https://software.intel.com/en-us/blogs/2018/11/08/microsoft-azure-confidential-computing-with-intel-sgx}},
+  note = {Accessed: 2019-01-28}
+}
+
+@misc{ibm-sgx,
+  title = {{Data-in-use protection on IBM Cloud using Intel SGX}},
+  howpublished = {\url{https://www.ibm.com/blogs/bluemix/2018/05/data-use-protection-ibm-cloud-using-intel-sgx/}},
+  note = {Accessed: 2019-01-28}
+}
+
+@misc{opteefaq,
+  title = {{OP-TEE} {FAQ} on {Github}},
+  howpublished = {\url{https://github.com/OP-TEE/OP-TEE\_website/tree/master/faq}},
+  note = {Accessed: 2018-12-04}
+}
+
+@misc{opaque-git,
+  title = {{Opaque} on {Github}},
+  howpublished = {\url{https://github.com/ucbrise/opaque}},
+  note = {Accessed: 2019-01-17}
+}
+
+@misc{docker-container,
+  title = {{Docker: What is a Container?}},
+  howpublished = {\url{https://www.docker.com/resources/what-container}},
+  note = {Accessed: 2019-02-04}
+}
+
+@misc{scala-language,
+  title = {{The Scala Programming Language}},
+  howpublished = {\url{https://www.scala-lang.org/}},
+  note = {Accessed: 2019-02-04}
+}
+
+@misc{rdd-programming-guide,
+  title = {{RDD Programming Guide}},
+  howpublished = {\url{https://spark.apache.org/docs/latest/rdd-programming-guide.html}},
+  note = {Accessed: 2019-02-04}
+}
+
+@misc{structured-streaming-programming-guide,
+  title = {{Structured Streaming Programming Guide}},
+  howpublished = {\url{https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html}},
+  note = {Accessed: 2019-02-04}
+}
+
+@misc{dstat,
+  title = {{dstat - Linux Man Page}},
+  howpublished = {\url{https://linux.die.net/man/1/dstat}},
+  note = {Accessed: 2019-02-05}
+}
+
+@misc{text-filestream,
+  title = {{Spark Documentation: Streaming Context - \texttt{textFileStream}}},
+  howpublished = {\url{https://spark.apache.org/docs/2.2.0/api/java/org/apache/spark/streaming/StreamingContext.html#textFileStream-java.lang.String-}},
+  note = {Accessed: 2019-02-04}
+}
+
+@misc{mqtt-protocol,
+  title = {{MQTT Communication Protocol}},
+  howpublished = {\url{http://mqtt.org/}},
+  note = {Accessed: 2019-02-04}
+}
+
+@misc{mqtt-eclipse,
+  title = {{Eclipse Paho MQTT Implementation}},
+  howpublished = {\url{https://www.eclipse.org/paho/}},
+  note = {Accessed: 2019-02-04}
+}
+
+@misc{docker-compose,
+  title = {{Docker Documentation: Docker Compose}},
+  howpublished = {\url{https://docs.docker.com/compose/}},
+  note = {Accessed: 2019-02-04}
+}
+
+@Misc{lsds,
+  author       = {{Imperial College London}},
+  title        = {{Large-Scale Data \& Sytems Group} at the {Imperial College London} Website},
+  howpublished = {\url{https://lsds.doc.ic.ac.uk/}},
+  note         = {Accessed: 2019-01-18},
+}
+
+@misc{weeveos,
+  title = "{{weeveOS}}",
+  howpublished = {\url{https://github.com/weeveiot/weeveOS}}
+}
+
+@misc{armsmc,
+  title = "{{ARM1176JZF-S Technical Reference Manual - 2.12.13. Secure Monitor Call (SMC)}}",
+  howpublished = {\url{http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0301h/ch02s12s13.html}}
+}
+
+@misc{cve20175754,
+  title = "{{CVE-2017-5754}}",
+  howpublished = {\url{https://nvd.nist.gov/vuln/detail/CVE-2017-5754}}
+}
+
+@misc{cve20175715,
+  title = "{{CVE-2017-5715}}",
+  howpublished = {\url{https://nvd.nist.gov/vuln/detail/CVE-2017-5715}}
+}
+
+@misc{cve20175753,
+  title = "{{CVE-2017-5753}}",
+  howpublished = {\url{https://nvd.nist.gov/vuln/detail/CVE-2017-5753}}
+}
+
+@misc{cve20183639,
+  title = "{{CVE-2018-3639}}",
+  howpublished = {\url{https://nvd.nist.gov/vuln/detail/CVE-2018-3639}}
+}
+
+@misc{genericentrysmc, 
+  title = {{OP-TEE source}}, 
+  howpublished = {\url{https://github.com/OP-TEE/optee\_os/blob/master/core/arch/arm/kernel/generic\_entry\_a64.S}},
+  note = {Accessed: 2018-12-09}
+}
+
+@misc{nstid,
+  title = {{Cortex-A9 Technical Reference Manual - 6.3. Memory Access Sequence}},
+  howpublished = {\url{http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0388f/Ciheiecd.html}},
+  note = {Accessed: 2018-12-09}
+}
+
+@inproceedings{teecovertchannelsprimecount,
+author = {Cho, Haehyun and Zhang, Penghui and Kim, Donguk and Park, Jinbum and Lee, Choong-Hoon and Zhao, Ziming and Doupé, Adam and Ahn, Gail-Joon},
+year = {2018},
+month = {12},
+pages = {441-452},
+title = {{Prime+Count: Novel Cross-world Covert Channels on ARM TrustZone}},
+doi = {10.1145/3274694.3274704}
+}
+
+@misc{qemu,
+  title = "{{Qemu}}",
+  howpublished = {\url{https://www.qemu.org}},
+  note = {Accessed: 2018-12-04}
+}
+
+@inproceedings{secloakfull,
+author = {Lentz, Matthew and Sen, Rijurekha and Druschel, Peter and Bhattacharjee, Bobby},
+year = {2018},
+month = {06},
+pages = {1-13},
+title = {SeCloak: ARM Trustzone-based Mobile Peripheral Control},
+doi = {10.1145/3210240.3210334}
+}
+
+@misc{openteegithub,
+  title = "{{Open-TEE}}",
+  howpublished = {\url{https://open-tee.github.io}}
+}
+
+@misc{arcticmx4,
+  title = "{{Arctic MX-4}}",
+  howpublished = {\url{https://www.arctic.ac/ch\_en/mx-4.html}}
+}
+
+@article{tilm35,
+    author =       "{Texas} {Instruments}",
+    title =        "{LM35 Precision Centigrade Temperature Sensors}",
+    year =         "2017"
+}
+
+@misc{trustsonic,
+  title = "{{TRUSTSONIC}}",
+  howpublished = {\url{https://www.trustonic.com/solutions/trustonic-solutions-iot}}
+}
+
+@article{tlk,
+    author =       "{nVidia}",
+    title =        "{TRUSTED LITTLE KERNEL (TLK) FOR TEGRA: FOSS EDITION}",
+    year =         "2015"
+}
+
+@article{armtzc,
+    author =       "{ARM}",
+    title =        "{ARM® CoreLink™ TZC-400 TrustZone®Address Space Controller}",
+    year =         "2014"
+}
+
+
+
+@misc{globalplatform,
+  title = "{GlobalPlatform} {Technology}",
+  howpublished = {\url{https://globalplatform.org}}
+}
+
+@article{teeinternalcorespecsbigintadd,
+    author =       "{GlobalPlatform} {Technology}",
+    title =        "{TEE Internal Core API Specification Version 1.1.2.50 June 2018}",
+    pages =        "252",
+    year =         "2018"
+}
+
+@misc{kernelgovernors,
+  title = "{CPU} frequency and voltage scaling code in the {Linux}(TM) kernel",
+  author = "{Dominik Brodowski}",
+  howpublished = {\url{https://www.kernel.org/doc/Documentation/cpu-freq/governors.txt}}
+}
+
+@misc{powerzkm001,
+  title = "{POWER-Z} {KM001C} Tester",
+  author = "{ChargerLAB}",
+  howpublished = {\url{http://www.chargerlab.com/archives/536.html}}
+}
+
+@misc{rpifaq,
+  title = "Rapberry pi {FAQ}",
+  author = "{Raspberry Pi Foundation}",
+  howpublished = {\url{https://www.raspberrypi.org/documentation/faqs/}},
+  note = {Accessed: 2018-12-04}
+}
+
+@misc{arcticf12silent,
+  title = "{F12} Silent",
+  author = "{Arctic Cooling}",
+  howpublished = {\url{https://www.arctic.ac/ch\_en/f12-silent.html}},
+  note = {Accessed: 2018-12-04}
+}
+
+@article{globalplatformteesystemarchitecture,
+    author =       "{GlobalPlatform} {Technology}",
+    title =        "{GlobalPlatform TEE System Architecture v1.1}",
+    year =         "2017"
+}
+
+@misc{teebigintaddgitissue,
+  title = "{{TEE\_BigIntAdd fails when dest=op OP-TEE OS Issue \#2577}}",
+  howpublished = {\url{https://github.com/OP-TEE/optee\_os/issues/2577}}
+}
+
+@misc{flire4,
+  title = "{{Flir E4}}",
+  howpublished = {\url{https://www.flir.com/products/e4/}}
+}
+
+@misc{intelsgx,
+  title = "{{Intel SGX}}",
+  howpublished = {\url{https://software.intel.com/en-us/sgx}}
+}
+
+@misc{trustzone,
+  title = "{{ARM TrustZone Developer}}",
+  howpublished = {\url{https://developer.arm.com/technologies/trustzone}}
+}
+ 
+@misc{arm100bn ,
+  title = "{{ARM Inside The Numbers - 100bn}}",
+  howpublished = {\url{https://community.arm.com/processors/b/blog/posts/inside-the-numbers-100-billion-arm-based-chips-1345571105}}
+}
+
+@Misc{gartnerleadingtheiot2017,
+  author = {{Gartner}},
+  title  = {Leading the {IoT} {Gartner} Insights on How to Lead in a Connected World},
+  year   = {2017},
+}
+
+@misc{armfinancianresults,
+  title = "{{ARM Financial Results}}",
+  howpublished = {\url{https://www.arm.com/company/investors/financial-results}}
+}
+
+@misc{armeverywhere,
+  title = "{{ARM Everywhere}}",
+  howpublished = {\url{https://hexus.net/static/arm-everywhere/}}
+}
+
+@inproceedings{securestreams,
+  title={{SecureStreams}: {A} reactive middleware framework for secure data stream processing},
+  author={Havet, Aur{\'e}lien and Pires, Rafael and Felber, Pascal and Pasin, Marcelo and Rouvoy, Romain and Schiavoni, Valerio},
+  booktitle={Proceedings of the 11th ACM International Conference on Distributed and Event-based Systems},
+  pages={124--133},
+  year={2017},
+  organization={ACM}
+}
+
+@InProceedings{sgx-whitepaper,
+  author    = {McKeen, Frank and Alexandrovich, Ilya and Berenzon, Alex and Rozas, Carlos V. and Shafi, Hisham and Shanbhogue, Vedvyas and Savagaonkar, Uday R.},
+  title     = {Innovative Instructions and Software Model for Isolated Execution},
+  booktitle = {Proceedings of the 2nd International Workshop on Hardware and Architectural Support for Security and Privacy},
+  year      = {2013},
+  series    = {HASP '13},
+  pages     = {10:1--10:1},
+  address   = {New York, NY, USA},
+  publisher = {ACM},
+  acmid     = {2488368},
+  articleno = {10},
+  doi       = {10.1145/2487726.2488368},
+  isbn      = {978-1-4503-2118-1},
+  location  = {Tel-Aviv, Israel},
+  numpages  = {1},
+  url       = {http://doi.acm.org/10.1145/2487726.2488368},
+}
+
+@Article{intel-mee,
+  author  = {Sh. Gueron},
+  title   = {A Memory Encryption Engine Suitable for General Purpose Processors},
+  journal = {IACR Cryptology ePrint Archive},
+  year    = {2016},
+  volume  = {2016},
+  pages   = {204},
+}
+
+@inproceedings{spark-whitepaper,
+ author = {Zaharia, Matei and Chowdhury, Mosharaf and Franklin, Michael J. and Shenker, Scott and Stoica, Ion},
+ title = {Spark: Cluster Computing with Working Sets},
+ booktitle = {Proceedings of the 2Nd USENIX Conference on Hot Topics in Cloud Computing},
+ series = {HotCloud'10},
+ year = {2010},
+ location = {Boston, MA},
+ pages = {10--10},
+ numpages = {1},
+ url = {http://dl.acm.org/citation.cfm?id=1863103.1863113},
+ acmid = {1863113},
+ publisher = {USENIX Association},
+ address = {Berkeley, CA, USA},
+} 
+
+@misc{spark-streaming-documentation,
+  title = "Spark Streaming Programming Guide",
+  author = "{Apache Foundation}",
+  howpublished = {\url{https://spark.apache.org/docs/2.2.0/streaming-programming-guide.html}},
+  note = {Accessed: 2019-01-15}
+}
+
+@misc{sgx-lkl,
+  title = {{SGX-LKL} on {Github}},
+  howpublished = {\url{https://github.com/lsds/sgx-lkl}},
+  note = {Accessed: 2019-01-15}
+}
+
+@misc{sgx-spectre,
+  title = {{Spectre Attack SGX} on {Github}},
+  howpublished = {\url{https://github.com/lsds/spectre-attack-sgx}},
+  note = {Accessed: 2019-01-16}
+}
+
+@misc{mqtt-image,
+  title = {{Eclipse Mosquitto Image} on {Docker Hub}},
+  howpublished = {\url{https://hub.docker.com/\_/eclipse-mosquitto/}},
+  note = {Accessed: 2019-01-16}
+}
+
+@misc{consul-image,
+  title = {{Consul Image} on {Docker Hub}},
+  howpublished = {\url{https://hub.docker.com/\_/consul/}},
+  note = {Accessed: 2019-01-16}
+}
+
+@rfc{tls,
+ author = {Dierks, T. and Allen, C.},
+ title = {The TLS Protocol Version 1.2},
+ year = {2008},
+ publisher = {RFC Editor},
+ address = {United States},
+}
+
+@Article{hrv,
+  author  = {Malik, M.},
+  title   = {Heart rate variability: {S}tandards of measurement, physiological interpretation, and clinical use},
+  journal = {Circulation},
+  year    = {1996},
+  volume  = {93},
+  pages   = {1043-1065},
+  month   = {03},
+}
+
+@inproceedings{sgx-sidechannel,
+  title={{Malware guard extension: Using SGX to conceal cache attacks}},
+  author={Schwarz, Michael and Weiser, Samuel and Gruss, Daniel and Maurice, Cl{\'e}mentine and Mangard, Stefan},
+  booktitle={International Conference on Detection of Intrusions and Malware, and Vulnerability Assessment},
+  pages={3--24},
+  year={2017},
+  organization={Springer}
+}
+
+@inproceedings{foreshadow,
+    author = {Van Bulck, Jo and Minkin, Marina and Weisse, Ofir and Genkin, Daniel and Kasikci, Baris and
+              Piessens, Frank and Silberstein, Mark and Wenisch, Thomas F. and Yarom, Yuval and Strackx, Raoul},
+    title = {Foreshadow: Extracting the Keys to the {Intel SGX} Kingdom with Transient Out-of-Order Execution},
+    booktitle = {Proceedings of the 27th {USENIX} Security Symposium},
+    year = {2018},
+    month = {August},
+    publisher = {{USENIX} Association}
+}
+
+@Article{weisse2018foreshadowNG,
+  author  = {Weisse, O. and Van Bulck, J. and Minkin, M. and Genkin, D. and Kasikci, B. and Piessens, F. and Silberstein, M. and Strackx, R. and Wenisch, Th. F. and Yarom, Y.},
+  title   = {{Foreshadow-NG}: {B}reaking the virtual memory abstraction with transient out-of-order execution},
+  journal = {Technical report},
+  year    = {2018},
+  note    = {See also~\cite{foreshadow}},
+}
+
+@Article{hrv-metrics,
+  author  = {Shaffer, F. and Ginsberg, J. P.},
+  title   = {An overview of heart rate variability metrics and norms},
+  journal = {Frontiers in Public Health},
+  year    = {2017},
+  volume  = {5},
+  pages   = {258},
+}
+
+@inproceedings{opaque,
+ author = {Zheng, Wenting and Dave, Ankur and Beekman, Jethro G. and Popa, Raluca Ada and Gonzalez, Joseph E. and Stoica, Ion},
+ title = {Opaque: An Oblivious and Encrypted Distributed Analytics Platform},
+ booktitle = {Proceedings of the 14th USENIX Conference on Networked Systems Design and Implementation},
+ series = {NSDI'17},
+ year = {2017},
+ isbn = {978-1-931971-37-9},
+ location = {Boston, MA, USA},
+ pages = {283--298},
+ numpages = {16},
+ url = {http://dl.acm.org/citation.cfm?id=3154630.3154653},
+ acmid = {3154653},
+ publisher = {USENIX Association},
+ address = {Berkeley, CA, USA},
+} 
+
+@InProceedings{spark-sql,
+  author    = {Armbrust, M. and Xin, R. S. and Lian, C. and Huai, Y. and Liu, D. and Bradley, J. K. and Meng, X. and Kaftan, T. and Franklin, M. J. and Ghodsi, A. and Zaharia, M.},
+  title     = {{Spark SQL}: Relational data processing in {Spark}},
+  booktitle = {Proceedings of the 2015 ACM SIGMOD International Conference on Management of Data},
+  year      = {2015},
+  series    = {SIGMOD '15},
+  pages     = {1383--1394},
+  address   = {New York, NY, USA},
+  publisher = {ACM},
+  acmid     = {2742797},
+  doi       = {10.1145/2723372.2742797},
+  isbn      = {978-1-4503-2758-9},
+  keywords  = {data warehouse, databases, hadoop, machine learning, spark},
+  location  = {Melbourne, Victoria, Australia},
+  numpages  = {12},
+  url       = {http://doi.acm.org/10.1145/2723372.2742797},
+}
+
+@InProceedings{spark-streaming,
+  author    = {Zaharia, Matei and Das, Tathagata and Li, Haoyuan and Shenker, Scott and Stoica, Ion},
+  title     = {Discretized streams: {A}n efficient and fault-tolerant model for stream processing on large clusters},
+  booktitle = {Proceedings of the 4th USENIX Conference on Hot Topics in Cloud Ccomputing},
+  year      = {2012},
+  series    = {HotCloud'12},
+  pages     = {10--10},
+  address   = {Berkeley, CA, USA},
+  publisher = {USENIX Association},
+  acmid     = {2342773},
+  location  = {Boston, MA},
+  numpages  = {1},
+  url       = {http://dl.acm.org/citation.cfm?id=2342763.2342773},
+}
+
+@InProceedings{structured-streaming,
+  author    = {Armbrust, M. and Das, T. and Torres, J. and Yavuz, B. and Zhu, S. and Xin, R. and Ghodsi, A. and Stoica, I. and Zaharia, M.},
+  title     = {Structured streaming: {A} seclarative {API} for real-time applications in {Apache Spark}},
+  booktitle = {Proceedings of the 2018 International Conference on Management of Data},
+  year      = {2018},
+  series    = {SIGMOD '18},
+  pages     = {601--613},
+  address   = {New York, NY, USA},
+  publisher = {ACM},
+  acmid     = {3190664},
+  doi       = {10.1145/3183713.3190664},
+  isbn      = {978-1-4503-4703-7},
+  keywords  = {apache spark, programming models, stream processing},
+  location  = {Houston, TX, USA},
+  numpages  = {13},
+  url       = {http://doi.acm.org/10.1145/3183713.3190664},
+}
+
+@inproceedings{fhe-definition,
+ author = {Gentry, Craig},
+ title = {Fully Homomorphic Encryption Using Ideal Lattices},
+ booktitle = {Proceedings of the Forty-first Annual ACM Symposium on Theory of Computing},
+ series = {STOC '09},
+ year = {2009},
+ isbn = {978-1-60558-506-2},
+ location = {Bethesda, MD, USA},
+ pages = {169--178},
+ numpages = {10},
+ url = {http://doi.acm.org/10.1145/1536414.1536440},
+ doi = {10.1145/1536414.1536440},
+ acmid = {1536440},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {fully homomorphic encryption},
+} 
+
+@InProceedings{gottel2018security,
+  author    = {G{\"o}ttel, Christian and Pires, Rafael and Rocha, Isabelly and Vaucher, Sebastien and Felber, Pascal and Pasin, Marcelo and Schiavoni, Valerio},
+  title     = {Security, performance and energy trade-offs of hardware-assisted memory protection mechanisms},
+  booktitle = {Proceedings of the 37th {IEEE} Symposium on Reliable Distributed Systems ({SRDS'18})},
+  year      = {2018},
+  pages     = {133--142},
+}
+
+@InProceedings{mr-crypt,
+  author    = {Tetali, Sai Deep and Lesani, Mohsen and Majumdar, Rupak and Millstein, Todd},
+  title     = {{MrCrypt: Static Analysis for Secure Cloud Computations}},
+  booktitle = {Proceedings of the 2013 ACM SIGPLAN International Conference on Object Oriented Programming Systems Languages \& Applications},
+  year      = {2013},
+  series    = {OOPSLA '13},
+  pages     = {271--286},
+  address   = {New York, NY, USA},
+  publisher = {ACM},
+  acmid     = {2509554},
+  doi       = {10.1145/2509136.2509554},
+  isbn      = {978-1-4503-2374-1},
+  keywords  = {cloud computing, data confidentiality, encryption scheme inference, homomorphic encryption},
+  location  = {Indianapolis, Indiana, USA},
+  numpages  = {16},
+  url       = {http://doi.acm.org/10.1145/2509136.2509554},
+}
+
+
+@inproceedings{styx,
+ author = {Stephen, Julian James and Savvides, Savvas and Sundaram, Vinaitheerthan and Ardekani, Masoud Saeida and Eugster, Patrick},
+ title = {{STYX: Stream Processing with Trustworthy Cloud-based Execution}},
+ booktitle = {Proceedings of the Seventh ACM Symposium on Cloud Computing},
+ series = {SoCC '16},
+ year = {2016},
+ isbn = {978-1-4503-4525-5},
+ location = {Santa Clara, CA, USA},
+ pages = {348--360},
+ numpages = {13},
+ url = {http://doi.acm.org/10.1145/2987550.2987574},
+ doi = {10.1145/2987550.2987574},
+ acmid = {2987574},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Confidentiality, IoT, Stream data processing},
+} 
+
+@article{Xiong2018,
+  author  = {Xiong, Z. and Nash, M. and Cheng, E. and Fedorov, V. and Stiles, M. and Zhao, J.},
+  title   = {{ECG} signal classification for the detection of cardiac arrhythmias using a convolutional recurrent neural network},
+  journal = {Physiological Measurement},
+  year    = {2018},
+  month   = aug,
+  publisher={IOP Publishing}
+}
+
+@InProceedings{Renevey2018a,
+  author    = {Ph. Renevey and R. Delgado-Gonzalo and A. Lemkaddem and C. Verjus and S. Combertaldi and B. Rasch and B. Leeners and F. Dammeier and F. K¨ubler},
+  title     = {Respiratory and cardiac monitoring at night using a wrist wearable optical system},
+  booktitle = {Proceedings of the 40th Annual International Conference of the {IEEE} Engineering in Medicine and Biology Society ({EMBC'18})},
+  year      = {2018},
+  pages     = {2861--2864},
+  month     = jul,
+}
+
+@InProceedings{Puthal:2015:DES:2847604.2848495,
+  author    = {Puthal, Deepak and Nepal, Surya and Ranjan, Rajiv and Chen, Jinjun},
+  title     = {{DPBSV -- An Efficient and Secure Scheme for Big Sensing Data Stream}},
+  booktitle = {Proceedings of the 2015 IEEE Trustcom/BigDataSE/ISPA - Volume 01},
+  year      = {2015},
+  series    = {TRUSTCOM '15},
+  pages     = {246--253},
+  address   = {Washington, DC, USA},
+  publisher = {IEEE Computer Society},
+  acmid     = {2848495},
+  doi       = {10.1109/Trustcom.2015.381},
+  isbn      = {978-1-4673-7952-6},
+  keywords  = {Security, Sensor Networks, Big Data Stream, Key Exchange, Cloud Computing},
+  numpages  = {8},
+  url       = {http://dx.doi.org/10.1109/Trustcom.2015.381},
+}
+
+@TechReport{talos,
+  author      = {Aublin, Pierre-Louis and Kelbert, Florian and O 'keeffe, Dan and Muthukumaran, Divya and Priebe, Christian and Lind, Joshua and Krahn, Robert and Fetzer, Christof and Eyers, David and Pietzuch, Peter},
+  title       = {{TaLoS}: Secure and Transparent TLS Termination inside SGX Enclaves},
+  institution = {Imperial College London},
+  year        = {2017},
+  month       = {05},
+  doi         = {10.13140/RG.2.2.13308.95368},
+}
+
+@misc{sgx-spark,
+ year = {2017},
+ title = {{D3.2 SecureCloud: Specification and Implementation of Reusable Secure Microservices}},
+ howpublished={\url{https://www.securecloudproject.eu/wp-content/uploads/D3.2.pdf}}
+}
+
+@InProceedings{ppg,
+  author    = {Par\'ak, J. and Tarniceriu, A. and Renevey, Ph. and Bertschi, M. and Delgado-Gonzalo, R. and Korhonen, I.},
+  title     = {Evaluation of the beat-to-beat detection accuracy of {PulseOn} wearable optical heart rate monitor},
+  booktitle = {Proceedings of the 37th Annual International Conference of the {IEEE} Engineering in Medicine and Biology Society ({EMBC'15})},
+  year      = {2015},
+  volume    = {2015},
+  pages     = {8099--8102},
+  month     = aug,
+}
+
+@inproceedings{Koliousis:2016:SWH:2882903.2882906,
+ author = {Koliousis, Alexandros and Weidlich, Matthias and Castro Fernandez, Raul and Wolf, Alexander L. and Costa, Paolo and Pietzuch, Peter},
+ title = {{SABER: Window-Based Hybrid Stream Processing for Heterogeneous Architectures}},
+ booktitle = {Proceedings of the 2016 International Conference on Management of Data},
+ series = {SIGMOD '16},
+ year = {2016},
+ isbn = {978-1-4503-3531-7},
+ location = {San Francisco, California, USA},
+ pages = {555--569},
+ numpages = {15},
+ url = {http://doi.acm.org/10.1145/2882903.2882906},
+ doi = {10.1145/2882903.2882906},
+ acmid = {2882906},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {data parallelism, gpgpus, heterogeneous hardware, hybrid scheduling, stream processing, windowing support},
+}
+@inproceedings{miao2017streambox,
+  title={{StreamBox: Modern stream processing on a multicore machine}},
+  author={Miao, Hongyu and Park, Heejin and Jeon, Myeongjae and Pekhimenko, Gennady and McKinley, Kathryn S and Lin, Felix Xiaozhu},
+  booktitle={2017 USENIX Annual Technical Conference (USENIX ATC 17)},
+  pages={617--629},
+  year={2017}
+}
+@inproceedings{venkataraman2017drizzle,
+  title={{Drizzle: Fast and adaptable stream processing at scale}},
+  author={Venkataraman, Shivaram and Panda, Aurojit and Ousterhout, Kay and Armbrust, Michael and Ghodsi, Ali and Franklin, Michael J and Recht, Benjamin and Stoica, Ion},
+  booktitle={Proceedings of the 26th Symposium on Operating Systems Principles},
+  pages={374--389},
+  year={2017},
+  organization={ACM}
+}
+
+@Article{Gartner2017,
+  author = {{Gartner}},
+  title  = {{Leading the IoT Gartner Insights on How to Lead in a Connected World}},
+  year   = {2017},
+}
+
+@InProceedings{Barbosa2017,
+  author       = {Barbosa, Manuel and Mokhtar, Sonia Ben and Felber, Pascal and Maia, Francisco and Matos, Miguel and Oliveira, Rui and Riviere, Etienne and Schiavoni, Valerio and Voulgaris, Spyros},
+  title        = {{SAFETHINGS: Data Security by Design in the IoT}},
+  booktitle    = {Dependable Computing Conference (EDCC), 2017 13th European},
+  year         = {2017},
+  pages        = {117--120},
+  organization = {IEEE},
+}
+
+@inproceedings{paillier1999public,
+  title={Public-key cryptosystems based on composite degree residuosity classes},
+  author={Paillier, Pascal},
+  booktitle={International Conference on the Theory and Applications of Cryptographic Techniques},
+  pages={223--238},
+  year={1999},
+  organization={Springer}
+}
+
+@inproceedings{gentry2012homomorphic,
+  title={{Homomorphic evaluation of the AES circuit}},
+  author={Gentry, Craig and Halevi, Shai and Smart, Nigel P},
+  booktitle={Annual Cryptology Conference},
+  pages={850--867},
+  year={2012},
+  organization={Springer}
+}
+
+@Misc{azureconfidential,
+  author       = {Mark Russinovich},
+  title        = {Introducing {A}zure {C}onfidential {C}omputing},
+  howpublished = {\url{https://azure.microsoft.com/en-us/blog/introducing-azure-confidential-computing/}},
+  month        = sep,
+  year         = {2017},
+  note         = {{A}ccessed on: 2018-03-05},
+  organization = {Microsoft Corporation, 2017},
+  url          = {https://azure.microsoft.com/en-us/blog/introducing-azure-confidential-computing/},
+}
+
+@Misc{gceskylake,
+  author       = {Barb Darrow},
+  title        = {Google {I}s {F}irst in {L}ine to {G}et {I}ntel's {N}ext-{G}en {S}erver {C}hip},
+  howpublished = {\url{http://for.tn/2lLdUtD}},
+  month        = feb,
+  year         = {2017},
+  note         = {{A}ccessed on: 2018-03-05},
+  url          = {http://for.tn/2lLdUtD},
+}
+
+@Misc{amazonskylake,
+  title        = {Coming {S}oon: {A}mazon {EC}2 {C}5 {I}nstances, the next generation of {C}ompute {O}ptimized instances},
+  howpublished = {\url{http://amzn.to/2nmIiH9}},
+  month        = nov,
+  year         = {2016},
+  note         = {{A}ccessed on: 2018-03-05},
+  organization = {Amazon Web Services, Inc., 2016},
+  url          = {http://amzn.to/2nmIiH9},
+}
+
+@Article{costan2016intel,
+  author  = {Costan, V. and Devadas, S.},
+  title   = {{Intel SGX Explained}},
+  journal = {IACR Cryptology ePrint Archive},
+  year    = {2016},
+  volume  = {2016},
+  number  = {086},
+  pages   = {1--118},
+}
+
+
+@article{zaharia2016apache,
+ author = {Zaharia, Matei and Xin, Reynold S. and Wendell, Patrick and Das, Tathagata and Armbrust, Michael and Dave, Ankur and Meng, Xiangrui and Rosen, Josh and Venkataraman, Shivaram and Franklin, Michael J. and Ghodsi, Ali and Gonzalez, Joseph and Shenker, Scott and Stoica, Ion},
+ title = {Apache Spark: A Unified Engine for Big Data Processing},
+ journal = {Commun. ACM},
+ issue_date = {November 2016},
+ volume = {59},
+ number = {11},
+ month = oct,
+ year = {2016},
+ issn = {0001-0782},
+ pages = {56--65},
+ numpages = {10},
+ url = {http://doi.acm.org/10.1145/2934664},
+ doi = {10.1145/2934664},
+ acmid = {2934664},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+} 
+
+@Book{Kumar2016,
+  title     = {Signal and image processing in medical applications},
+  publisher = {Springer},
+  year      = {2016},
+  author    = {Kumar, A. and Shaik, F. and Rahim, B. A. and Kumar, D. S.},
+}
+
+@InProceedings{Renevey2018,
+  author    = {P. {Renevey} and R. {Delgado-Gonzalo} and A. {Lemkaddem} and C. {Verjus} and S. {Combertaldi} and B. {Rasch} and B. {Leeners} and F. {Dammeier} and F. {K¨ubler}},
+  title     = {Respiratory and cardiac monitoring at night using a wrist wearable optical system},
+  booktitle = {Proceedings of the 40th Annual International Conference of the {IEEE} Engineering in Medicine and Biology Society ({EMBC'18})},
+  year      = {2018},
+  pages     = {2861--2864},
+  month     = {July},
+  issn      = {1558-4615},
+}
+
+@InProceedings{VanZaen2019,
+  author    = {Van Zaen, J. and Ch\'etelat, O. and Lemay, M. and Calvo, E. M. and Delgado-Gonzalo, R.},
+  title     = {Classification of cardiac arrhythmias from single lead {ECG} with a convolutional recurrent neural network},
+  booktitle = {Proceedings of the 12th International Joint Conference on Biomedical Engineering Systems and Technologies ({BIOSTEC'19})},
+  year      = {2019},
+  note      = {In press.},
+}
+
+@InProceedings{styx,
+  author    = {Stephen, Julian James and Savvides, Savvas and Sundaram, Vinaitheerthan and Ardekani, Masoud Saeida and Eugster, Patrick},
+  title     = {{STYX: Stream Processing with Trustworthy Cloud-based Execution}},
+  booktitle = {Proceedings of the Seventh ACM Symposium on Cloud Computing},
+  year      = {2016},
+  series    = {SoCC '16},
+  pages     = {348--360},
+  address   = {New York, NY, USA},
+  publisher = {ACM},
+  acmid     = {2987574},
+  doi       = {10.1145/2987550.2987574},
+  isbn      = {978-1-4503-4525-5},
+  keywords  = {Confidentiality, IoT, Stream data processing},
+  location  = {Santa Clara, CA, USA},
+  numpages  = {13},
+  url       = {http://doi.acm.org/10.1145/2987550.2987574},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}
