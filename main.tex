@@ -1,0 +1,29 @@
+\documentclass[12pt, twoside]{book}
+
+% Document Preamble: basic definitions and packages.
+\input{preamble.tex}
+
+\begin{document}
+\onehalfspacing
+
+\frontmatter
+
+% Title page
+\input{front-page.tex}
+
+% Blank page after title
+\afterpage{\blankpage}
+
+% Epigraph TODO choose citation
+\input{epigraph.tex}
+\thispagestyle{empty}
+
+% Blank page after epigraph
+\afterpage{\blankpage}
+
+% Acknowledgments
+\input{sections/acknowledgments.tex}
+
+\mainmatter
+
+\end{document}

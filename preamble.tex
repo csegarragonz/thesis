@@ -1,0 +1,39 @@
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+% Page Margins and General Spacing
+\usepackage[top=2.5cm, left=2cm, right=2cm, bottom=2.0cm]{geometry}
+\usepackage{setspace}
+\usepackage{xspace}
+
+% Custom Commands
+\newcommand{\projName}{\textsc{MedSpark}\xspace}
+\newcommand{\sgxspark}{\textsc{SGX-Spark}\xspace}
+
+% Graphics and TiKz
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing, patterns}
+
+% Headers, Footers and page numeration
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+% Rule width
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+% This is currently the default, change when placeholders TODO
+\fancyhead[LE,RO]{\slshape \rightmark}
+\fancyhead[LO,RE]{\slshape \leftmark}
+\fancyfoot[C]{\thepage}
+
+% Blank Pages
+\usepackage{afterpage}
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
+
+% Epigraph Package (Book Citation)
+\usepackage{epigraph}
+\setlength\epigraphwidth{.5\textwidth}
