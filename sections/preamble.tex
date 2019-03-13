@@ -18,9 +18,10 @@
 % Headers, Footers and page numeration
 \usepackage{fancyhdr}
 % This is currently the default, change when placeholders TODO
-\fancyhead[LE,RO]{\slshape \rightmark}
-\fancyhead[LO,RE]{\slshape \leftmark}
-\fancyfoot[C]{\thepage}
+%\fancyhead[LE,RO]{\slshape \rightmark}
+%\fancyhead[LO,RE]{\slshape \leftmark}
+%\fancyfoot[C]{\thepage}
+%\pagestyle{fancy}
 \fancypagestyle{frontmatter}{% Pagestyle for the frontmatter
   \renewcommand{\headrulewidth}{0pt}% No header rule
   \renewcommand{\footrulewidth}{0pt}% No footer rule
@@ -29,12 +30,26 @@
 }
 \fancypagestyle{mainmatter}{%
   \renewcommand{\headrulewidth}{.4pt}% Header rule
-  \renewcommand{\footrulewidth}{.4pt}% Footer rule
-  \fancyhf{}% Clear header/footer
-  \fancyhead[L]{\leftmark}% Chapter in header Left
-  \fancyhead[R]{\thepage}% Page number in header Right
+  \renewcommand{\footrulewidth}{.0pt}% Footer rule
+  %\fancyhf{}% Clear header/footer
+  \fancyhead[LE]{\slshape\nouppercase{\leftmark}}% Chapter in header Left
+  \fancyhead[RE]{\thepage}% Page number in header Right
+  \fancyhead[LO]{\thepage}% Chapter in header Left
+  \fancyhead[RO]{\slshape\nouppercase{\rightmark}}% 
+  \fancyfoot{}
+}
+% The plain pagestyle is the one used by new Chapter pages and the ToC
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyhead[R]{\thepage}
+  \fancyfoot{}%
+  \renewcommand{\headrulewidth}{0pt}% Line at the header invisible
+  \renewcommand{\footrulewidth}{0pt}% Line at the footer visible
 }
 
 % Epigraph Package (Book Citation)
 \usepackage{epigraph}
 \setlength\epigraphwidth{.5\textwidth}
+
+% Placeholders
+\usepackage{lipsum}

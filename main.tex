@@ -7,6 +7,7 @@
 \onehalfspacing
 
 \frontmatter
+\pagestyle{frontmatter}
 
 % Title page
 \input{sections/front-page.tex}
@@ -66,9 +67,23 @@
 \vfill
 \pagebreak
 
-% Table of contents
+% Table of contents: we prevent it from spanning more pages than required (default for two-paged documents is for the ToC to span a lot)
+\pagestyle{plain}
+\begingroup
+\let\cleardoublepage\clearpage
 \tableofcontents
+\endgroup
 
 \mainmatter
+\pagestyle{mainmatter}
+% Main Chapters
+\input{sections/introduction.tex}
+\input{sections/background.tex}
+\input{sections/architecture.tex}
+\input{sections/implementation.tex}
+\input{sections/evaluation.tex}
+\input{sections/related-work.tex}
+\input{sections/future-work.tex}
+\input{sections/conclusion.tex}
 
 \end{document}
