@@ -9,7 +9,7 @@ In \S\ref{sec:background:med}, we describe the specificities of the data streams
 
 \subsection{Trusted Execution Environments and Intel SGX}
 A \emph{trusted execution environment (TEE)} is an isolated area of a main processor that provides code and data therein contained with confidentiality and integrity guarantees~\cite{tee-globalplatform}. 
-Condifentiality refers to preventing unauthorized parties from accessing sensitive information and integrity to ensuring that sensitive code and data is not tampered with.
+Confidentiality refers to preventing unauthorized parties from accessing sensitive information and integrity to ensuring that sensitive code and data is not tampered with.
 An application developed to run and deployed in a TEE is called a \emph{Trusted Application (TA)}.
 %The main CPU vendors have already implemented Trusted Execution Environments in their commodity CPUs.
 Trusted Execution Environments have already been available for several years in the main CPU vendors' commodity CPUS.
@@ -26,27 +26,27 @@ For these reasons, \textsc{Intel SGX} is our chosen hardware solution to deploy 
 \end{wrapfigure}
 Intel \textit{Software Guard eXtensions} are a set of new instructions and memory access changes added to Intel's architecture.
 These extensions enable applications to create hardware-protected containers in their address space, referred to as \emph{enclaves}.
-An enclave provides confidentiality and integrity even in the presence of malicious privileged software such as virtual machine monitors (VMM), BIOS or operating systems (OS)~\cite{sgx-whitepaper}. 
+An enclave provides confidentiality and integrity even in the presence of malicious privileged software such as virtual machine monitors (VMM), BIOS or operating systems (OS)~\cite{McKeen2013}. 
 At initialization time, the code and data is free for inspection and, once loaded to the enclave, the latter is measured (via hashing) and sealed. 
 An application using an enclave identifies itself through a remote attestation protocol and, once verified, interacts with the protected region through a call gate mechanism.
 The application can also verify that its secure code is running in a genuine enclave using the same attestation protocol via platform specific keys. %The basic mechanisms of SGX are depicted in Figure~\ref{fig:sgx-principles}.
 
 Services using SGX divide its source code in an untrusted and a trusted part.
-The former deployed outside the enclve and the latter inside.
+The former deployed outside the enclave and the latter inside.
 Figure~\ref{fig:sgx-principles} breaks down the typical execution workflow of SGX services.
 After the initial attestation protocol, code in the untrusted region creates an enclave and securely loads trusted code and data inside (Figure-\ding{202}). 
 Whenever this untrusted code wants to make use of the enclave, it makes a call to a trusted function (Figure-\ding{204}) that gets captured by the call gate mechanism and, after performing sanity and integrity checks (\ding{205}), gets executed (\ding{206}), the value returned (\ding{207}) and the untrusted code can resume execution (\ding{208}).
 It is important to stress that the security perimeter is kept at the CPU package and, as a consequence, all other software including privileged software or even other enclaves are prevented from accessing code and data located inside the enclave. 
-In particular, the systems' main memory is left untrusted and the traffic between CPU and DRAM over the protected address range is managed by the \textit{Memory Encryption Engine}~\cite{intel-mee}.
+In particular, the systems' main memory is left untrusted and the traffic between CPU and DRAM over the protected address range is managed by the \textit{Memory Encryption Engine}~\cite{Gueron16}.
 % TODO: should we mention SGX's main drawbacks or vulnerabilities?
 
 \subsection{Spark and Spark Streaming}
 \textsc{Apache Spark} is a cluster-computing framework to develop scalable, fault-tolerant, distributed applications. 
-It builds on RDDs, resilient distributed datasets~\cite{spark-whitepaper}, a read-only collection distributed over a cluster that can be rebuilt if one partition is lost. 
+It builds on RDDs, resilient distributed datasets~\cite{McKeen2013}, a read-only collection distributed over a cluster that can be rebuilt if one partition is lost. 
 It is implemented in \textsc{Scala} and provides bindings for \textsc{Python}, \textsc{Java}, \textsc{SQL} and \textsc{R}. 
-\textsc{Spark Streaming}~\cite{spark-streaming} is an extension of Spark's core API that enables scalable, high-throughput, fault tolerant stream (mini-batch) processing of data streams~\cite{spark-streaming-documentation}.
+\textsc{Spark Streaming}~\cite{Zaharia2012} is an extension of Spark's core API that enables scalable, high-throughput, fault tolerant stream (mini-batch) processing of data streams~\cite{ZahariaDStreams2012}.
 \projName leverages Spark Streaming to perform file-based streaming, by monitoring a filesystem interface outside the enclave and processing new files as they are loaded.
-In particular, and as detailed later in Chapter \ref{chap:implementation}, \projName uses the \textit{Structured Streaming} API~\cite{structured-streaming-programming-guide}.
+In particular, and as detailed later in Chapter \ref{chap:implementation}, \projName uses the \textit{Discretized Streams} API~\cite{spark-streaming-documentation}.
 
 \subsection{SGX-LKL and SGX-Spark}
 Developed at the \textit{Large Scale Data \& Systems Group (LSDS)}~\cite{lsds} at the \textit{Imperial College London}, \textsc{SGX-LKL}~\cite{sgx-lkl} is a library OS to run unmodified Linux binaries inside enclaves.
@@ -67,14 +67,9 @@ The engine deploys two collaborative Java Virtual Machines (JVM), one outside (F
 Spark code outside the enclave accesses only encrypted data.
 The communication between the JVMs is kept encrypted and is performed through the host OS shared memory.
 \sgxspark provides a compilation toolchain, and it currently supports the vast majority of the native Spark operators, allowing to transparently deploy and run existing Spark applications into the SGX enclaves.
-This is, the user must only compile the source code together with \textsc{SGX-Spark}'s and, as long as the operators used are supported by the framework, execution is seamlessly deployed inside the enclave with \emph{no} ammendments to the vanilla Spark implementation.
+This is, the user must only compile the source code together with \textsc{SGX-Spark}'s and, as long as the operators used are supported by the framework, execution is seamlessly deployed inside the enclave with \emph{no} amendments to the vanilla Spark implementation.
 
 \section{Heart Rate Variability Analysis} \label{sec:background:med}
-\begin{figure}[t]
-    \centering
-    \input{figs/ecg-hrv.tex}
-    \caption{Schematic representation of an ECG signal showing three normal beats. A normal electrocardiogram can be broken down in three waves: a \textit{P wave} corresponding to the depolarization of the atria, a \textit{QRS complex} corresponding to the depolarization of the ventricles and a \textit{T wave} corresponding to the repolarization of the ventricle~\cite{Lilly2001}. From an ECG the sensor extracts and streams the R-peaks' timestamp and the time elapsed between them. \label{fig:ecg-hrv}}
-\end{figure}
 The data streams used for the evaluation and the algorithms compiled with \textsc{SGX-Spark} belong to the medical domain and motivate the real need for confidentiality and integrity. 
 As further explained in Chapter \ref{chap:architecture}, our use case contemplates a scenario where multiple sensors track the cardiac activity of different users.
 The two most standard procedures for monitoring heart activity are electrocardiograms (ECG) and photoplethysmograms (PPG).
@@ -84,6 +79,11 @@ Although less precise, PPGs are the chosen technique by all wrist-based cardiac 
 %Both procedures lead to an approximation of R peaks' timestamps and the intervals between them (RR intervals). 
 The generation of the approximated diagram and the time measures are done inside the sensor.
 Figure~\ref{fig:ecg-hrv} depicts a schematic representation of an ECG and the values streamed from the sensor to the gateway: R peak's timestamps and RR intervals. 
+\begin{figure}[h!]
+    \centering
+    \input{figs/ecg-hrv.tex}
+    \caption{Schematic representation of an ECG signal showing three normal beats. A normal electrocardiogram can be broken down in three waves: a \textit{P wave} corresponding to the depolarization of the atria, a \textit{QRS complex} corresponding to the depolarization of the ventricles and a \textit{T wave} corresponding to the repolarization of the ventricle~\cite{Lilly2001}. From an ECG the sensor extracts and streams the R-peaks' timestamp and the time elapsed between them. \label{fig:ecg-hrv}}
+\end{figure}
 
 In our case, \projName focuses on the analysis of the Heart Rate Variability (HRV)~\cite{Camm1996}, that is, the analysis of the variation in the time intervals between heartbeats (a.k.a. RR intervals).
 The HRV is of utmost importance since it has been shown to be a predictor for myocardial infarction~\cite{Kleiger1987,Bigger1992}.
