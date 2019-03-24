@@ -6,14 +6,26 @@
 \usepackage{setspace}
 \usepackage{xspace}
 
-% Custom Commands
+% References and \url
+\usepackage{hyperref}
+
+% Custom Name Abbreviations
 \newcommand{\projName}{\textsc{MedSpark}\xspace}
 \newcommand{\sgxspark}{\textsc{SGX-Spark}\xspace}
+\newcommand{\tz}{\textsc{TrustZone}\xspace}
+\newcommand{\arm}{\textsc{Arm}\xspace}
 
 % Graphics and TiKz
 \usepackage{graphicx}
+\usepackage{wrapfig} % Wrapping figures w/ text
 \usepackage{tikz}
 \usetikzlibrary{decorations.pathmorphing, patterns}
+% We use this commands for sgx-principles.tex figure
+\usepackage{pifont} % To use circled numbers in text
+\newcommand*\blackcircled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,fill,inner sep=0.5pt] (char) {\textcolor{white}{#1}};}}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 
 % Headers, Footers and page numeration
 \usepackage{fancyhdr}
