@@ -1,7 +1,20 @@
 \chapter{Implementation} \label{chap:implementation}
+% TODO: include code listings in this section!!
+% TODO: Add appendix with all docker deployment files.
 
-\section{Server Implementation}
+The aim of this chapter is to present the implementation details of \projName.
+Each explanation is accompanied, when required, by code snippets to further illustrate the rationale behind our design choices.
+The implementation we will cover is the one the results presented in Chapter \ref{chap:evaluation} are based on.
+As a consequence, and in order to stress-test \projName, we replace real sensors with synthetic data generators.
+Additionally, all components are packaged in Docker containers so that a large fleet of clients concurrently using our system can be replicated.
+In \S\ref{sec:server-implementation} and \S\ref{sec:client-implementation} we cover the implementation details of the server-side and the client-side component respectively.
+Re-using Docker-speciphic nomenclature, we will there refer to functionalities packaged in a container as services.
+A collection of services makes up one component.
+Lastly, in \S\ref{sec:deployment} we cover how we establish the client cluster and deploy hundreds of fake users.
+Furthermore, in Appendix REF, we attach all the Docker configuration scripts together with the main source code. %TODO: appendix!!
 
-\section{Client Implementation}
+\section{Server Implementation} \label{sec:server-implementation}
 
-\section{Deployment}
+\section{Client Implementation} \label{sec:client-implementation}
+
+\section{Deployment} \label{sec:deployment}
