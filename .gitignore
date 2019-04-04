@@ -1,6 +1,11 @@
 *.log
 *.bbl
 *.blg
+*.acr
+*.acn
+*.alg
+*.ist
+*.glo
 *.out
 *.pdf
 *.aux

@@ -35,7 +35,7 @@ Its security model requires a \textit{Public Key Infrastructure (PKI)} and a dyn
 In spite of using trusted hardware on the DSM end for key generation and management, the server-side processes all the data in clear, making the framework not suitable for our security model. 
 
 \textsc{TaLoS}~\cite{Aublin2017} is \textit{Transport Layer Security (TLS)}~\cite{Dierks2008} library that terminates connections by maintaining sensitive information inside enclaves. 
-The authors provide custom wrappers for the most common \textsc{SSL} API calls and securely store users and sessions' keys inside enclaves.
+The authors provide custom wrappers for the most common \textsc{TLS} API calls and securely store users and sessions' keys inside enclaves.
 The embedding with a native Spark, or SGX-Spark, application is not transparent to the end user and hence why we discard it.
 
 Lastly, homomorphic encryption~\cite{Gentry2009} does not rely on trusted execution environments and offers the promise of providing privacy-preserving computations over encrypted data.

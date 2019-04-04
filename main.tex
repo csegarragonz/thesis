@@ -3,6 +3,10 @@
 % Document Preamble: basic definitions and packages.
 \input{sections/preamble.tex}
 
+% List of acronyms
+\makeglossaries
+\input{sections/acronyms.tex}
+
 \begin{document}
 \onehalfspacing
 
@@ -72,6 +76,10 @@
 \let\cleardoublepage\clearpage
 \tableofcontents
 \endgroup
+
+\glsaddall
+%\addcontentsline{toc}{chapter}{List of Acronyms}
+\printglossary[type=\acronymtype,title=List of Acronyms]
 
 \mainmatter
 \pagestyle{mainmatter}
