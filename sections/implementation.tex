@@ -70,16 +70,29 @@ As firstly introduced in \S\ref{sec:clients}, our implementation decouples the c
     }
   }
 \end{lstlisting}
+    \item The \texttt{producer} service is a \textsc{Python} script that monitors a local directory and, whenever a new file is sotred, sends it to the remote filesystem. The monitoring functionality is depicted in Listing~\ref{code:producer-short} and the full source code is available in Listing~\ref{code:producer}.
+\begin{lstlisting}[language=Python,caption={Snippet illustrating the local directory monitoring in the \texttt{producer} service.},label=code:producer-short]
+ object HelloWorld {
+    def main(args: Array[String]) {
+      println("Hello, world!")
+      yield
+    }
+  }
+\end{lstlisting}
+    \item Similarly, the \texttt{consumer} service is a \textsc{Python} script that monitors the remote filesystem and, whenever a result file is stored, fetches it to the local result directory. The monitoring functionality is illustrated in Listing~\ref{code:consumer-short} and the whole source code is available in Listing~\ref{code:consumer}.
+\begin{lstlisting}[language=Python,caption={Snippet illustrating the remote filesystem monitoring in the \texttt{consumer} service.},label=code:producer-short]
+ object HelloWorld {
+    def main(args: Array[String]) {
+      println("Hello, world!")
+      yield
+    }
+  }
+\end{lstlisting}
 \end{enumerate}
-For evaluation purposes, the \texttt{sensor} is a \textsc{Python} service that generates random RR intervals.
-These are published into the \textsc{MQTT} queue~\cite{mqtt-protocol,mqtt-eclipse} following a uniform time distribution. 
-The gateway is composed by a \textsc{MQTT} queue and broker service.
-We rely on \texttt{eclipse-mosquitto}\footnote{\url{https://hub.docker.com/_/eclipse- mosquitto/}}, a \texttt{mqtt-sub} service that subscribes to the specific topic and generates data files with several samples, and a \texttt{producer} and \texttt{consumer} services that interact with the remote filesystem.
-These components are implemented in Python, and consist of $888$ LoC. %~\cs{Here I do not account for the mqtt image which I do not know what is implemented in}
-% (being the last three implemented in \textsc{Python}). 
-Our prototype relies on Docker to facilitate the deployment of new clients, and on \texttt{docker-compose}~\cite{docker-compose} to easily group orchestrate their deployment. % along the mentioned micro-services.
-%A single client can be deployed in isolation using \texttt{docker-compose}, running a total of five different services (with their corresponding image and \texttt{Dockerfile}). 
-The communication between the client and the server happens via SSH/SecureFTP to ensure transport layer security when transfering user's data. %\vs{TO DO what? Complete..}.
+All the services implemented in Python, amount to a total of $888$ Lines of Code (LoC). 
+As introduced before, for the service deployment we rely on Docker.
+The corresponding \texttt{Dockerfile}s and \texttt{docker-compose} are presented in \S\ref{sec:deployment}.
+Lastly, the communication between the client and the server happens via SSH/SecureFTP to ensure transport layer security when transfering user's data.
 
 \section{Deployment} \label{sec:deployment}
 
