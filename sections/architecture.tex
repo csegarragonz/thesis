@@ -16,7 +16,7 @@ The remaining of the chapter is structured as follows: \S\ref{sec:server} detail
 \begin{figure}[h!]
     \centering
     \input{figs/system-architecture.tex}
-    \caption{(Left) Schematic of the system's main architecture. A set of clients bidirectionally stream data to a remote server. The interaction is done via a filesystem interface. On the server side, \sgxspark performs secure processing using different HRV analysis algorithms. (Right) Breakdown of a packaged client: it includes a \texttt{sensor} and gateway that wrap four different microservices (\textsc{mqtt} broker, \texttt{mqtt-subscriber}, \texttt{consumer}, \texttt{producer}) to interact with the remote end. \label{fig:system-architecture}}
+    \caption[Schematic of the system's main architecture.]{(Left) Schematic of the system's main architecture. A set of clients bidirectionally stream data to a remote server. The interaction is done via a filesystem interface. On the server side, \sgxspark performs secure processing using different HRV analysis algorithms. (Right) Breakdown of a packaged client: it includes a \texttt{sensor} and gateway that wrap four different microservices (\textsc{mqtt} broker, \texttt{mqtt-subscriber}, \texttt{consumer}, \texttt{producer}) to interact with the remote end. \label{fig:system-architecture}}
 \end{figure}
 
 \section{Server-Side} \label{sec:server}

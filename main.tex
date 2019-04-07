@@ -77,6 +77,12 @@
 \tableofcontents
 \endgroup
 
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+
+\addcontentsline{toc}{chapter}{\lstlistlistingname}
+\lstlistoflistings
+
 \glsaddall
 %\addcontentsline{toc}{chapter}{List of Acronyms}
 \printglossary[type=\acronymtype,title=List of Acronyms]
@@ -97,5 +103,9 @@
 %\pagebreak
 \bibliographystyle{unsrt}
 \bibliography{references}
+
+\begin{appendices}
+    \input{sections/app-code.tex}
+\end{appendices}
 
 \end{document}
