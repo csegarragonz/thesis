@@ -6,6 +6,7 @@
 *.alg
 *.ist
 *.glo
+*.lot
 *.out
 *.pdf
 *.aux

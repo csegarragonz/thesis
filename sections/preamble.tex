@@ -146,3 +146,10 @@
 
 % Hyphenation for \texttt
 \usepackage[htt]{hyphenat}
+
+% For nice looking tables
+\usepackage{tabularx}
+\usepackage{booktabs} % For the rules
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}

@@ -9,6 +9,9 @@
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Schematic of the system's main architecture.}}{14}{figure.4.1}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Evolution of the average elapsed time as the input workload increases.}}{37}{figure.6.1}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Evolution of the average batch processing time as we increase the input stream size.}}{38}{figure.6.2}
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
