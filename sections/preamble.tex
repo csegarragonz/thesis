@@ -132,7 +132,7 @@
 }
 % Syntax Highlighting for Docker Compose files
 \lstdefinelanguage{docker-compose}{
-  keywords={image, environment, ports, container_name, ports, volumes, links},
+  keywords={image, environment, ports, container_name, ports, volumes, links, user, command, build, depends_on},
   keywordstyle=\color{blue}\bfseries,
   identifierstyle=\color{black},
   sensitive=false,
@@ -143,3 +143,6 @@
   morestring=[b]"
 }
 \renewcommand\lstlistlistingname{List of Listings}
+
+% Hyphenation for \texttt
+\usepackage[htt]{hyphenat}

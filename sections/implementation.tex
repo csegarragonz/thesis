@@ -1,6 +1,4 @@
 \chapter{Implementation} \label{chap:implementation}
-% TODO: include code listings in this section!!
-% TODO: Add appendix with all docker deployment files.
 
 The aim of this chapter is to present the implementation details of \projName.
 Each explanation is accompanied, when required, by code snippets to further illustrate the rationale behind our design choices.
@@ -12,19 +10,18 @@ Large fleets of concurrent users are then simulated using Docker's standalone cl
 
 The rest of the Chapter is structured as follows.
 In \S\ref{sec:server-implementation} and \S\ref{sec:client-implementation} we cover the implementation details of the server-side and the client-side component respectively.
-Re-using Docker-speciphic nomenclature, we will refer to logical isolated functionalities packaged in a container as \emph{services}.
+Re-using Docker-specific nomenclature, we will refer to logical isolated functionalities packaged in a container as \emph{services}.
 Sets of services working collaboratively will be gathered and deployed as a \emph{component} using \texttt{docker-compose}.
 Collections (or clusters) of replicated components form \emph{swarms} using \texttt{docker-swarm}.
 Lastly, in \S\ref{sec:deployment} we cover how each service, component and swarm is deployed.
-Furthermore, even if only snippets of code are included in this Chapter, the full source code is available in Appendix \ref{chap:app-code}.
 
 \section{Server Implementation} \label{sec:server-implementation}
 
 We rely on the original \sgxspark implementation, and we only modify it to support a different in-enclave code deployment path, so that the \texttt{.jar} archive is available inside the enclaves and the shared memory. 
 To do so, we include our newly added module in the project's \texttt{pom.xml} compilation file, in the worker and driver initialization scripts and in the enclave generation \texttt{Makefile} so that code is loaded in the enclave at compilation time.
-The before-mentioned module contains a two HRV processing algorithms and a benchmarking one: \texttt{SDNN}, \texttt{HRVBands}, and \texttt{Identity}.
+The before-mentioned module contains two HRV processing algorithms and a benchmarking one: \texttt{SDNN}, \texttt{HRVBands}, and \texttt{Identity}.
 The \texttt{SDNN} algorithm computes the standard deviation of NN (RR) intervals in a rolling basis, generating one output per 10 seconds worth of samples.
-The \texttt{HRVBands}~\cite{Shaffer2017} performs a Discrete Fourier Transform (DFT) of 10 seconds worth of samples, and computes the power of the low frequency and high frequency compoents, together with their ratio.
+The \texttt{HRVBands}~\cite{Shaffer2017} performs a Discrete Fourier Transform (DFT) of 10 seconds worth of samples, and computes the power of the low frequency and high frequency components, together with their ratio.
 Lastly, the \texttt{Identity} algorithm copies the input to the output file.
 It is used to provide a baseline on the overhead the system is introducing.
 All the application code is implemented in \textsc{Spark}'s binding for the \textsc{Scala} programming language~\cite{scala-language}. 
@@ -32,67 +29,435 @@ We choose this particular binding since it is the only one supported by \sgxspar
 To be usable inside \sgx enclaves, applications must adhere to the RDD~\cite{rdd-programming-guide} and DStreams~\cite{ZahariaDStreams2012} API.
 
 The particular implementation of these algorithms relies on basic Spark Streaming operators, and their corresponding Scala counterparts.
-For instance, the fylesystem interface is monitored using DStream's \texttt{textFileStream} method as exposed in Listing~\ref{code:text-file-stream}.
+For instance, the filesystem interface is monitored using DStream's \texttt{textFileStream} method as exposed in Listing~\ref{code:text-file-stream}. There, variables and code are initialized (lines 3-10) then the input directory is monitored (line 12) and the computation and output are assigned. Note that data is not processed until the Streaming Context is started via the \texttt{start()} method (line 22).
 \begin{lstlisting}[language=Scala,caption={Snippet illustrating \texttt{textFileStream} functionality.},label=code:text-file-stream]
- object HelloWorld {
-    def main(args: Array[String]) {
-      println("Hello, world!")
-      yield
-    }
+def main(args: Array[String]) {
+      // Initialize variables and Spark Contexts
+      val wdwSize = 10
+      val numClients = args(0).toInt
+      val conf = new SparkConf().setAppName("HRV Toolbox - SDNN")          
+      val sc = new SparkContext(conf)                                    
+      val ssc = new StreamingContext(sc, Duration(10000))                 
+                                                                          
+      // Initialize the Estimate Class
+      val estimateHRV = new EstimateHRVBands(wdwSize)
+      
+      // Monitor Input Directory                           
+      val dataStreamVec = for (i <- 1 to numClients) yield ssc.textFileStream("csem/src/main/resources/csv/"+i.toString+"/
+")                                                                                                                     
+      // Estimate
+      val hrvBandVec = for (dS <- dataStreamVec) yield estimateHRV.estimate(dS)
+      // Save as Output
+      for (i <- 1 to numClients) {
+        hrvBandVec(i-1).saveAsTextFiles("csem/src/main/resources/results/" + i.toString + "/sdnn")
+      }
+      // Start Stream Processing
+      ssc.start()
+      ssc.awaitTermination()
   }
 \end{lstlisting}
 Lastly, the implementations of \texttt{SDNN}, \texttt{HRVBands}, and \texttt{Identity} can be found in Listings~\ref{code:sdnn},~\ref{code:hrvbands}, and~\ref{code:identity} respectively.
 
 \section{Client Implementation} \label{sec:client-implementation}
 
-Clients correspond to body-sensors strapped to the body of a user. 
-In a real deployment, the sensor service in the client component would be an actual sensor strapped to the user's body (\textit{e.g.} HR band, smartwatch, optical HR monitoring device, ...) and the gateway would be implemented in a, for instance, \textsc{Raspberry Pi}.
+Clients correspond to body-sensors strapped to the body of a user working collaboratively with a smart gateway, sending gathered data to the cloud-based component. 
+In a real deployment, the sensor service in the client component would be an actual sensor (\textit{e.g.} HR band, smartwatch, optical HR monitoring device, ...) and the gateway would be implemented in a, for instance, \textsc{Raspberry Pi}.
 For evaluation purposes (see Chapter~\ref{chap:evaluation}), these services are simulated and virtualized.
-This way we can simulate a situation where multiple clients concurrently use \projName without the hardware burden.
+This way, we can simulate a situation where multiple clients concurrently use \projName without the hardware burden.
 As firstly introduced in \S\ref{sec:clients}, our implementation decouples the client component into into five different services (see Figure~\ref{fig:system-architecture}, right). 
 \begin{enumerate}
-    \item The \texttt{sensor} service is a \textsc{Python} script that generates \texttt{sample\_rate} random samples per second, generates the corresponding timestamps, and publishes the information to the \texttt{artificial-data} topic in a \textsc{MQTT}~\cite{mqtt-protocol} broker located in the gateway. Listing~\ref{code:sensor-data-gen} presents the part of the \texttt{sensor} source code where artifical data is generated and published. The full source code is available in Listing~\ref{code:sensor}.
+    \item The \texttt{sensor} service is a \textsc{Python} script that generates \texttt{sample\_rate} random samples per second, generates the corresponding timestamps, and publishes the information to the \texttt{artificial-data} topic in a \textsc{MQTT}~\cite{mqtt-protocol} broker located in the gateway. Listing~\ref{code:sensor-data-gen} presents the part of the \texttt{sensor} source code where artificial data is generated and published. The full source code is available in Listing~\ref{code:sensor}. Note the particularity of the sample generation procedure. First \texttt{sample\_rate} random points in a $[0, 1)$ uniform distribution are generated (lines 18, 21). Then, current timestamps are inferred from them (line 24) and intervals are computed as successive differences (line 25).
 \begin{lstlisting}[language=Python,caption={Snippet illustrating the artificial data generation in the \texttt{sensor} service.},label=code:sensor-data-gen]
- object HelloWorld {
-    def main(args: Array[String]) {
-      println("Hello, world!")
-      yield
-    }
-  }
+def loop(sample_rate):
+    """Endless Sample Generation
+
+    This module is the endless loop that generates <sample_rate>
+    new samples per second and publishes them to a MQTT topic.
+
+    Parameters
+    ----------
+    sample_rate : float
+        How many samples are generated per second
+    """
+    killer = Killer()
+    global CL_ID
+    past_ts = time.time()
+    while 1:
+        value = ""
+        # First we generate <sample_rate> timestamps in one second
+        tstamps = [i for i in random.uniform(low=time.time(),
+                                             high=time.time() + 1,
+                                             size=(sample_rate))]
+        tstamps.sort()
+        # Second we compute the intervals between them
+        for i in tstamps:
+            tmp = datetime.fromtimestamp(i).strftime('%Y-%m-%d %H:%M:%S')
+            value += tmp+','+str(int((i - past_ts) * 1e6))+'\n'
+            past_ts = i
+        publish.single("artificial-data-{}".format(CL_ID), value)
+        time.sleep(1)
+        if killer.kill_now:
+            print("Exiting gracefully!")
+            break
 \end{lstlisting}
     \item The \texttt{eclipse-mqtt} service is the \texttt{mosquitto}~\cite{mqtt-eclipse} implementation of the \textsc{MQTT} broker. We rely on the public Docker image at Docker Hub~\cite{mqtt-image}. It handles the samples generated by \texttt{sensor} and delivers them to the \texttt{mqtt-subscriber} when the latter subscribes to the \texttt{artificial-data} topic.
-    \item The \texttt{mqtt-subscriber} service is a \textsc{Python} script that subscribes to the \texttt{artificial-data} \textsc{MQTT} topic and whenever it gathers \texttt{FILE\_LINES} samples it generates a \texttt{.csv} file at a specified location. The key functionality of the service, sample gathering and file generation, is illustrated in Listing~\ref{cite:mqtt-sub-short}. The full service code is available in Listing~\ref{code:mqtt-sub}.
+    \item The \texttt{mqtt-subscriber} service is a \textsc{Python} script that subscribes to the \texttt{artificial-data} \textsc{MQTT} topic and whenever it gathers \texttt{FILE\_LINES} (line 26) samples it generates a \texttt{.csv} file at a specified location. The key functionality of the service, sample gathering and file generation, is illustrated in Listing~\ref{code:mqtt-sub-short}. The full service code is available in Listing~\ref{code:mqtt-sub}.
 \begin{lstlisting}[language=Python,caption={Snippet illustrating the data gathering and file generation in the \texttt{mqtt-subscriber} service.},label=code:mqtt-sub-short]
- object HelloWorld {
-    def main(args: Array[String]) {
-      println("Hello, world!")
-      yield
-    }
-  }
+def on_message(mosq, obj, msg):
+    """Callback method for the mosquitto client.
+
+    Whenever the MQTT client receives a new sample it triggers this method.
+    When the current count reaches the threshold, a new csv file is generated
+    and stored in the local data directory.
+
+    Parameters
+    ----------
+    Parameters are those of the standard implementation of the MQTT client
+    for Python.
+    """
+    global count
+    global curr_str
+    global FILE_LINES
+    global CL_ID
+    global LOCAL_DATA_DIR
+    global killer
+    print("Received message")
+    dcd_msg = msg.payload.decode("utf-8").split("\n")
+    whole_msg = [i.split(",") for i in dcd_msg if i != ""] 
+    for tmp in whole_msg:
+        d = datetime.strptime(tmp[0], '%Y-%m-%d %H:%M:%S')
+        time_stamp = time.mktime(d.timetuple())
+        rr = tmp[1]
+        if count == FILE_LINES:
+            global TS
+            print("It took: {} s".format(time.time() - TS))
+            curr_str += "{},{}".format(time_stamp, rr)
+            ts = int(time.time()*1e3)
+            filename = "{}{}_".format(LOCAL_DATA_DIR, CL_ID)+str(ts)+".csv"
+            try:
+                with open(filename, "w+") as f:
+                    f.write(curr_str)
+            except FileNotFoundError as e:
+                if killer.kill_now:
+                    mosq.disconnect()
+                    print("Exiting gracefully!")
+                    break
+            count = 0
+            curr_str = ""
+        else:
+            curr_str += "{},{}\n".format(time_stamp, rr)
+            count += 1
+    else:
+        if killer.kill_now:
+            mosq.disconnect()
+            print("Exiting gracefully!")
 \end{lstlisting}
-    \item The \texttt{producer} service is a \textsc{Python} script that monitors a local directory and, whenever a new file is sotred, sends it to the remote filesystem. The monitoring functionality is depicted in Listing~\ref{code:producer-short} and the full source code is available in Listing~\ref{code:producer}.
+    \item The \texttt{producer} service is a \textsc{Python} script that monitors a local directory and, whenever a new file is stored, sends it to the remote filesystem. The monitoring functionality is depicted in Listing~\ref{code:producer-short} and the full source code is available in Listing~\ref{code:producer}. We keep track of the current files in the directory with a dictionary (lines 175 and 180) and we compute the difference between the pre and the post (line 181). We then transfer the new files over SFTP (line 188).
 \begin{lstlisting}[language=Python,caption={Snippet illustrating the local directory monitoring in the \texttt{producer} service.},label=code:producer-short]
- object HelloWorld {
-    def main(args: Array[String]) {
-      println("Hello, world!")
-      yield
-    }
-  }
+def monitor(ssh, sftp, *args):
+    """Sending daemon
+
+    This method starts an infinite loop that every <SEND_PERIOD> looks for
+    newly added data files and copies them to a remote directory.
+
+    Parameters
+    ----------
+    ssh : paramiko.SSHClient
+        SSH Client connected to the remote host.
+    sftp : paramiko.SFTPClient
+        SFTP Client connected to the remote host.
+    """
+    global LOCAL_DATA_DIR
+    path_to_watch = LOCAL_DATA_DIR
+    before = dict([(f, None) for f in os.listdir(path_to_watch)])
+    global SEND_PERIOD
+    killer = Killer()
+    while 1:
+        time.sleep(SEND_PERIOD)
+        after = dict([(f, None) for f in os.listdir(path_to_watch)])
+        added = [f for f in after if f not in before]
+        if added:
+            for f in added:
+                local_file = LOCAL_DATA_DIR + str(f)
+                global REMOTE_DATA_DIR
+                remote_file = REMOTE_DATA_DIR + "/" + str(f)
+                sftp.put(local_file, remote_file)
+                os.remove(local_file)
+                # If there are a lot of files, not checking inside also leads
+                # to error with code 137
+                if killer.kill_now:
+                    print("Exiting gracefully!")
+                    break
+        before = after
+        if killer.kill_now:
+            print("Exiting gracefully!")
+            break
+    for d in os.listdir(LOCAL_DATA_DIR):
+        tmp_file = LOCAL_DATA_DIR + str(d)
+        os.remove(tmp_file)
 \end{lstlisting}
-    \item Similarly, the \texttt{consumer} service is a \textsc{Python} script that monitors the remote filesystem and, whenever a result file is stored, fetches it to the local result directory. The monitoring functionality is illustrated in Listing~\ref{code:consumer-short} and the whole source code is available in Listing~\ref{code:consumer}.
-\begin{lstlisting}[language=Python,caption={Snippet illustrating the remote filesystem monitoring in the \texttt{consumer} service.},label=code:producer-short]
- object HelloWorld {
-    def main(args: Array[String]) {
-      println("Hello, world!")
-      yield
-    }
-  }
+    \item Similarly, the \texttt{consumer} service is a \textsc{Python} script that monitors the remote filesystem and, whenever a result file is stored, fetches it to the local result directory. The monitoring functionality is illustrated in Listing~\ref{code:consumer-short} and the whole source code is available in Listing~\ref{code:consumer}. It is, in essence, symmetric to the one presented for the \texttt{producer} service. The only difference is that, since \texttt{sftp.get()} does not support recursive invokations (\textit{e.g.} \texttt{-R} flags), specific care must be taken to fetch all the different files placed in the different directories.
+\begin{lstlisting}[language=Python,caption={Snippet illustrating the remote filesystem monitoring in the \texttt{consumer} service.},label=code:consumer-short]
+def monitor(ssh, sftp):
+    """Fetching daemon
+
+    This method starts an infinite loop that every <FETCH_PERIOD> looks for
+    newly added directories and copies them to a local result directory.
+
+    Parameters
+    ----------
+    ssh : paramiko.SSHClient
+        SSH Client connected to the remote host.
+    sftp : paramiko.SFTPClient
+        SFTP Client connected to the remote host.
+    """
+    global REMOTE_RESULT_DIR
+    global FETCH_PERIOD
+    global LOCAL_RESULT_DIR
+    #print("CONSUMER: user -> {}".format(getpass.getuser()))
+    path_to_watch = REMOTE_RESULT_DIR
+    before = dict([(f, None) for f in sftp.listdir(path_to_watch)])
+    killer = Killer()
+    while 1:
+        time.sleep(FETCH_PERIOD)
+        after = dict([(f, None) for f in sftp.listdir(path_to_watch)])
+        added = [f for f in after if f not in before]
+        if added:
+            for f in added:
+                local_dir = LOCAL_RESULT_DIR + str(f) + "/"
+                remote_dir = REMOTE_RESULT_DIR + "/" + str(f) + "/"
+                try:
+                    os.mkdir(local_dir)
+                    get_all(sftp, remote_dir, local_dir)
+                except FileExistsError as e:
+                    print("Fetching a file that already exists!")
+        before = after
+        if killer.kill_now:
+            print("Exiting gracefully!")
+            break
+    for d in os.listdir(LOCAL_RESULT_DIR):
+        tmp_dir = LOCAL_RESULT_DIR + d
+        for f in os.listdir(tmp_dir):
+            tmp_file = tmp_dir + "/" + f
+            os.remove(tmp_file)
+        os.rmdir(tmp_dir)
 \end{lstlisting}
 \end{enumerate}
 All the services implemented in Python, amount to a total of $888$ Lines of Code (LoC). 
 As introduced before, for the service deployment we rely on Docker.
 The corresponding \texttt{Dockerfile}s and \texttt{docker-compose} are presented in \S\ref{sec:deployment}.
-Lastly, the communication between the client and the server happens via SSH/SecureFTP to ensure transport layer security when transfering user's data.
+Furthermore, the deployment of each service is also wrapped in a \texttt{Dockerfile} and included in an image.
+Lastly, we remark that the communication between the client and the server happens via SSH/SFTP to ensure transport layer security when transferring user's data.
 
 \section{Deployment} \label{sec:deployment}
 
+To ease scalability and reproducibility of both server and client, deployment is orchestrated by a single script detached from both execution environments. 
+This is done through a combination of \texttt{bash} scripts that act as entry points for the \texttt{Dockerfile} and \texttt{docker-compose} file.
+We differentiate between the server deployment (\S\ref{sec:deployment:server}), the client deployment (\S\ref{sec:deployment:client}) and the overall deployment and evaluation (\S\ref{sec:deployment:all}).
+
+\subsection{Server Execution Deployment} \label{sec:deployment:server}
+
+Specifying the remote location; the \textsc{SGX-Spark} engine, the streaming algorithm and the filesystem interface are initialized. 
+Depending on whether we want to enable enclaves or not (\texttt{SGX\_MODE}, line 24), a set of scripts (lines 25 and 26) are executed in the remote server using \texttt{ssh.exec\_command()}.
+The script then remains passive until a \texttt{SIGTERM} signal is captured, and all processes are killed (lines 41-49).
+A snippet of the main functionality is attached in Listing~\ref{code:deployment:server-short} and the full source code is available in Listing~\ref{sec:deployment:server}.
+Note that the code is intended to be launched from a location different from the server (which we leave untrusted).
+
+\begin{lstlisting}[language=Python,caption={Main method of the Server-Side Deployment Script.},label=code:deployment:server-short]
+def main(ssh, sftp):
+    """Main execution method
+
+    This method contains the main deployment of UC1. It basically starts each
+    and every process, launches the benchmarking, and cleans everything when
+    execution has finished.
+
+    Notes
+    -----
+    All the sleeps are placed due to experienced errors race conditions. As a
+    consequence their arguments are completely empirical.
+
+    Arguments
+    ---------
+    ssh : paramiko.SSHClient
+        SSH Client to the remote server.
+    sftp : paramiko.SFTPClient
+        SFTP Client to the remote server.
+    """
+    global ALGORITHM
+    global SGX_MODE
+    global NUM_CLIENTS
+    algo_name = "./launch-csem-{}.sh {}".format(ALGORITHM, NUM_CLIENTS)
+    if SGX_MODE:
+        script_list = ["./master.sh", "./worker.sh", "./worker-enclave.sh",
+                       "./driver-enclave.sh", algo_name]
+    else:
+        script_list = ["./master.sh", "./worker.sh", algo_name]
+    for script in script_list:
+        _in, _out, _err = ssh.exec_command("cd sgx-spark; {} &".format(script))
+        time.sleep(3)
+    tmp_command = "dstat -l --nocolor --noheaders 10 > cpu_load.csv"
+    _, _out, __ = ssh.exec_command("cd sgx-spark; {} &".format(tmp_command))
+    _out.readlines()
+    killer = Killer()
+    while 1:
+        time.sleep(1)
+        if killer.kill_now:
+            print("Killing Gracefully!")
+            break
+    for script in script_list:
+        _, _out, __ = ssh.exec_command("kill $(pgrep -f '{}')".format(script))
+        _out.readlines()
+    _, _out, __ = ssh.exec_command("kill $(pgrep -f 'java')")
+    _out.readlines()
+    _, _out, __ = ssh.exec_command("kill $(pgrep -f 'dstat')")
+    _out.readlines()
+    _, _out, __ = ssh.exec_command("rm /dev/shm/*")
+    _out.readlines()
+    return 0
+\end{lstlisting}
+
+\subsection{Client Execution Deployment} \label{sec:deployment:client}
+
+The client deployment procedure is more complicated than the server's one since \projName supports executions of variable number of clients, which are instantiated at start-up time.
+In short, when the number of clients is set, \projName starts a standalone Docker cluster (or \emph{swarm}).
+However, once started with the scalability tests, we recalled that the number of clients a cluster whose network relies on Docker's default \texttt{bridge} adapter can support was too small.
+At 20 clients, the engine ran out of local IP addresses and executions would systematically fail.
+As a consequence, we decided to virtualize a local standalone cluster using \texttt{docker-machine}.
+This latter functionality enables the deployment of several Docker engines in a single computing instance.
+To do so, a virtual machine must be started for each engine, and special care must be taken to set up the network, so that all containers are reachable from the others.
+
+Even though the full script is rather long, given its complexity and how crucial it is to \projName performance, we attach it entirely in Listing~\ref{code:deploy-client}.
+We firstly deploy a name discovery service based on the \textsc{Consul}~\cite{consul-image} docker image, the aim of which is to keep track of all the generated virtual machines, and assign an IP address to each one (lines 27-36).
+Secondly, we start $\lceil \texttt{NUM\_CLIENTS} / 20 \rceil$ virtual machines and register them with the name discovery service (lines 40-60).
+These set of virtual machines will form our Docker Swarm, as a consequence, it is important to elect one (first by default) as our \texttt{swarm-master}.
+Note that, in order to speed up the start-up time, the images for all the client services are compressed and pre-loaded to the virtual machines (lines 62-66).
+In third place, we create the overlay network (lines 70-71).
+Then, the local directories for each client in each virtual machine must be mounted and mirrored to outside the virtual machine so that we can process the results.
+This is done using SSHF in lines 76-85.
+Lastly, each client is deployed using the specific \texttt{docker-compose} file (see Listing~\ref{code:client-compose}).
+\begin{lstlisting}[language=sh,caption={Client Cluster Deployment Script.},label=code:deploy-client]
+#!/bin/bash
+
+set -a
+
+# Predefined enviroment variables
+source docker-env.env
+
+# Pull MQTT image
+docker-compose pull mqtt
+
+# Max Containers per Host
+MAX_CONTAINERS=2
+
+# Input Parameters
+SAMPLE_RATE=${1}
+NUM_CLIENTS=${2}
+FILE_LINES=${3}
+
+NUM_HOSTS=$(( $(( $NUM_CLIENTS / $MAX_CONTAINERS )) + 1))
+
+# To introduce an abstraction layer, even if there is no real need for an
+# overlay network (the bridge itself suffices) we create an external machine
+# anyways. This may be an overkill for very small executions but is introduced
+# to preserve scalability transparent to the user.
+
+# We first create the Consul discovery service (key/value store)
+docker-machine create \
+    -d virtualbox \
+    --virtualbox-boot2docker-url ~/tmp/boot2docker.iso \
+    mh-keystore
+eval "$(docker-machine env mh-keystore)"
+docker run -d \
+  --name consul \
+  -p "8500:8500" \
+  -h "consul" \
+  consul agent -server -bootstrap -client "0.0.0.0"
+
+# We then create the Swarm cluster the first node (id == 1) will be the swarm
+# manager.
+for HOST_ID in $(seq 1 ${NUM_HOSTS}); 
+do
+    if [ $HOST_ID == 1 ]; then
+        docker-machine create \
+            -d virtualbox \
+            --virtualbox-boot2docker-url ~/tmp/boot2docker.iso \
+            --swarm --swarm-master \
+            --swarm-discovery="consul://$(docker-machine ip mh-keystore):8500" \
+            --engine-opt="cluster-store=consul://$(docker-machine ip mh-keystore):8500" \
+            --engine-opt="cluster-advertise=eth1:2376" \
+            "sgx-csem-host-$HOST_ID"
+    else
+        docker-machine create \
+            -d virtualbox \
+            --virtualbox-boot2docker-url ~/tmp/boot2docker.iso \
+            --swarm \
+            --swarm-discovery="consul://$(docker-machine ip mh-keystore):8500" \
+            --engine-opt="cluster-store=consul://$(docker-machine ip mh-keystore):8500" \
+            --engine-opt="cluster-advertise=eth1:2376" \
+            "sgx-csem-host-$HOST_ID"
+    fi
+    eval $(docker-machine env "sgx-csem-host-$HOST_ID")
+    docker load -i ~/tmp/consumer.tar
+    docker load -i ~/tmp/deployment.tar
+    docker load -i ~/tmp/fake-sensor.tar
+    docker load -i ~/tmp/mqtt-sub.tar
+    docker load -i ~/tmp/producer.tar
+done
+
+# We now create the overlay network
+eval $(docker-machine env --swarm sgx-csem-host-1)
+docker network create --driver overlay --subnet=10.0.0.0/16 sgx-csem-net
+
+for CL_ID in $(seq 1 ${NUM_CLIENTS});
+do
+    # Prepare environment
+    H_ID=$(( $(( $CL_ID / $MAX_CONTAINERS )) + 1))
+    mkdir -p ${LOCAL_DATA_DIR}${CL_ID}
+    mkdir -p ${LOCAL_RESULT_DIR}${CL_ID}
+    eval $(docker-machine env "sgx-csem-host-$H_ID")
+    docker-machine ssh "sgx-csem-host-$H_ID" mkdir -p "results/${CL_ID}"
+    docker-machine mount "sgx-csem-host-$H_ID":"/home/docker/results/$CL_ID" \
+        ${LOCAL_RESULT_DIR}${CL_ID}
+    docker-machine ssh "sgx-csem-host-$H_ID" mkdir -p "data/${CL_ID}"
+    docker-machine mount "sgx-csem-host-$H_ID":"/home/docker/data/$CL_ID" \
+        ${LOCAL_DATA_DIR}${CL_ID}
+
+    # Deploy containers (Add a -d at the end for detach mode)
+    cat ${COMPOSE_FILE} | envsubst | docker-compose -f - -p \
+        "${PROJECT_NAME}-${CL_ID}" up &
+    sleep 5
+done
+
+# Return to default environment before exiting
+eval $(docker-machine env -u)
+\end{lstlisting}
+
+\subsection{\projName Deployment} \label{sec:deployment:all}
+
+The main entry point for \projName's deployment is included in Listing~\ref{code:deployment:whole}.
+It firsts loads a set of environment variables and parses the input (lines 6,8-12), it then deploys the client cluster as detailed in \S\ref{sec:deployment:client}, and it lastly deploys the server container as detailed in \S\ref{sec:deployment:server}.
+\begin{lstlisting}[language=sh,caption={Main entry point for a single \projName execution.},label=code:deployment:whole]
+#!/bin/bash
+
+set -a
+
+# Predefined enviroment variables
+source execution.env
+
+ALGORITHM=${1}
+SGX_MODE=${2}
+SAMPLE_RATE=${3}
+NUM_CLIENTS=${4}
+FILE_LINES=${5}
+
+# Deploy Client-Side container
+cd ${CLIENT_DIR}
+bash ${CLIENT_DIR}/deploy-client.sh ${SAMPLE_RATE} ${NUM_CLIENTS} ${FILE_LINES}
+cd ${WDIR}
+
+# Deploy Server-Side Containers
+cat ${COMPOSE_FILE} | envsubst | docker-compose -f - -p "${PROJECT_NAME}" up &
+\end{lstlisting}
+
+Additionally, a \textsc{Python} script wraps the launcher presented in Listing~\ref{code:deployment:whole} in order to conveniently orchestrate execution batches for evaluation purposes.
+The same script (attached in Listing~\ref{code:deployment:experiments} also includes the queries to obtain the required metrics for the different benchmarking scenarios that we will present in Chapter~\ref{chap:evaluation}.

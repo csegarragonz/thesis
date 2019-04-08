@@ -54,7 +54,7 @@ This is indeed a low throughput but, as shown in Chapter \ref{chap:implementatio
 In this Section we cover \projName's threat model and the main security assumptions we make.
 This is, what kind of attacker our system is protected from.
 Vulnerabilities out of the scope of this project, together with known issues are covered in \S\ref{sec:vulnerabilities}.
-Firstly, we assume that the communication between the gateway and the filesystem is kept protected (\emph{e.g.}, encrypted) using secure transfer protocols (more in Chapter~\ref{chap:implementation}).
+Firstly, we assume that the communication between the gateway and the filesystem is kept protected (\emph{e.g.}, encrypted) using secure transfer protocols (\textit{e.g. Secure File Transport Protocol (SFTP)}, more in Chapter~\ref{chap:implementation}).
 Secondly, we trust the whole client package.
 Protecting it is out of \projName's scope, but suggestions are given in Chapter \ref{chap:future-work}.
 Given these assumptions, our threat model is the same as typical systems that rely on \textsc{SGX}. 
