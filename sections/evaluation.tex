@@ -25,10 +25,10 @@ The machine we are using is located in UniNe's cluster and is equipped with two 
 It is deployed with Ubuntu v$18.04$ LTS (kernel 4.15.0-42-generic). 
 The client containers are built and deployed using Docker (v$18.09.0$) and \texttt{docker-compose} (v$1.23.2$). 
 We use \texttt{docker-machine} (v$0.16.0$) with the \texttt{virtualbox} disk image. 
-Each machine hosts 20 clients, the maximum number of services supported by its local network, and it registers itself to the Swarm via a name discovery service running on another machine (we rely on \textsc{Consul}~\cite{consul-image}.
+Each machine hosts 20 clients, the maximum number of services supported by its local network, and it registers itself to the Swarm via a name discovery service running on another machine (we rely on \textsc{Consul}~\cite{consul-image}).
 Inter-container communication is established using the \texttt{overlay} network driver.
 To optimize start up time we provide all the images via \texttt{.tar} files that are loaded to the VM, skipping image building time, and we use a local copy of \texttt{virtualbox}'s disk image.
-In order to gather the results, we mount a Docker volume on each client and mirror the VM to the real filesystem using SSHFS. 
+In order to gather the results, we mount a Docker volume on each client and mirror the VM to the real filesystem using \textit{Secure SHell File System (SSHFS)}. 
 We pull the latest images available on Docker Hub for the Consul name discovery service (v$1.4$) and the \texttt{eclipse-mosquitto} (v$1.5$) message broker.
 
 \section{Experimental Configuration} \label{sec:evaluation:experiments}
@@ -36,7 +36,7 @@ We pull the latest images available on Docker Hub for the Consul name discovery 
 In order to evaluate the overhead \sgxspark and \projName introduce, we compare three different settings or execution modes:
 \begin{enumerate}
     \item The \textbf{vanilla Spark} mode acts as our baseline. It executes the algorithm using a standard distribution of the Spark cluster-computing framework.
-    \item The \textbf{\sgxspark w/o Enclaves} mode is an \sgxspark execution but with the enclaves disabled. This is, the engine sets up the collaborative JVM scheme communicating over SHM, but neither is runs inside an enclave.
+    \item The \textbf{\sgxspark w/o Enclaves} mode is an \sgxspark execution but with the enclaves disabled. This is, the engine sets up the collaborative JVM scheme communicating over SHM, but neither runs inside an enclave.
     \item The \textbf{\sgxspark w/ Enclaves} mode is the execution mode of \projName. It runs unmodified Spark applications leveraging \sgx for sensitive computations.
 \end{enumerate}
 The current implementation of \sgxspark (still under development) does not provide support for Spark's \texttt{Streaming Context} inside enclaves. 
@@ -49,19 +49,19 @@ We increment the input workload (see \S\ref{sec:evaluation:workload}) and measur
 In batch mode, a result file is generated once the processing is finished.
 In the streaming scenario, an output file is generated every ten seconds.
 In a multi-client scenario, each client has a separated data stream (or file) and consequently a different result file.
-A streaming execution consists of 5 minutes of the service operating with a specific execution mode, client configuration and input workload.
+A streaming execution consists of 5 minutes of the service operating with a specific execution mode, client configuration, and input workload.
 We execute our experiments 5 times and report average values together with their standard deviations.
 
 \section{Analyzed Metrics} \label{sec:evaluation:metrics}
 
-To assess performance, scalability and efficiency of \projName, we consider two different metrics depending on whether we run in \emph{batch} or \emph{stream} mode: \textbf{elapsed time} and \textbf{average batch processing time}
+To assess performance, scalability, and efficiency of \projName, we consider two different metrics depending on whether we run in \emph{batch} or \emph{stream} mode: \textbf{elapsed time} and \textbf{average batch processing time}
 \footnote{
 Note that we mention \textit{batch} in two different contexts: batch execution (one static input and static output) and streaming batches.
 Spark Streaming divides live input data in chunks called \emph{batches} determined by a time duration (10 seconds in our experiments).
 The time it takes the engine to process the data therein contained is denoted as batch processing time.}.
 \begin{enumerate}
     \item \textbf{Elapsed Time} measures the time it takes the engine to process the input file. In short, it is \projName's execution time in \emph{batch} mode. To obtain this metric it is sufficient with introducing logs (measuring time) in the application code.
-    \item \textbf{Average Batch Processing Time} takes the average of the time it takes \projName to process each 10-second-long chunk of the input data stream. To obtain this value we query Spark's REST API~\cite{spark-rest-api}. We use Python's \texttt{requests} package as depicted in Listing~\ref{code:evaluation:requests}. Since the server, the clients and the deployment might be hosted in different locations, the easiest way to query the REST API instantiated by the master process at the server is to establish a SSH tunnel and forward the contents in the servers $4040$ port to \texttt{localhost}. This is done in line 9 using an additional Python script that we attach in Listing~\ref{code:evaluation:port-forward} (see also Listing~\ref{code:evaluation:forward-tunnel}). Note that in the latter there are configuration-specific parameters. Once the port forwarding is established, we set up and execute the request (lines 11-14) and then process the results (lines 16-20). It is worth mentioning that, since Spark keeps an historic of the batch processing time, it is sufficient with doing only one query right before we terminate the 5-minute-long execution.
+    \item \textbf{Average Batch Processing Time} takes the average of the time it takes \projName to process each 10-second-long chunk of the input data stream. To obtain this value we query Spark's REST API~\cite{spark-rest-api}. We use Python's \texttt{requests} package as depicted in Listing~\ref{code:evaluation:requests}. Since the server, the clients, and the deployment might be hosted in different locations, the easiest way to query the REST API instantiated by the master process at the server is to establish a SSH tunnel and forward the contents in the servers $4040$ port to \texttt{localhost}. This is done in line 9 using an additional Python script that we attach in Listing~\ref{code:evaluation:port-forward} (see also Listing~\ref{code:evaluation:forward-tunnel}). Note that in the latter there are configuration-specific parameters. Once the port forwarding is established, we set up and execute the request (lines 11-14) and then process the results (lines 16-20). It is worth mentioning that, since Spark keeps an historic of the batch processing time, it is sufficient with doing only one query right before we terminate the 5-minute-long execution.
 \begin{lstlisting}[language=Python,caption={Snippet illustrating a query to Spark's REST API.},label=code:evaluation:requests]
 def query_batch_processing(filedir):
     """Query Spark's REST API 
