@@ -11,5 +11,7 @@
 *.pdf
 *.aux
 *.toc
+*.lof
+*.lol
 tags
 tags.lock
