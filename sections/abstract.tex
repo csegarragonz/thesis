@@ -84,17 +84,20 @@ This Bachelor Thesis presents \projName, a secure streaming processing system bu
 \vspace{0.5cm}
 
 \normalsize
-TRANSLATE TO CATALAN %TODO
-%Processing sensitive data, specially medical data produced by body sensors, on third-party untrusted clouds is particularly challenging without compromising the privacy of the users generating it. Typically, these sensors generate large quantities of continuous data in a streaming fashion. Such vast amount of information must be processed efficiently and securely, even under strong adversarial models. The recent introduction in the mass-market of consumer-grade processors with Trusted Execution Environments (TEEs), such as Intel SGX, paves the way to implement solutions that overcome less flexible approaches, such as those atop homomorphic encryption. 
 
-El processat de dades de car\`acter personal, especialment les d'or\'igen medical, en servidors remots al n\'uvol, \'es particularment complicat sense atemptar contra la privacitat dels usuaris que generen la informaci\'o.
-Molt habitualment aquestes dades s\'on generades per sensors corporals que emeten un flux continu d'informaci\'o. Aquesta no nom\'es ha de ser processada de manera eficient, sin\'o tamb\'e de forma segura, fins i tot sota adversaris poderosos.
-La recent introducci\'o al mercat de processadors amb Entorns d'Execuci\'o Segura (\textit{Trusted Execution Environments}), com ara Intel SGXX, faciliten la implementaci\'o de solucions 
+El processat de dades de car\`acter personal, especialment aquelles provinents de dominis m\`edics, en servidors remots al n\'uvol, \'es particularment delicat quan es vol preservar la privacitat dels usuaris que les generen.
+Molt habitualment, aquestes dades provenen de petits sensors que l'usuari du posats i que emeten un flux continu de mesures.
+Dit volum de mesures no nom\'es han de ser processades de manera eficient, sin\'o tamb\'e de manera segura, fins i tot sota hipot\`etics atacants amb acc\'es privilegiat a les m\`aquines al n\'uvol.
+La recent introducci\'o al mercat de processadors amb Entorns d'Execuci\'o Segura (\textit{Trusted Execution Environments}), com ara Intel SGX, faciliten la implementaci\'o de solucions m\'es flexibles i lleugeres que les basades en esquemes de criptografia homom\`orfica.
     
-This Bachelor Thesis presents \projName, a secure streaming processing system built on top of Intel SGX. To showcase the viability of this approach, we use it with a system specifically fitted for medical data. We design and fully implement a prototype system that we evaluate with several realistic datasets. Our experimental results show that \projName achieves modest overhead compared to vanilla Spark while offering additional protection guarantees under powerful attackers and threat models.
+Aquest Treball de Final de Grau presenta \projName, una plataforma de processament segur de fluxos que es basa en Intel SGX.
+Per il{\tiny\raisebox{.9ex}{\textbullet}}lustrar la viabilitat de la plataforma, la usem en un entorn m\`edic.
+En el decurs del treball, dissenyem i implementem un sistema prototip que evaluem amb jocs de dades reals.
+Els nostres resultats experimentals mostren que \projName introdueix un discret ralentiment en comparaci\'o amb la implementaci\'o est\`andard de Spark, tot oferint un nivell de protecci\'o adicional per a les dades dels usuaris. 
+%This Bachelor Thesis presents \projName, a secure streaming processing system built on top of Intel SGX. To showcase the viability of this approach, we use it with a system specifically fitted for medical data. We design and fully implement a prototype system that we evaluate with several realistic datasets. Our experimental results show that \projName achieves modest overhead compared to vanilla Spark while offering additional protection guarantees under powerful attackers and threat models.
 
 \vspace{0.5cm}
 
-\textbf{Keywords:} TEE, Trusted Hardware, Stream Processing, Intel SGX, Spark
+\textbf{Paraules Clau:} Entorns d'Execuci\'o Segura, Computaci\'o Segura, Processament de Fluxos, Intel SGX, Spark
 
 \vfill
