@@ -67,14 +67,12 @@ It is worth noting that, any bug or security leak included in the application co
 
 \section{Known Vulnerabilities} \label{sec:vulnerabilities}
 
-Given the threat model and our particular assumptions described in \S\ref{sec:threat}, this project, \sgxspark and \sgx share an attacker model.
-%This is, we assume a powerful attacker with administrator (privileged) access to the machine where the processing takes place.
-%This means that high-privileged software such as the operating system, the hypervisor or even the BIOS might be compromised.
-%In fact, every component in the host machine besides the CPU package is left untrusted.
-%Since our project, \sgxspark, and \sgx share the same attacker model, they are all vulnerable to the same kind of attacks.
-As a consequence, they are all vulnerable to the same kind of attacks.
+%Given the threat model and our particular assumptions described in \S\ref{sec:threat}, this project, \sgxspark and \sgx share an attacker model.
+%As a consequence, they are all vulnerable to the same kind of attacks.
+The threat model described in \S\ref{sec:threat} is the same of \sgx.
+As a consequence, and given our security assumptions, it is sufficient to look into the known vulnerabilities of the latter.
 Providing protection from attacks outside of \sgx's threat model is out of the scope of this project.
-Intel's MEE is not designed to be an oblivious RAM, therefore an adversary could perform traffic analysis attacks~\cite{Gueron16}.
+Intel's MEE is not designed to be an oblivious RAM, therefore an adversary could perform traffic analysis attacks~\cite{Gueron16} against our system.
 This is, even if communication between the CPU and the DRAM is kept encrypted, a smart attacker could infer information from patterns in the message exchanges.
 However, current work enables oblivious computations on enclaves~\cite{Zheng2017}. 
 In March 2017, Schwarz \textit{et. al.}~\cite{Schwarz2017} unveiled a side-channel timing attack capable of extracting a full RSA key from an enclave in under 5 minutes.  
