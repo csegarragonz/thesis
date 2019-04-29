@@ -1,14 +1,14 @@
 \chapter{Evaluation} \label{chap:evaluation}
 
-The aim of this Chapter is to present the experimental evaluation of \projName.
+The aim of this Chapter is to present the experimental evaluation of our system.
 Firstly, in \S\ref{sec:evaluation:hardware} we introduce the hardware used for the benchmarking.
 We differentiate between the machines and software used in the Server-side \S\ref{sec:evaluation:hardware:server} and those used in the Client-side \S\ref{sec:evaluation:hardware:client} since both components have very different requirements.
-For instance, server machines must have \sgx available and enclaves enabled.
+%For instance, server machines must have \sgx available and enclaves enabled.
 Secondly, we cover the different experimental configurations considered in \S\ref{sec:evaluation:experiments}.
 The latter require a given number of metrics that we present in \S\ref{sec:evaluation:metrics}.
-The workloads used to assess \projName are presented and justified in \S\ref{sec:evaluation:workload}.
+The workloads used to assess the performance are presented and justified in \S\ref{sec:evaluation:workload}.
 Lastly, our results are presented and analyzed in \S\ref{sec:evaluation:results}.
-In a nutshell, our experiments answer the following questions: \emph{(i)} is the design of \projName sound? \emph{(ii)} is our implementation efficient, \emph{(iii)} what is the overhead of SGX, and \emph{(iv)} is it scalable?
+In a nutshell, our experiments answer the following questions: \emph{(i)} is the design of the platform sound? \emph{(ii)} is our implementation efficient, \emph{(iii)} what is the overhead of SGX, and \emph{(iv)} is it scalable?
 
 \section{Hardware Settings} \label{sec:evaluation:hardware}
 
@@ -33,11 +33,11 @@ We pull the latest images available on Docker Hub for the Consul name discovery 
 
 \section{Experimental Configuration} \label{sec:evaluation:experiments}
 
-In order to evaluate the overhead \sgxspark and \projName introduce, we compare three different settings or execution modes:
+In order to evaluate the overhead \sgxspark and our system introduce, we compare three different settings or execution modes:
 \begin{enumerate}
     \item The \textbf{vanilla Spark} mode acts as our baseline. It executes the algorithm using a standard distribution of the Spark cluster-computing framework.
     \item The \textbf{\sgxspark w/o Enclaves} mode is an \sgxspark execution but with the enclaves disabled. This is, the engine sets up the collaborative JVM scheme communicating over SHM, but neither runs inside an enclave.
-    \item The \textbf{\sgxspark w/ Enclaves} mode is the execution mode of \projName. It runs unmodified Spark applications leveraging \sgx for sensitive computations.
+    \item The \textbf{\sgxspark w/ Enclaves} mode is the execution mode of our system. It runs unmodified Spark applications leveraging \sgx for sensitive computations.
 \end{enumerate}
 The current implementation of \sgxspark (still under development) does not provide support for Spark's \texttt{Streaming Context} inside enclaves. 
 To overcome this temporary limitation, we evaluate the \texttt{SDNN} and \texttt{Identity} algorithms in \emph{batch} and \emph{stream} mode. 
@@ -54,14 +54,14 @@ We execute our experiments 5 times and report average values together with their
 
 \section{Analyzed Metrics} \label{sec:evaluation:metrics}
 
-To assess performance, scalability, and efficiency of \projName, we consider two different metrics depending on whether we run in \emph{batch} or \emph{stream} mode: \textbf{elapsed time} and \textbf{average batch processing time}
+To assess performance, scalability, and efficiency, we consider two different metrics depending on whether we run in \emph{batch} or \emph{stream} mode: \textbf{elapsed time} and \textbf{average batch processing time}
 \footnote{
 Note that we mention \textit{batch} in two different contexts: batch execution (one static input and static output) and streaming batches.
 Spark Streaming divides live input data in chunks called \emph{batches} determined by a time duration (10 seconds in our experiments).
 The time it takes the engine to process the data therein contained is denoted as batch processing time.}.
 \begin{enumerate}
-    \item \textbf{Elapsed Time} measures the time it takes the engine to process the input file. In short, it is \projName's execution time in \emph{batch} mode. To obtain this metric it is sufficient with introducing logs (measuring time) in the application code.
-    \item \textbf{Average Batch Processing Time} takes the average of the time it takes \projName to process each 10-second-long chunk of the input data stream. To obtain this value we query Spark's REST API~\cite{spark-rest-api}. We use Python's \texttt{requests} package as depicted in Listing~\ref{code:evaluation:requests}. Since the server, the clients, and the deployment might be hosted in different locations, the easiest way to query the REST API instantiated by the master process at the server is to establish a SSH tunnel and forward the contents in the servers $4040$ port to \texttt{localhost}. This is done in line 9 using an additional Python script that we attach in Listing~\ref{code:evaluation:port-forward} (see also Listing~\ref{code:evaluation:forward-tunnel}). Note that in the latter there are configuration-specific parameters. Once the port forwarding is established, we set up and execute the request (lines 11-14) and then process the results (lines 16-20). It is worth mentioning that, since Spark keeps an historic of the batch processing time, it is sufficient with doing only one query right before we terminate the 5-minute-long execution.
+    \item \textbf{Elapsed Time} measures the time it takes the engine to process the input file. In short, it is our system's execution time in \emph{batch} mode. To obtain this metric it is sufficient with introducing logs (measuring time) in the application code.
+    \item \textbf{Average Batch Processing Time} takes the average of the time it takes the platform to process each 10-second-long chunk of the input data stream. To obtain this value we query Spark's REST API~\cite{spark-rest-api}. We use Python's \texttt{requests} package as depicted in Listing~\ref{code:evaluation:requests}. Since the server, the clients, and the deployment might be hosted in different locations, the easiest way to query the REST API instantiated by the master process at the server is to establish a SSH tunnel and forward the contents in the servers $4040$ port to \texttt{localhost}. This is done in line 9 using an additional Python script that we attach in Listing~\ref{code:evaluation:port-forward} (see also Listing~\ref{code:evaluation:forward-tunnel}). Note that in the latter there are configuration-specific parameters. Once the port forwarding is established, we set up and execute the request (lines 11-14) and then process the results (lines 16-20). It is worth mentioning that, since Spark keeps an historic of the batch processing time, it is sufficient with doing only one query right before we terminate the 5-minute-long execution.
 \begin{lstlisting}[language=Python,caption={Snippet illustrating a query to Spark's REST API.},label=code:evaluation:requests]
 def query_batch_processing(filedir):
     """Query Spark's REST API 
@@ -114,7 +114,7 @@ Each client injects a modest workload into our system (230 - 690 bytes per minut
         \bottomrule
     \end{tabular}
 \end{table}
-Hence, to assess the efficiency and the processing time as well as to uncover possible bottlenecks, we scale up the output rate of these signals with the goal of inducing more aggressive workloads into \projName.
+Hence, to assess the efficiency and the processing time as well as to uncover possible bottlenecks, we scale up the output rate of these signals with the goal of inducing more aggressive workloads into the system.
 We do so in detriment of medical realism, since arbitrary input workloads do not relate to any medical situation or condition.
 Table~\ref{tab:eval:inputs} shows the variations used to evaluate the various execution modes.
 On the leftmost column, BM and SM stand for \emph{batch} and \emph{stream} mode execution. For each mode, we consider a small load and a big load evaluation setting. We present both the \texttt{sample\_rate} parameter passed to the \texttt{sensor} component and the total workload that amounts to (in multiples of bytes per second).
@@ -134,18 +134,18 @@ The results obtained are include in Figure \ref{fig:batch-input-size}.
     \centering
     \includegraphics[width=.85\textwidth]{plots/batch/input_size/input_size.pdf}
     \includegraphics[width=.85\textwidth]{plots/batch/input_size/big_input_size.pdf}
-    \caption[Evolution of the average elapsed time as the input workload increases.]{Evolution of the average elapsed time, together with its standard deviation, as we increase the size of the input file. We compare the three different execution modes for each algorithm. Mode \sgxspark w/ enclaves is the mode \projName runs in. \label{fig:batch-input-size}}
+    \caption[Evolution of the average elapsed time as the input workload increases.]{Evolution of the average elapsed time, together with its standard deviation, as we increase the size of the input file. We compare the three different execution modes for each algorithm. Mode \sgxspark w/ enclaves is the mode the platform runs in. \label{fig:batch-input-size}}
 \end{figure}
 
 From the bar plot we highlight that the variance between execution times among same execution modes as we increase the input file size is relatively low. 
 However, it exponentiates as we reach input files of 4-8 MB.
 We also observe that the slow-down factor between execution modes remains also quite static until reaching the before mentioned load threshold. 
-\sgxspark with enclaves (and hence \projName), if input files are smaller than 4 MB, increases execution times x4-5 when compared to vanilla Spark and x1.5-2 when compared to \sgxspark with enclaves disabled.
+\sgxspark with enclaves (and hence our system), if input files are smaller than 4 MB, increases execution times x4-5 when compared to vanilla Spark and x1.5-2 when compared to \sgxspark with enclaves disabled.
 Note that, since a single client in our real use case streams around 230 to 690 bytes per minute, the current input size limitation already enables several hundreds of concurrent clients (considering processing time as the only bottleneck).
 
 \subsection{Stream Execution} \label{sec:evaluation:results:stream}
 
-Similarly as done in \S\ref{sec:evaluation:results:batch}, we scale the load of the data streams that feed \projName and study the evolution of the average batch processing time.
+Similarly as done in \S\ref{sec:evaluation:results:batch}, we scale the load of the data streams that feed the platform and study the evolution of the average batch processing time.
 We deploy one worker, one driver and one client, query the average batch processing time to Spark's REST API, and present the results for the \texttt{Identity} and \texttt{SDNN} algorithms. 
 Results are summarized in Figure \ref{fig:throughput}.
 

@@ -1,14 +1,14 @@
 \chapter{Implementation} \label{chap:implementation}
 
-The aim of this chapter is to present the implementation details of \projName.
+The aim of this chapter is to present the implementation details of our system.
 Each explanation is accompanied, when required, by code snippets to further illustrate the rationale behind our design choices.
 For the full implementation details we refer to Appendix \ref{chap:app-code}.
 The implementation we will cover is the one the results presented in Chapter \ref{chap:evaluation} are based on.
-As a consequence, and in order to stress-test \projName, we replace real sensors with synthetic data generators in the client package first described in \S\ref{sec:clients}.
+As a consequence, and in order to stress-test the system, we replace real sensors with synthetic data generators in the client package first described in \S\ref{sec:clients}.
 All the different components introduced in Chapter \ref{chap:architecture} are packaged in sets of Docker containers.
 Large fleets of concurrent users are then simulated using Docker's standalone clusters and mounted using \texttt{docker-machine}.
 
-The rest of the Chapter is structured as follows.
+The rest of the chapter is structured as follows.
 In \S\ref{sec:server-implementation} and \S\ref{sec:client-implementation} we cover the implementation details of the server-side and the client-side component respectively.
 Re-using Docker-specific nomenclature, we will refer to logical isolated functionalities packaged in a container as \emph{services}.
 Sets of services working collaboratively will be gathered and deployed as a \emph{component} using \texttt{docker-compose}.
@@ -61,12 +61,12 @@ Lastly, the implementations of \texttt{SDNN}, \texttt{HRVBands}, and \texttt{Ide
 \section{Client Implementation} \label{sec:client-implementation}
 
 Clients correspond to body-sensors strapped to the body of a user working collaboratively with a smart gateway, sending gathered data to the cloud-based component. 
-In a real deployment, the sensor service in the client component would be an actual sensor (\textit{e.g.} HR band, smartwatch, optical HR monitoring device, ...) and the gateway would be implemented in a, for instance, \textsc{Raspberry Pi}.
+In a real deployment, the sensor service in the client component would be an actual sensor (\textit{e.g.} HR band, smartwatch, or optical HR monitoring device) and the gateway would be implemented in a, for instance, \textsc{Raspberry Pi}.
 For evaluation purposes (see Chapter~\ref{chap:evaluation}), these services are simulated and virtualized.
-This way, we can simulate a situation where multiple clients concurrently use \projName without the hardware burden.
+This way, we can simulate a situation where multiple clients concurrently use the platform without the hardware burden.
 As firstly introduced in \S\ref{sec:clients}, our implementation decouples the client component into into five different services (see Figure~\ref{fig:system-architecture}, right). 
 \begin{enumerate}
-    \item The \texttt{sensor} service is a \textsc{Python} script that generates \texttt{sample\_rate} random samples per second, generates the corresponding timestamps, and publishes the information to the \texttt{artificial-data} topic in a \textsc{MQTT}~\cite{mqtt-protocol} broker located in the gateway. Listing~\ref{code:sensor-data-gen} presents the part of the \texttt{sensor} source code where artificial data is generated and published. The full source code is available in Listing~\ref{code:sensor}. Note the particularity of the sample generation procedure. First \texttt{sample\_rate} random points in a $[0, 1)$ uniform distribution are generated (lines 18, 21). Then, current timestamps are inferred from them (line 24) and intervals are computed as successive differences (line 25).
+    \item The \texttt{sensor} service is a \textsc{Python} script that generates \texttt{sample\_rate} random samples per second, where a sample is an RR interval and its timestamp, and publishes the information to the \texttt{artificial-data} topic in a \textsc{MQTT}~\cite{mqtt-protocol} broker located in the gateway. Listing~\ref{code:sensor-data-gen} presents the part of the \texttt{sensor} source code where artificial data is generated and published. The full source code is available in Listing~\ref{code:sensor}. Note the particularity of the sample generation procedure. First \texttt{sample\_rate} random points in a $[0, 1)$ uniform distribution are generated (lines 18, 21). Then, current timestamps are inferred from them (line 24) and intervals are computed as successive differences (line 25). These intervals are, in fact, the RR intervals.
 \begin{lstlisting}[language=Python,caption={Snippet illustrating the artificial data generation in the \texttt{sensor} service.},label=code:sensor-data-gen]
 def loop(sample_rate):
     """Endless Sample Generation
@@ -318,15 +318,15 @@ def main(ssh, sftp):
 
 \subsection{Client Execution Deployment} \label{sec:deployment:client}
 
-The client deployment procedure is more complicated than the server's one since \projName supports executions of variable number of clients, which are instantiated at start-up time.
-In short, when the number of clients is set, \projName starts a standalone Docker cluster (or \emph{swarm}).
+The client deployment procedure is more complicated than the server's one since we support executions of variable number of clients, which are instantiated at start-up time.
+In short, when the number of clients is set, the platform start a standalone Docker cluster (or \emph{swarm}).
 However, once started with the scalability tests, we recalled that the number of clients a cluster whose network relies on Docker's default \texttt{bridge} adapter can support was too small.
 At 20 clients, the engine ran out of local IP addresses and executions would systematically fail.
 As a consequence, we decided to virtualize a local standalone cluster using \texttt{docker-machine}.
 This latter functionality enables the deployment of several Docker engines in a single computing instance.
 To do so, a virtual machine must be started for each engine, and special care must be taken to set up the network, so that all containers are reachable from the others.
 
-Even though the full script is rather long, given its complexity and how crucial it is to \projName performance, we attach it entirely in Listing~\ref{code:deploy-client}.
+Even though the full script is rather long, given its complexity and how crucial it is to the system's performance, we attach it entirely in Listing~\ref{code:deploy-client}.
 We firstly deploy a name discovery service based on the \textsc{Consul}~\cite{consul-image} docker image, the aim of which is to keep track of all the generated virtual machines, and assign an IP address to each one (lines 27-36).
 Secondly, we start $\lceil \texttt{NUM\_CLIENTS} / 20 \rceil$ virtual machines and register them with the name discovery service (lines 40-60).
 These set of virtual machines will form our Docker Swarm, as a consequence, it is important to elect one (first by default) as our \texttt{swarm-master}.
@@ -432,11 +432,11 @@ done
 eval $(docker-machine env -u)
 \end{lstlisting}
 
-\subsection{\projName Deployment} \label{sec:deployment:all}
+\subsection{Deployment} \label{sec:deployment:all}
 
-The main entry point for \projName's deployment is included in Listing~\ref{code:deployment:whole}.
+The main entry point for the platform's deployment is included in Listing~\ref{code:deployment:whole}.
 It firsts loads a set of environment variables and parses the input (lines 6,8-12), it then deploys the client cluster as detailed in \S\ref{sec:deployment:client}, and it lastly deploys the server container as detailed in \S\ref{sec:deployment:server}.
-\begin{lstlisting}[language=sh,caption={Main entry point for a single \projName execution.},label=code:deployment:whole]
+\begin{lstlisting}[language=sh,caption={Main entry point for a single execution.},label=code:deployment:whole]
 #!/bin/bash
 
 set -a
