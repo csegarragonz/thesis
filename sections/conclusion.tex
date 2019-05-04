@@ -1,1 +1,16 @@
 \chapter{Conclusions and Lessons Learnt} \label{chap:conclusion}
+
+In this thesis, we have presented a proof of concept of a streaming platform that grants executions on remote, untrusted, servers or clouds with data and code confidentiality and integrity. 
+We provide end-to-end protection transparently to the developer since we run unmodified \textsc{Apache Spark} applications inside \textsc{Intel SGX}'s enclaves.
+
+Our design easily scales to different types of data generators, data streams, or even processing algorithms.
+It only relies on \sgxspark, a stream processing framework.
+However, this dependency could also be overcomed since the server component in our architecture is also pluggable and modular.
+
+We have quantified the impact on overall system performance when protecting health sensitive data from an untrusted cloud provider.
+More precisely, when performing an HRV analysis, for files smaller than 4 MB it introduces a x4-5 slow-down when compared to vanilla \textsc{Apache Spark} both in batch and streaming execution mode. 
+A good part of this slow-down though, is due to the collaborative JVM structure adopted in \sgxspark.
+For a matter of fact, a slow-down of only x1.5-2 is introduced when moving from \sgxspark without enclaves to with enclaves.
+Regardless, these results are already competitive when compared to other S.o.A privacy-preserving processing engines~\cite{Zheng2017}. 
+Therefore, we consider our platform to be mature enough to be introduced in a production environment, since it complies with current data protection regulations whilst still maintaining a reasonable performance, and keeping the costs to use the cloud infrastructure reasonable.
+
