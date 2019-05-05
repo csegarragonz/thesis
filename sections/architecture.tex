@@ -32,7 +32,7 @@ A \textsc{Spark} job deployed in standalone mode executes: the master process fo
 In the case of \sgxspark jobs, two Java Virtual Machines (JVMs) are deployed per driver and worker process: one inside an enclave and one outside.
 The communication between \acrshort{jvm}s is kept encrypted and is done through the host OS shared memory (see Figure \ref{fig:sgx-spark-scheme}).
 A process outside the enclave never sees data in clear since sensitive operations are \emph{always} executed in secured environments.
-Note that, for each newly deployed worker, a new pair of \acrshort{jvm}s and a new enclave are deployed.
+Note that, for each newly deployed worker, a new pair of \acrshort{jvm}s and a new enclave are also deployed.
 
 \sgxspark requires that algorithms are compiled together with the engine so that code can be loaded inside enclaves.
 However, the specific algorithm that we will execute is currently set at start-up time.
@@ -60,9 +60,9 @@ Protecting it is out of the scope of this work, but suggestions are given in Cha
 Given these assumptions, our threat model is the same as typical systems that rely on \textsc{SGX}. 
 Specifically, we assume an attacker with access to system's privileged software such as the OS, VMM or BIOS.
 Our security perimeter only includes the internals of the CPU package and the \textit{on-die} memory.
-Most notably, the system's main memory (DRAM) is left \emph{outside} our security parameter.
+Most notably, the system's main memory (DRAM) is left \emph{outside} our security perimeter.
 As a consequence, the traffic between enclave applications and main memory is kept encrypted and is handled by the MEE~\cite{Gueron16}.
-The trusted computing base is Intel's microcode as well as and the code loaded at the enclave, which can be measured and integrity checked. 
+The trusted computing base is Intel's microcode and the code loaded at the enclave, which can be measured and integrity checked. 
 It is worth noting that, any bug or security leak included in the application code loaded in the enclave might compromise our security model.
 
 \section{Known Vulnerabilities} \label{sec:vulnerabilities}

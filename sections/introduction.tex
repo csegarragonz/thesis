@@ -21,10 +21,10 @@ They allow deployers to hand-off the maintenance of the required infrastructure,
 
 Processing privacy-sensitive data on untrusted cloud platforms presents a number of challenges.
 A malicious (compromised) Cloud operator could observe and leak data, if no countermeasures are taken beforehand.
-While there are software solutions that allow to operate on encrypted data (\emph{e.g.}, partial~\cite{Paillier1999} or full-homomorphic~\cite{Gentry2012} encryption), their current computational overhead makes  impractical in real-life scenarios~\cite{Gottel2018S}.
+While there are software solutions that allow to operate on encrypted data (\emph{e.g.}, partial~\cite{Paillier1999} or full-homomorphic~\cite{Gentry2012} encryption), their current computational overhead makes them impractical in real-life scenarios~\cite{Gottel2018S}.
 
 The recent introduction into the mass market of processors with embedded trusted execution environments (TEEs), \emph{e.g.}, Intel Software Guard Extensions (SGX)~\cite{Costan2016} (starting from processors with codename Skylake) or ARM TrustZone~\cite{trustzone}, offer a viable alternative to pure-software solutions.
-TEEs protect code and data against several types of attacks, including a malicious underlying OS, software bugs or threats from co-hosted applications.
+TEEs protect code and data against several types of attacks, including a malicious underlying OS, software bugs, or threats from co-hosted applications.
 The application's security boundary becomes the CPU itself.
 The code is executed at near-native execution speeds inside enclaves of limited memory capacity.
 All the major Infrastructure-as-a-Service providers (Google~\cite{gceskylake}, Amazon~\cite{amazonskylake}, IBM~\cite{ibm-sgx}, Microsoft~\cite{azureconfidential}) are nowadays offering nodes with SGX processors.
@@ -63,7 +63,7 @@ We divide it in \S\ref{sec:background:tech} where we introduce the concepts that
 And \S\ref{sec:background:med} where we introduce and motivate the envisioned use-case, and contextualize the data streams we will feed our streaming platform with.
 In Chapter \ref{chap:related-work} we cover the state of the art for privacy preserving stream processing engines of medical data.
 In Chapter \ref{chap:architecture} we first describe our system's architecture (\S\ref{sec:server}, \S\ref{sec:clients}) and then we go on to introduce our threat model (\S\ref{sec:threat}) and our system's known vulnerabilities (\S\ref{sec:vulnerabilities}).
-Then, in Chapter \ref{chap:implementation} we describe how the previously introduced architecture is implemented (\S\ref{sec:client-implementation}, \S\ref{sec:server-implementation}) and deployed (\S\ref{sec:deployment}).
+Then, in Chapter \ref{chap:implementation}, we describe how the previously introduced architecture is implemented (\S\ref{sec:client-implementation}, \S\ref{sec:server-implementation}) and deployed (\S\ref{sec:deployment}).
 A complete and exhaustive evaluation of the system is then presented in Chapter \ref{chap:evaluation}.
 In particular, we first describe the evaluation context: hardware settings (\S\ref{sec:evaluation:hardware}), experiment configuration (\S\ref{sec:evaluation:experiments}), analyzed metrics (\S\ref{sec:evaluation:metrics}), and injected workloads (\S\ref{sec:evaluation:workload}).
 To then present the obtained results in \S\ref{sec:evaluation:results}.

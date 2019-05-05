@@ -34,7 +34,7 @@ Moreover, applications must be written in the \textsc{Lua} programming language,
 Its security model requires a \textit{Public Key Infrastructure (PKI)} and a dynamic prime number generation technique to synchronously update the keys. 
 In spite of using trusted hardware on the DSM end for key generation and management, the server-side processes all the data in clear, making the framework not suitable for our security model. 
 
-\textsc{TaLoS}~\cite{Aublin2017} is \textit{Transport Layer Security (TLS)}~\cite{Dierks2008} library that terminates connections by maintaining sensitive information inside enclaves. 
+\textsc{TaLoS}~\cite{Aublin2017} is a \textit{Transport Layer Security (TLS)}~\cite{Dierks2008} library that terminates connections by maintaining sensitive information inside enclaves. 
 The authors provide custom wrappers for the most common \textsc{TLS} API calls and securely store users and sessions' keys inside enclaves.
 The embedding with a native Spark, or SGX-Spark, application is not transparent to the end user and hence why we discard it.
 
@@ -51,7 +51,7 @@ As such, since they off-load computation to third-party cloud services, these so
 Similarly, another solution~\cite{VanZaen2019} uses convolutional networks for the detection of arrhythmias.
 However, the authors take no considerations with regard to data security and privacy.
 
-To the best of our knowledge, there are no privacy-preserving real-time streaming systems specifically designed for  medical and cardiac data. 
-Our system fills this gap by proposing a system that leverages Intel SGX enclaves to compute such analytics over public untrusted clouds without changing the existing Java- or Scala-based source code.
+%To the best of our knowledge, there are no privacy-preserving real-time streaming systems specifically designed for  medical and cardiac data. 
+This work is one of the first attempts to building a privacy-preserving real-time streaming system specifically designed for  medical and cardiac data. 
 
-
+Our system fills the existing research gap by proposing a system that leverages Intel SGX enclaves to compute such analytics over public untrusted clouds without changing the existing Scala-based source code.
