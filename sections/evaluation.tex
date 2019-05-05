@@ -96,6 +96,8 @@ def query_batch_processing(filedir):
 \end{enumerate}
 We study the variability of these two parameters as we modify the input workload according to \S\ref{sec:evaluation:workload}.
 
+\vspace{-20pt}
+
 \section{Workload} \label{sec:evaluation:workload}
 
 As firstly introduced in Chapter \S\ref{sec:background:med}, the clients inject streams as cardiac signals corresponding to RR intervals and their timestamps.
@@ -119,16 +121,24 @@ We do so in detriment of medical realism, since arbitrary input workloads do not
 Table~\ref{tab:eval:inputs} shows the variations used to evaluate the various execution modes.
 On the leftmost column, BM and SM stand for \emph{batch} and \emph{stream} mode execution. For each mode, we consider a small load and a big load evaluation setting. We present both the \texttt{sample\_rate} parameter passed to the \texttt{sensor} component and the total workload that amounts to (in multiples of bytes per second).
 
+\vspace{-7pt}
+
 \section{Results} \label{sec:evaluation:results}
+
+\vspace{-11pt}
 
 In this Section we present and analyze the evolution of the different metrics (\S\ref{sec:evaluation:metrics}) as we vary the input workload (\S\ref{sec:evaluation:workload}) for the different execution modes (\S\ref{sec:evaluation:experiments}).
 We firstly present the results for \emph{batch} mode in \S\ref{sec:evaluation:results:batch} and then we do the same for \emph{stream} mode in \S\ref{sec:evaluation:results:stream}.
 
+\vspace{-19pt}
+
 \subsection{Batch Execution} \label{sec:evaluation:results:batch}
+
+\vspace{-8pt}
 
 The exact configuration for the study of the elapsed time as we vary the input file size is: one client, one master, one driver, one worker, and a variable input file that progressively increases in size. 
 We measure the elapsed time of each execution and present the average and standard deviation of a total of five experiments with the same configuration.
-The results obtained are include in Figure \ref{fig:batch-input-size}.
+Results obtained are included in Figure \ref{fig:batch-input-size}.
 
 \begin{figure}[h!]
     \centering
@@ -143,7 +153,11 @@ We also observe that the slow-down factor between execution modes remains also q
 \sgxspark with enclaves (and hence our system), if input files are smaller than 4 MB, increases execution times x4-5 when compared to vanilla Spark and x1.5-2 when compared to \sgxspark with enclaves disabled.
 Note that, since a single client in our real use case streams around 230 to 690 bytes per minute, the current input size limitation already enables several hundreds of concurrent clients (considering processing time as the only bottleneck).
 
+\vspace{-19pt}
+
 \subsection{Stream Execution} \label{sec:evaluation:results:stream}
+
+\vspace{-8pt}
 
 Similarly as done in \S\ref{sec:evaluation:results:batch}, we scale the load of the data streams that feed the platform and study the evolution of the average batch processing time.
 We deploy one worker, one driver and one client, query the average batch processing time to Spark's REST API, and present the results for the \texttt{Identity} and \texttt{SDNN} algorithms. 
