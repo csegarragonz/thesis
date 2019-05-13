@@ -196,7 +196,7 @@ def monitor(ssh, sftp, *args):
         tmp_file = LOCAL_DATA_DIR + str(d)
         os.remove(tmp_file)
 \end{lstlisting}
-    \item Similarly, the \texttt{consumer} service is a \textsc{Python} script that monitors the remote filesystem and, whenever a result file is stored, fetches it to the local result directory. The monitoring functionality is illustrated in Listing~\ref{code:consumer-short} and the whole source code is available in Listing~\ref{code:consumer}. It is, in essence, symmetric to the one presented for the \texttt{producer} service. The only difference is that, since \texttt{sftp.get()} does not support recursive invokations (\textit{e.g.} \texttt{-R} flags), specific care must be taken to fetch all the different files placed in the different directories.
+    \item Similarly, the \texttt{consumer} service is a \textsc{Python} script that monitors the remote filesystem and, whenever a result file is stored, fetches it to the local result directory. The monitoring functionality is illustrated in Listing~\ref{code:consumer-short} and the whole source code is available in Listing~\ref{code:consumer}. It is, in essence, symmetric to the one presented for the \texttt{producer} service. The only difference is that, since \texttt{sftp.get()} does not support recursive invocations (\textit{e.g.} \texttt{-R} flags), specific care must be taken to fetch all the different files placed in the different directories.
 \begin{lstlisting}[language=Python,caption={Snippet illustrating the remote filesystem monitoring in the \texttt{consumer} service.},label=code:consumer-short]
 def monitor(ssh, sftp):
     """Fetching daemon
@@ -329,7 +329,7 @@ To do so, a virtual machine must be started for each engine, and special care mu
 Even though the full script is rather long, given its complexity and how crucial it is to the system's performance, we attach it entirely in Listing~\ref{code:deploy-client}.
 We firstly deploy a name discovery service based on the \textsc{Consul}~\cite{consul-image} docker image, the aim of which is to keep track of all the generated virtual machines, and assign an IP address to each one (lines 27-36).
 Secondly, we start $\lceil \texttt{NUM\_CLIENTS} / 20 \rceil$ virtual machines and register them with the name discovery service (lines 40-60).
-These set of virtual machines will form our Docker Swarm, as a consequence, it is important to elect one (first by default) as our \texttt{swarm-master}.
+These set of virtual machines will form our Docker Swarm. As a consequence, it is important to elect one (first by default) as our \texttt{swarm-master}.
 Note that, in order to speed up the start-up time, the images for all the client services are compressed and pre-loaded to the virtual machines (lines 62-66).
 In third place, we create the overlay network (lines 70-71).
 Then, the local directories for each client in each virtual machine must be mounted and mirrored outside the virtual machine so that we can process the results.
