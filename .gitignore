@@ -8,7 +8,7 @@
 *.glo
 *.lot
 *.out
-*.pdf
+main.pdf
 *.aux
 *.toc
 *.lof
