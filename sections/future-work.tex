@@ -1,1 +1,19 @@
 \chapter{Future Work} \label{chap:future-work}
+
+There are several dimensions along which the current project can be improved. 
+We differentiate between possible improvements to the current architecture as presented in Chapter~\ref{chap:architecture}, and further research lines to enrich the privacy-preserving computing state of the art.
+
+With regard to the project here presented, there are different issues that would need to be addressed in the coming work.
+Firstly, the current \sgxspark implementation, as mentioned in Chapter~\ref{chap:evaluation}, does not yet have support for in-enclave streaming.
+As a consequence, the estimated results should be validated once the Streaming API is supported by \sgxspark.
+Secondly, results concerning client scalability should also be included in the evaluation chapter.
+Following the deployment technique (standalone \texttt{Docker} cluster) indicated in \S\ref{sec:deployment}, we have managed to run experiments with hundreds of clients.
+However, due to time constraints, we have not been able to provide an exhaustive assessment of the system's scalability, \textit{i.e.} how many clients it can run in parallel, neither of how the overhead introduced by \sgxspark might affect the number of clients our platform can handle simultaneously.
+On the same lines, we would like to study the cost of deploying our system over public cloud infrastructures such as AWS Confidential Computing.
+Lastly, we intend to deploy the platform in a real use case, this is, using real data produced by real users and streamed through a smart gateway.
+
+On a more general note, we think that our threat model, as presented in \S\ref{sec:threat}, could be very much improved by securing the client package.
+To do so, we envision the use of ARM TrustZone, widely available in low-power devices (\textit{e.g.}, Raspberry PI), to reduce the TCB in the client-side of the architecture whilst still leveraging on Trusted Execution Environments.
+Finally, were TEEs to be used to secure the client package, a point-to-point, TEE-to-TEE, communication could be leveraged instead of relying on standard secure transfer protocols.
+This way, data would never leave the TEE (to be included in a SFTP package and sent over the network), hence reducing the overall attack surface.
+Even though generic TEE-to-TEE point-to-point communication protocols might not be mature enough yet (for generic TEEs on each endpoint), there are for instance solutions for enclave-to-enclave~\cite{Aublin2017} secure link establishment.
