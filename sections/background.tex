@@ -65,7 +65,7 @@ It partitions the code of Spark applications to execute the sensitive parts insi
 Figure~\ref{fig:sgx-spark-scheme} depicts its architecture.
 The engine deploys two collaborative Java Virtual Machines (JVM), one outside (Figure~\ref{fig:sgx-spark-scheme}, left) and one inside the enclave (Figure~\ref{fig:sgx-spark-scheme}, right) for the driver, and two more for each worker deployed in the cluster. 
 Spark code outside the enclave accesses only encrypted data.
-The communication between the JVMs is kept encrypted and is performed through the host OS shared memory.
+The communication between the JVMs is kept encrypted and is performed through the host OS shared memory (SHM).
 \sgxspark provides a compilation toolchain, and it currently supports the vast majority of the native Spark operators, allowing to transparently deploy and run existing Spark applications into SGX enclaves.
 This is, the user must only compile the source code together with \textsc{SGX-Spark}'s and, as long as the operators used are supported by the framework, execution is seamlessly deployed inside the enclave with \emph{no} amendments to the vanilla Spark implementation.
 
