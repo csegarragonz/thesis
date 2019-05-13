@@ -12,7 +12,7 @@ Lastly, in \S\ref{sec:related:cardiac} we cover other approaches at cardiac data
 Stream processing has recently attracted a lot of attention from academia and industry~\cite{Koliousis2016,Miao2017,Venkataraman2017}.
 Apache Spark~\cite{Zaharia2012} is arguably the de-facto standard in this domain, by combining batch and stream processing with a unified API~\cite{ZahariaDStreams2012}.
 Apache Spark SQL~\cite{Armbrust2015} allows to process structured data by integrating relational processing with Spark's functional programming style.
-Structured streaming~\cite{Armbrust2018} leverages Spark SQL and it compares favourably against the discretized counterpart~\cite{ZahariaDStreams2012} in terms of performance. % approach used in this project. 
+Structured streaming~\cite{Armbrust2018} leverages Spark SQL and it compares favorably against the discretized counterpart~\cite{ZahariaDStreams2012} in terms of performance. % approach used in this project. 
 However, the former lacks security or privacy guarantees, and hence it was not considered.
 Furthermore \sgxspark only has support for the \textit{Discretized Streams} API, and therefore we also rely on it.
 
@@ -28,7 +28,7 @@ In \texttt{oblivious} mode, \emph{i.e.}, protecting against traffic pattern anal
 
 SecureStreams~\cite{Havet2017} is a reactive framework that exploits Intel SGX to define dataflow processing by pipelining several independent components. 
 In order to use this framework, the user requires a good knowledge of the underlying implementation. 
-Moreover, applications must be written in the \textsc{Lua} programming language, hindering its applicability to legacy systems or thrd-party programs.
+Moreover, applications must be written in the \textsc{Lua} programming language, hindering its applicability to legacy systems or third-party programs.
 
 \textsc{DPBSV}~\cite{Puthal2015} is a secure big data stream processing framework that focuses on securing data transmission from the sensors or clients to the \textit{Data Stream Manager (DSM)} or server. 
 Its security model requires a \textit{Public Key Infrastructure (PKI)} and a dynamic prime number generation technique to synchronously update the keys. 
