@@ -2,7 +2,7 @@
 
 In this chapter we introduce general concepts to better understand the design and implementation details of our system.
 Firstly, we introduce the hardware, software and programming frameworks that we leverage, and then the medical technicalities regarding the data we use and the processing we make of it.
-In \S\ref{sec:background:tech}, we cover technical aspects exploited in the remaining of this work, specifically: we descrive the concept of Trusted Execution Environment, the operating principles of Intel SGX and Spark, and lastly we present two key frameworks developed by the \textit{Large Scale Data \& Systems}~\cite{lsds} group at the Imperial College London, \textsc{SGX-LKL} and \sgxspark.
+In \S\ref{sec:background:tech}, we cover technical aspects exploited in the remaining of this work, specifically: we describe the concept of Trusted Execution Environment, the operating principles of Intel SGX and Spark, and lastly we present two key frameworks developed by the \textit{Large Scale Data \& Systems}~\cite{lsds} group at the Imperial College London, \textsc{SGX-LKL} and \sgxspark.
 In \S\ref{sec:background:med}, we describe the specificities of the data streams from the medical domain our system deals with, how this data streams are obtained, together with the required processing that our system allows to offload on an untrusted cloud provider, and how this processing can be useful in a real use case.
 
 \section{Technical Background} \label{sec:background:tech}
@@ -66,7 +66,7 @@ Figure~\ref{fig:sgx-spark-scheme} depicts its architecture.
 The engine deploys two collaborative Java Virtual Machines (JVM), one outside (Figure~\ref{fig:sgx-spark-scheme}, left) and one inside the enclave (Figure~\ref{fig:sgx-spark-scheme}, right) for the driver, and two more for each worker deployed in the cluster. 
 Spark code outside the enclave accesses only encrypted data.
 The communication between the JVMs is kept encrypted and is performed through the host OS shared memory.
-\sgxspark provides a compilation toolchain, and it currently supports the vast majority of the native Spark operators, allowing to transparently deploy and run existing Spark applications into the SGX enclaves.
+\sgxspark provides a compilation toolchain, and it currently supports the vast majority of the native Spark operators, allowing to transparently deploy and run existing Spark applications into SGX enclaves.
 This is, the user must only compile the source code together with \textsc{SGX-Spark}'s and, as long as the operators used are supported by the framework, execution is seamlessly deployed inside the enclave with \emph{no} amendments to the vanilla Spark implementation.
 
 \section{Cardiac Analysis} \label{sec:background:med}
@@ -85,7 +85,7 @@ This environment is depicted in Figure~\ref{fig:wearable-ecosystem}.
 \begin{figure}[h!]
     \centering
     \includegraphics[width=.8\textwidth]{./img/wearable-ecosystem.png}
-    \caption[Envisioned user-sensor ecosystem.]{Envisioned sensor ecosystem composed of: a user, a wearable device, a gateway with internet connection, and the cloud were results are stored and processd.\label{fig:wearable-ecosystem}}
+    \caption[Envisioned user-sensor ecosystem.]{Envisioned sensor ecosystem composed of: a user, a wearable device, a gateway with internet connection, and the cloud were results are stored and processed.\label{fig:wearable-ecosystem}}
 \end{figure}
 
 %Both procedures lead to an approximation of R peaks' timestamps and the intervals between them (RR intervals). 
