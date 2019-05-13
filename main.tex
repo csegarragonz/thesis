@@ -33,6 +33,7 @@
 \vfill \pagebreak
 
 % Note from the author TODO necessary? correctly placed?
+\phantomsection
 \input{sections/note-from-author.tex}
 
 % Blank page after Note from Author
@@ -42,6 +43,7 @@
 \vfill
 \pagebreak
 
+\phantomsection
 \input{sections/autorship.tex}
 
 % Blank page after Declaration of Autorship
@@ -52,6 +54,7 @@
 \pagebreak
 
 % Acknowledgments
+\phantomsection
 \input{sections/acknowledgments.tex}
 
 % Blank page after Acknowledgments
@@ -61,6 +64,7 @@
 \vfill
 \pagebreak
 
+\phantomsection
 \input{sections/abstract.tex}
 
 % Blank page after Abstract
@@ -78,14 +82,17 @@
 \endgroup
 
 \cleardoublepage
+\phantomsection
 \addcontentsline{toc}{chapter}{List of Figures}
 \listoffigures
 
 \cleardoublepage
+\phantomsection
 \addcontentsline{toc}{chapter}{List of Tables}
 \listoftables
 
 \cleardoublepage
+\phantomsection
 \addcontentsline{toc}{chapter}{\lstlistlistingname}
 \lstlistoflistings
 
