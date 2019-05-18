@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+
+    % Insert Nodes
+    \node[visible on=<1-4>] (sensor) at (0,0) {\includegraphics[width=40pt]{./images/sensor.png}};
+    \node[visible on=<4->] (new-sensor) at (6, 0) {\includegraphics[width=40pt]{./images/blue-sensor.png}};
+
+    % Elapsed Time Labels
+    %% Expected Lifetime @ Sensor
+    \node[below of=sensor, visible on=<1>] {\textcolor{darkgreen}{\texttt{\textbf{Expected Lifetime:} $4$ TU}}};
+    \node[below of=sensor, visible on=<2>] {\textcolor{darkgreen}{\texttt{\textbf{Expected Lifetime:} $3$ TU}}};
+    \node[below of=sensor, visible on=<3>] {\textcolor{red}{\texttt{\textbf{Expected Lifetime:} $2$ TU}}};
+    \node[below of=sensor, visible on=<4>] {\textcolor{red}{\texttt{\textbf{Expected Lifetime:} $1$ TU}}};
+    \node[below of=new-sensor, visible on=<4>] {\textcolor{darkgreen}{\texttt{\textbf{Expected Lifetime:} $10$ TU}}};
+    \node[below of=new-sensor, visible on=<5>] {\textcolor{darkgreen}{\texttt{\textbf{Expected Lifetime:} $9$ TU}}};
+    %% Time Counter
+    \node[visible on=<1>] (counter) at (8.5, 0.5) {\texttt{\textbf{Time:} $0$ TU}};
+    \node[visible on=<2>] (counter) at (8.5, 0.5) {\texttt{\textbf{Time:} $1$ TU}};
+    \node[visible on=<3>] (counter) at (8.5, 0.5) {\texttt{\textbf{Time:} $2$ TU}};
+    \node[visible on=<4>] (counter) at (8.5, 0.5) {\texttt{\textbf{Time:} $3$ TU}};
+    \node[visible on=<5>] (counter) at (8.5, 0.5) {\texttt{\textbf{Time:} $4$ TU}};
+    
+    % Insert Links
+    \draw[->, thick, fgRed, visible on=<2>] (4, 0) -- (sensor) node[pos=.5, anchor=south] {\texttt{\textbf{Measure\_T1}}};
+    \draw[->, thick, fgRed, visible on=<3>] (-3, 0) -- (sensor) node[pos=.5, anchor=south] {\texttt{\textbf{Measure\_T2}}};
+    \draw[->, very thick, dashed, draw=red, visible on=<4>] (sensor) -- (new-sensor) node[pos=.5, anchor=south] {\texttt{\textbf{[Measure\_T1, Measure\_T2]}}} node[pos=.5, anchor=north] {{\texttt{TA Code \& Metadata}}};
+    \draw[->, thick, fgRed, visible on=<5>] (3, 0) -- (new-sensor) node[pos=.5, anchor=south] {\texttt{\textbf{Measure\_T4}}};
+\end{tikzpicture}

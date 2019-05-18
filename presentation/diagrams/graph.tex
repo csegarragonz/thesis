@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+    % insert nodes
+    \node[shape=circle,draw=black] (v1) at (0,0) {$v_1$};
+    \node[shape=circle,draw=black] (v2) at (0,3) {$v_2$};
+    \node[shape=circle,draw=black] (v3) at (2.5,4) {$v_3$};
+    \node[shape=circle,draw=black] (v4) at (2.5,1) {$v_4$};
+    \node[shape=circle,draw=black] (v5) at (5,3) {$v_5$} ;
+    
+    % insert links
+	\draw (v1) -- (v2);
+    \draw (v1) -- (v4);
+	\draw (v1) -- (v3);
+    \draw (v4) -- (v5);
+    \draw (v3) -- (v4);
+    \draw (v4) -- (v2);
+    \draw (v5) -- (v3);
+\end{tikzpicture}

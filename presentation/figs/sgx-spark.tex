@@ -1,0 +1,48 @@
+\begin{tikzpicture}
+    % Colors definition: latexcolor.com
+    \definecolor{blue0}{RGB}{0,25,51}
+    \definecolor{blue1}{RGB}{0,51,102}
+    \definecolor{blue2}{RGB}{0,128,255}
+    \definecolor{blue3}{RGB}{153,204,255}
+    \definecolor{yellow}{RGB}{250,165,25}
+    \definecolor{lightyellow}{RGB}{229,208,66}
+    \definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
+    \definecolor{x11gray}{rgb}{0.75, 0.75, 0.75}
+
+    
+    % Main outline
+    \draw[fill=blue1!50] (0,0) rectangle (3, 4);
+
+    % First Layer
+    % Shared Memory
+    \draw[fill=white] (0.25, 0.25) rectangle (2.75, 0.5) node[pos=.5] {\tiny{SHM}};
+    \node at (0.45, 0.375) {\includegraphics[width=5pt]{images/hacker.png}};
+
+%    \draw[fill=white] (0.25, 0.25) rectangle (1.45, 0.825) node[pos=.5] {\tiny{OS}};;
+%    \node at (0.45, 0.45) {\includegraphics[width=8pt]{images/hacker.png}};
+%    \draw[fill=white, pattern=north west lines,pattern color=gray!50] (1.55, 0.25) rectangle (2.75, 0.825) node[pos=.5] {\tiny{SGX}};
+%    \node at (2.55, 0.45) {\includegraphics[width=8pt]{images/intel-sgx.png}};
+
+    % Second Layer
+    \draw[fill=white] (0.25, 0.6) rectangle (1.45, 1.55) node[pos=.5, xshift=2pt, align=center] {\tiny{Spark} \\[-2pt] \tiny{Worker}};
+    \node at (0.45, 0.8) {\includegraphics[width=8pt]{images/hacker.png}};
+    \draw[preaction={fill,white}, pattern=north west lines,pattern color=yellow] (1.55, 0.6) rectangle (2.75, 1.55) node[pos=.5, xshift=-3pt, align=center] {\tiny{Worker} \\[-2pt] \tiny{Enclave}};
+    \node at (2.55, 0.8) {\includegraphics[width=8pt]{images/intel-sgx.png}};
+
+    % Third Layer
+    \draw[fill=white] (0.25, 1.65) rectangle (1.45, 3.4);
+    \node[align=center] at (0.85, 2.65) {\tiny{Spark Driver} \\[-4pt] \tiny{\&} \\[-4pt] \tiny{Application} \\[-4pt] \tiny{Entry Point}};
+    \node at (0.45, 1.85) {\includegraphics[width=8pt]{images/hacker.png}};
+    \draw[preaction={fill,white}, pattern=north west lines,pattern color=yellow] (1.55, 1.65) rectangle (2.75, 3.4);
+    \node[align=center] at (2.15, 2.85) {\tiny{Driver} \\[-2pt] \tiny{Enclave}};
+    \node at (2.55, 1.85) {\includegraphics[width=8pt]{images/intel-sgx.png}};
+    % Spark Tasks
+    \draw[fill=white] (1.65, 2.1) rectangle (2.0, 2.4) node[pos=.5] {\tiny{T $1$}}; 
+    \node at (2.15, 2.25) {\tiny{$\cdots$}};
+    \draw[fill=white] (2.3, 2.1) rectangle (2.65, 2.4) node[pos=.5] {\tiny{T $N$}}; 
+
+    % Spark Master
+    \draw[fill=white] (0.25, 3.5) rectangle (2.75, 3.75) node[pos=.5] {\tiny{Spark Master}};
+    \node at (0.45, 3.625) {\includegraphics[width=5pt]{images/hacker.png}};
+
+\end{tikzpicture}

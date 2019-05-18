@@ -1,0 +1,484 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Carlos Segarra's Beamer Presentation Template. All credits
+%% to Vincent Labatut from whom I took the template and added
+%% my own flavour to it. Kudos to <vincent.labatut@univ-avignon.fr>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% setup Beamer
+\documentclass[10pt,    % default is 11pt, use 10pt for more compact slides
+%    handout,            % collapse all overlays (=animations) and video-invert console text
+    english,            % presentation language (theme supports only french & english)
+    xcolor=table,       % colors in the tables
+    envcountsect,        % include section number in theorem numbers
+    aspectratio=169     % Using 16:9 aspect ratio because 2019
+]{beamer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% setup the theme
+%\usepackage{au/sty/beamerthemeAU}         % no option at all
+\usepackage[light]{csg-temp/sty/beamerthemeAU}   % the "light" option only changes the title and section pages
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% setup side notes
+\usepackage{pgfpages}                                   % comment all 3 below lines to hide notes
+%\setbeameroption{show notes}                           % alternate content and note slides
+%\setbeameroption{show only notes}                      % only note slides
+%\setbeameroption{show notes on second screen=right}    % dualscreen: right, left, top, bottom
+%\usepackage{enumitem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% name of the biblatex file
+\addbibresource{biblio.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% External Packages
+\usepackage{datenumber}
+\usepackage{varwidth}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Name Definitions via commands
+\newcommand{\projName}{\textsc{MedSpark}\xspace}
+\newcommand*\blackcircled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,fill=fgRed,inner sep=0.5pt] (char) {\textcolor{white}{#1}};}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% title and subtitle of the presentation (the latter is optional)
+\title[\projName:~Secure Streaming] % leave empty for no title in footer
+    {\projName: Using Trusted Execution Environments for Secure Stream Processing of Medical Data}
+\subtitle{251's Technical Sessions - CSe Research Internship: 01/10/2018 - 22/02/2019} % leave empty if no subtitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% date of the presentation (leave empty for no date, default is today)
+\date[Wednesday, March 6th] % leave empty for no date in footer
+    {\datedayname, \today}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% authors and their affiliations (the latter is optional)
+\author[] % leave empty for no author in footer
+{\textbf{C.~Segarra}\inst{1} \and V.~Schiavoni\inst{2} \and E.~Muntan\'e\inst{1} \and P.~Aublin\inst{3} \and P.~Pietzuch\inst{3} \and R.~Delgado\inst{1}}
+\institute[] % (short affiliation not used in this theme)
+{\inst{1} CSEM, Neuch\^atel, Switzerland, \texttt{\{first.last\}@csem.ch} \and
+\inst{2} University of Neuch\^atel, Switzerland, \texttt{valerio.schiavoni@unine.ch} \and
+\inst{3} Imperial College London, United Kingdom, \texttt{\{p.aublin,prp\}@imperial.ac.uk}
+}
+%{\inst{1} Computer Science Lab, Avignon University -- LIA EA 4128 \texttt{\{firstname.lastname\}@univ-avignon.fr}
+%\and \inst{2} Institute of Disruptive Innovation, University of Excellence \texttt{\{firstname.lastname\}@univ-excell.fr}
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% optional: additional logo (ex. lab)
+\titlegraphic{\includegraphics[width=3cm,]{images/logo-csem.png}}
+% if you want several logos, put them in a box
+%\titlegraphic{\parbox{3cm}{\includegraphics[width=3cm,]{images/ceri_logo.pdf}\newline\includegraphics[width=3cm,]{images/lia_logo.pdf}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Presentation speciphic packages
+% \usepackage{multicol}
+% \usepackage[titles]{tocloft}
+% \renewcommand{\cftchapfont}{\normalfont\bfseries}
+\usetikzlibrary{decorations.pathmorphing, patterns}
+\usepackage{tabularx}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%% title page
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%%% outline of the presentation
+\begin{frame}{Session Outline}
+    \begin{columns}[T,onlytextwidth]
+        \begin{column}{.48\textwidth}
+            \tableofcontents[sections={1-2}]
+    %        [hideallsubsections] % un-comment this line to hide sub-sections
+        \end{column}
+        \begin{column}{.48\textwidth}
+            \tableofcontents[sections={3-5}]
+    %        [hideallsubsections] % un-comment this line to hide sub-sections
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Introduction}
+\label{sec:introduction}
+\sectionframe
+
+\begin{frame}
+    \frametitle{Introduction}
+    \framesubtitle{Better Late Than Never}
+
+    \vspace{-25pt}
+
+    \begin{itemize}
+        \item \textbf{Bachelor Thesis Internship 01/10/2018 - 31/03/2019}
+        \item Work on \textbf{\textcolor{fgRed}{privacy-preserving}} data processing \textrightarrow \textbf{Trusted Hardware}
+        \item Two submitted publications: \href{https://github.csem.local/publications/embc2019-medspark}{\textbf{EMBC '19}} and \href{https://github.csem.local/publications/dais2019-medspark}{\textbf{DAIS '19}} (available on \href{https://github.csem.local/publications/}{GitHub})
+        \item Joint work with:
+        \begin{itemize}
+            \item \textbf{Universit\'e de Neuchatel} - Valerio Schiavoni
+            \item \textbf{Imperial College London} - Pierre-Louis Aublin and Peter Pietzuch
+            \item \textbf{Universitat Polit\`ecnica de Catalunya} - Jos\'e Adri\'an Rodr\'iguez Fonollosa
+        \end{itemize}
+    \end{itemize}
+
+    \vspace{15pt}
+
+    \begin{columns}[b]
+        \centering
+        \begin{column}{.2\textwidth}
+            \includegraphics[width=2.5cm]{images/unine-no-bg-no-letter.png}
+        \end{column}
+        \begin{column}{.2\textwidth}
+            \hspace*{-30pt}\includegraphics[width=4.5cm]{images/cfis-upc-no-bg.png}
+        \end{column}
+        \begin{column}{.2\textwidth}
+            \includegraphics[width=3cm]{images/imperial-college.png}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\section{Background}
+\label{sec:background}
+\sectionframe
+
+\subsection{Trusted Execution Environments \& Intel SGX}
+
+\begin{frame}
+    \frametitle{Trusted Execution Environments (TEE)}
+    \framesubtitle{Formal definition, examples and availability}
+
+    \begin{exampleblock}{Trusted Execution Environment}
+        A \textbf{TEE} is a secure area of a main processor. It guarantees code and data loaded inside to be protected with respect to \textbf{\textcolor{fgRed}{confidentiality}} and \textbf{\textcolor{fgRed}{integrity}}. 
+    \end{exampleblock}
+
+    \only<2>{
+    \begin{itemize}
+        \item Available on a variety of commodity CPUs. Namely:
+    \end{itemize}
+    }
+
+    % TODO: missing Intel SGX and Arm Trustzone logo
+    \visible<3>{
+    \begin{columns}
+        \begin{column}{.45\textwidth}
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=2.2cm]{images/intel-sgx-enclave.jpg}
+                \caption*{\textbf{Intel SGX} Available on consumer-grade CPUs starting from architecture codename \textit{Skylake}.}
+            \end{figure}
+        \end{column}
+        \begin{column}{.45\textwidth}
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=3cm]{images/Arm-TrustZone-Logo.png}
+                \caption*{\textbf{Arm Trustzone} Available on Cortex-A processors and v8 Cortex-M23 and Cortex-M33.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+    }
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Intel Software Guard eXtensions}
+    \framesubtitle{Limitations, Threat Model and Known Vulnerabilities}
+
+    \only<1>{
+    \vspace{60pt}
+    \begin{exampleblock}{Software Guard eXtensions \& Enclaves}
+        \textbf{Intel Software Guard eXtensions (SGX)} are a set of instructions and memory access extensions that enable applications to create \textbf{hardware-protected areas} in their address space called \textbf{\textcolor{fgRed}{enclaves}}. 
+    \end{exampleblock}
+    }
+
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \only<2>{
+                \vspace{-35pt}
+                \begin{itemize}
+                    \setlength\itemsep{13pt}
+                    \item Security perimiter includes \textbf{\textcolor{fgRed}{only}} the internals of the CPU package.
+                    \item Traffic between CPU and main memory is kept \textbf{confidential} by the \textbf{\textcolor{fgRed}{MEE}}.
+                    \item An \textbf{\textcolor{fgRed}{attestation protocol}} verifies that code is running in a \textbf{genuine enclave} and that it has not been tampered.
+                \end{itemize}
+            }
+            \only<3>{
+                \vspace{-35pt}
+                \begin{itemize}
+                    \setlength\itemsep{8pt}
+                    \item Threat model assumes an adversary with access to \textbf{\textcolor{fgRed}{privileged software}}. Such as: VMM, BIOS, OS, ...
+                    \item Limited \textbf{\textcolor{fgRed}{enclave memory}}, costly entry/exit and expensive \textbf{\textcolor{fgRed}{paging}}.
+                    \item \textbf{Traffic Analysis}, \textbf{Side-Channel} and \textbf{Speculative Execution} attacks have been succesful. Most \textbf{\textcolor{fgRed}{patched}} as of today.
+                \end{itemize}
+            }
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \visible<2->{
+                    \begin{figure}[H]
+                    \centering
+                    \resizebox{0.9\linewidth}{!}{\input{figs/sgx-principles.tex}}
+                    \caption{Intel SGX Operating Principles.}
+                    \label{fig:sgx-principles}
+                \end{figure}
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Apache Spark \& SGX-Spark}
+
+\begin{frame}
+    \frametitle{Apache Spark \& SGX-Spark}
+    \framesubtitle{Running Spark Jobs inside Enclaves}
+
+    \only<1>{
+    \vspace{60pt}
+    \begin{exampleblock}{Apache Spark \& Spark Streaming}
+        \textbf{Spark} is a cluster-computing framework to develop distributed applications. \textbf{Spark Streaming} is an extension to the core API that enables \textbf{\textcolor{fgRed}{batch}}, \textbf{\textcolor{fgRed}{file-based}} stream processing.
+    \end{exampleblock}
+    }
+
+    \begin{columns}
+        \begin{column}{0.65\textwidth}
+            \only<2>{
+                \vspace{-35pt}
+
+                \textbf{\textcolor{fgRed}{SGX-Spark}}
+
+                \begin{itemize}
+                    %\setlength\itemsep{13pt}
+                    \item Framework under-development at the \textbf{Imperial College London} (co-authors) to enable seamless deployment of \textbf{Spark} jobs inside \textbf{enclaves}.
+                    \item Protect \textbf{confidentiality} and \textbf{integrity} of existing Spark jobs \textbf{\textcolor{fgRed}{without}} modifications to the application code.
+                    \item Execute only \textbf{sensitive} parts of the application \textbf{\textcolor{fgRed}{inside}} the enclave. Leave information outside the enclave \textbf{encrypted}.
+                \end{itemize}
+            }
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \visible<2->{
+                \begin{figure}[H]
+                    \centering
+                    \resizebox{0.9\linewidth}{!}{\input{figs/sgx-spark.tex}}
+                    \caption{SGX-Spark Collaborative Structure.}
+                    \label{fig:sgx-spark}
+                \end{figure}
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\highlightframe{Questions so far?}
+
+\section{\projName}
+\label{sec:medspark}
+\sectionframe
+
+\subsection{Motivation \& Envisioned Use Case}
+
+\begin{frame}
+    \frametitle{Motivation}
+    \framesubtitle{Why do we need secure big data processing engines?}
+
+    \vspace{-20pt}
+
+    \begin{figure}[H]
+        \centering
+        \resizebox{0.9\linewidth}{!}{\input{figs/motivation.tex}}
+    \end{figure}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{\projName}
+    \framesubtitle{Secure Stream Processing for Medical Data}
+
+    \only<1>{
+        
+        \vspace{10pt}
+
+        \begin{itemize}
+            \item \textbf{\textcolor{fgRed}{Goal:}} use SGX-Spark to implement a streaming platform that gathers data from sensors and securely outsources computation.
+            \begin{itemize}
+                \item Deploy in an existing medical environment.
+                \item Perform stress tests to assess the system's robustness and reliability.
+                \item Evaluate and quantify the overhead of providing strong security guarantees.
+            \end{itemize}
+        \end{itemize}
+    }
+
+    The \textbf{chosen scenario} involves:
+    \begin{enumerate}
+        \item ECG data streamed from a \textbf{sensor} to a \textbf{gateway}
+        \item Real-time processing with \textbf{HRV} algorithms: SDNN and HRV Bands analysis.
+        \item Suport for \textbf{storage} and result \textbf{post-processing}
+    \end{enumerate}
+
+    \visible<2->{
+        \begin{figure}[H]
+            \centering
+            \resizebox{0.9\linewidth}{!}{\input{figs/ecg-hrv.tex}}
+        \end{figure}
+    }
+
+\end{frame}
+
+\subsection{Architecture \& Implementation}
+
+\begin{frame}
+    \frametitle{System Architecture}
+    \framesubtitle{Component Analysis and Execution Workflow}
+
+    \begin{figure}[H]
+        \centering
+        \resizebox{0.9\linewidth}{!}{\input{figs/system-architecture.tex}}
+        \caption{\projName client-server architecture.}
+        \label{fig:system-architecture}
+    \end{figure}
+
+\end{frame}
+
+\subsection{Evaluation \& Results}
+
+\begin{frame}
+    \frametitle{Evaluation \& Results}
+    \framesubtitle{Experimental Setup \& Metrics}
+
+    \vspace{-20pt}
+
+    \begin{columns}[T]
+        \begin{column}{.38\textwidth}
+            \textbf{Three Execution Modes:}
+            \begin{enumerate}
+                \item Vanilla Spark
+                \item SGX-Spark w/o Enclaves
+                \item \textbf{\textcolor{fgRed}{SGX-Spark w/ Enclaves}}
+            \end{enumerate}
+        \end{column}
+        \begin{column}{.3\textwidth}
+            \textbf{Two Algorithms:}
+            \begin{enumerate}
+                \item \texttt{Identity} (Batch \& Stream)
+                \item \texttt{SDNN} (Batch \& Stream)
+            \end{enumerate}
+        \end{column}
+        \begin{column}{.3\textwidth}
+            \textbf{Two Metrics:}
+            \begin{enumerate}
+                \item Ellapsed Time
+                \item Avg. Batch Processing Time
+            \end{enumerate}
+        \end{column}
+    \end{columns}
+
+    \begin{table}[t]
+        \centering
+    	\rowcolors{1}{fgVeryLightRed}{}
+        \begin{tabular}{L{2.8cm}C{5.5cm}C{4.2cm}}
+            \hline
+	        \rowcolor{fgLightRed} 
+            \textbf{Experiment} & \footnotesize{\textbf{\texttt{s\_rate} (samples / sec)}} & \textbf{Input Load} \\[3pt]
+            \hline
+            BE - Small Load & $\lbrace 44, 89, 178, 356, 712, 1424 \rbrace $ & $\lbrace 1, 2, 4, 8, 16, 32 \rbrace$ kB \\[3pt]
+            SE - Small Load & $\lbrace 44, 89, 178, 356, 712, 1424 \rbrace$ & $\lbrace 1, 2, 4, 8, 16, 32 \rbrace$ kB / sec\\[3pt]
+            BE - Big Load & $\lbrace 44, 89, 178, 356, 712, 1424 \rbrace * 1024$ & $\lbrace 1, 2, 4, 8, 16, 32 \rbrace$ MB \\[3pt]
+            SE - Big Load & $\lbrace 44, 89, 178, 356, 712, 1424 \rbrace * 1024$ & $\lbrace 1, 2, 4, 8, 16, 32 \rbrace$ MB / sec\\[3pt]
+            \hline
+        \end{tabular}
+%        \caption{Different input loads used for Batch Executions (BE) and Streaming Executions (SE). We present the sample rate they simulate (\textit{i.e.} how many RR intervals are streamed per second) and the overall file or stream size (Input Load). \label{tab:eval:inputs}}
+    \end{table}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Evaluation \& Results}
+    \framesubtitle{Results: Batch Execution - Small Load}
+
+    \vspace{-15pt}
+
+    \begin{figure}[T]
+        \centering
+        \includegraphics[width=.7\textwidth]{plots/input_size.pdf}
+    \end{figure}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Evaluation \& Results}
+    \framesubtitle{Results: Batch Execution - Big Load}
+
+    \vspace{-15pt}
+
+    \begin{figure}[T]
+        \centering
+        \includegraphics[width=.7\textwidth]{plots/big_input_size.pdf}
+    \end{figure}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Evaluation \& Results}
+    \framesubtitle{Results: Stream Execution - Small Load}
+
+    \vspace{-15pt}
+
+    \begin{figure}[T]
+        \centering
+        \includegraphics[width=.7\textwidth]{plots/throughput.pdf}
+    \end{figure}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Evaluation \& Results}
+    \framesubtitle{Results: Stream Execution - Big Load}
+
+    \vspace{-15pt}
+
+    \begin{figure}[T]
+        \centering
+        \includegraphics[width=.7\textwidth]{plots/big_throughput.pdf}
+    \end{figure}
+
+\end{frame}
+
+\section{And now, what?}
+\label{sec:medspark}
+\sectionframe
+
+\subsection{Securing the Client}
+
+\begin{frame}
+    \frametitle{Securing the Client}
+    \framesubtitle{TEEs for low-powered/smaller devices}
+
+    \vspace{-20pt}
+
+    \begin{itemize}
+        \item \textbf{Internship Extension 01/04/2019 - 31/07/2019}
+        \begin{itemize}
+            \item Continue to have Trusted Execution Environments as a common denominator.
+            \item Use \textbf{\textcolor{fgRed}{GlobalPlatform}} compliant APIs for \textit{Secure Device Manufacturer} certifications (TBS).
+            \item Study the possibilities \textbf{Arm Trustzone} yields for new v8 Cortex-M processors.
+            \begin{itemize}
+                \item \textbf{Cortex-M23:} similar to M0+
+                \item \textbf{\textcolor{fgRed}{Cortex-M33:}} similar to a cross of M4 and M23 (Nordic nRF91)
+            \end{itemize}
+            \item Two main \textbf{\textcolor{fgRed}{outcome}} goals:
+            \begin{itemize}
+                \item \textbf{O1:} Communication library with endpoints inside TrustZones.
+                \item \textbf{O2:} Use-case for \textbf{O1}, Trusted Application Migration (TBD)
+            \end{itemize}
+        \end{itemize}
+        \item \textbf{\textcolor{red}{@251: Help Needed!}} Anyone interested in collaborating, giving a hand?
+        \item Available \textbf{\textcolor{fgRed}{slides}} for this research proposal with further details and BG info.
+    \end{itemize}
+
+\end{frame}
+
+\subsection{Help needed!}
+
+\section{Question Time!}
+\sectionframe
+
+\end{document}

@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+    % Colors definition: latexcolor.com
+    \definecolor{blue0}{RGB}{0,25,51}
+    \definecolor{blue1}{RGB}{0,51,102}
+    \definecolor{blue2}{RGB}{0,128,255}
+    \definecolor{blue3}{RGB}{153,204,255}
+    \definecolor{yellow}{RGB}{250,165,25}
+    \definecolor{lightyellow}{RGB}{229,208,66}
+    \definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
+    \definecolor{x11gray}{rgb}{0.75, 0.75, 0.75}
+
+    %% Nodes
+    % We want to
+    \node[align=center] (first) at (0,0) {\textbf{We want to:}};
+    \node[below of=first, align=center, yshift=10pt] (second) {\textbf{Process} large amounts of \textbf{\textcolor{fgRed}{sensitive}} information};
+    % Outsourcing
+    \node[below of=second, align=center, visible on=<2->] (third) {\textbf{\textcolor{fgRed}{Outsourcing}} of data \textbf{storage} and \textbf{processing}};
+    % Cloud Provider 
+    \node[below of=third, align=center, visible on=<3->] (fourth) {Cloud tenant \textbf{\textcolor{fgRed}{can}} access \textbf{protected} data};
+    % This is...
+    \node[below of=fourth, align=center, visible on=<4->] (fifth) {\textbf{\textcolor{red}{UNACCEPTABLE FOR INDUSTRIES IN THE MEDICAL DOMAIN}}};
+
+    %% Arrows
+    \draw[->, very thick, blue2!50!blue1, visible on=<2->] (second) -- (third) node[pos=.5, align=left, anchor=west, xshift=8pt] {\textcolor{blue2!50!blue1}{Generally requires...}};
+    \draw[->, very thick, blue2!50!blue1, visible on=<3->] (third) -- (fourth) node[pos=.5, align=left, anchor=west, xshift=8pt] {\textcolor{blue2!50!blue1}{Generally means...}};
+    \draw[->, very thick, blue2!50!blue1, visible on=<4->] (fourth) -- (fifth) node[pos=.5, align=left, anchor=west, xshift=8pt] {\textcolor{blue2!50!blue1}{This is...}};
+\end{tikzpicture}

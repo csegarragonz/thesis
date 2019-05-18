@@ -1,0 +1,15 @@
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.nav
+*.out
+*.run.xml
+*.snn
+*.snm
+*.log
+*.pdf
+*.toc
+*.vrb
+tags
+tags.lock
