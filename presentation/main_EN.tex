@@ -46,7 +46,7 @@
 \title[TEEs for Secure Stream Processing] % leave empty for no title in footer
     {\normalsize CFIS-UPC Joint Bachelor's Thesis Defense \\ \Large Using Trusted Execution Environments for Secure Stream Processing of Medical Data}
 \subtitle{\small \textmd{In partial fulfillment of the requirements for the} \\
-\normalsize Bachelor's Degree in Mathematics \\ \small \textmd{and} \\ \normalsize Bachelor's Degree Telecommunications Technologies and Services Engineering \vspace{-10pt}} % leave empty if no subtitle
+\normalsize Bachelor's Degree in Mathematics \\ \small \textmd{and} \\ \normalsize Bachelor's Degree in Telecommunications Technologies and Services Engineering \vspace{-10pt}} % leave empty if no subtitle
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % date of the presentation (leave empty for no date, default is today)
 \date[Thursday, May 30th] % leave empty for no date in footer
@@ -91,11 +91,13 @@
 %%% outline of the presentation
 \begin{frame}{Session Outline}
     \begin{columns}[T,onlytextwidth]
-        \begin{column}{.48\textwidth}
+        \hspace{1.25cm}
+        \begin{column}{.4\textwidth}
             \tableofcontents[sections={1-2}]
     %        [hideallsubsections] % un-comment this line to hide sub-sections
         \end{column}
-        \begin{column}{.48\textwidth}
+        \hspace*{-3.25cm}
+        \begin{column}{.4\textwidth}
             \tableofcontents[sections={3-5}]
     %        [hideallsubsections] % un-comment this line to hide sub-sections
         \end{column}
@@ -210,7 +212,7 @@
 
 \begin{frame}
     \frametitle{Intel Software Guard eXtensions}
-    \framesubtitle{Limitations, Threat Model and Known Vulnerabilities}
+    \framesubtitle{Definition, Threat Model and Known Vulnerabilities}
 
     \begin{columns}
         \begin{column}{0.45\textwidth}
@@ -294,21 +296,22 @@
             \item Our solution is \textbf{\textcolor{fgRed}{independent of the chosen data streams}}, hence it could be leveraged in a variety of domains where privacy might be a concern. However, 
             \item The data streams used for this project belong to the \textbf{medical} domain, in particular, they are obtained from human \textbf{\textcolor{fgRed}{cardiac activity monitoring}}. The two most standard procedures are:
             \begin{enumerate}
-                \item \textbf{ECG:} measure heart's electrical activity over time \textrightarrow Chest-based sensors
-                \item \textbf{PPG:} measure blood's volume variation over time \textrightarrow Wrist-based sensors
+                \item \textbf{ECG:} measure heart's electrical activity over time. \textit{E.g:} chest straps.-%\textrightarrow Chest-based sensors
+                \item \textbf{PPG:} measure blood's volume variation over time. \textit{E.g:} smartwatches and pulse oximeters.
             \end{enumerate}
         \end{itemize}
     }
 
     \begin{itemize}
-        \item Either if the data comes from an \textbf{ECG} or \textbf{PPG} based sensor, we are interested in the \textbf{\textcolor{fgRed}{R peaks}} from the generated diagram ($23 - 69$ B per second per user).
-        \item With their \textbf{timestamps} we compute a live analysis of the \textbf{\textcolor{fgRed}{Heart Rate Variability (HRV)}}
+        \item Either if the data comes from an \textbf{ECG} or \textbf{PPG} based sensor, we are interested in the \textbf{\textcolor{fgRed}{inter-beat intervals}} from the generated diagram ($23 - 69$ B per second per user).
+        \item From an \textbf{ECG} we can obtain obtain these intervals from the time between \textbf{\textcolor{fgRed}{R peaks}}, abbreviated as RR intervals (Figure \ref{fig:ecg-hrv}).
+        \item With their \textbf{timestamps} we compute a live analysis of the \textbf{\textcolor{fgRed}{Heart Rate Variability (HRV)}}.
     \end{itemize}
     \visible<2->{
         \begin{figure}[H]
             \centering
             \resizebox{0.75\linewidth}{!}{\input{figs/ecg-hrv.tex}}
-            \caption{Schematic representation of an ECG signal and the data we gather.}
+            \caption{Schematic representation of an ECG signal and the data we gather.\label{fig:ecg-hrv}}
         \end{figure}
     }
 
@@ -342,13 +345,17 @@
     \begin{enumerate}
         \item ECG data streamed from a \textbf{sensor} to a \textbf{gateway}
         \item Real-time processing with \textbf{HRV} algorithms: SDNN and HRV Bands analysis.
+        \begin{itemize}
+            \item \textbf{SDNN:} rolling standard deviation of NN (RR) intervals.
+            \item \textbf{HRV Bands:} rolling DFT and LF/HF component measure.
+        \end{itemize}
         \item Suport for \textbf{storage} and result \textbf{post-processing}
     \end{enumerate}
 
     \visible<2->{
         \begin{figure}[H]
             \centering
-            \includegraphics[width=.6\linewidth]{images/wearable-ecosystem.png}
+            \includegraphics[width=.5\linewidth]{images/wearable-ecosystem.png}
             \caption{Wearable-enabled ecosystem of our platform.}
         \end{figure}
     }
@@ -487,7 +494,7 @@
     \begin{itemize}
         \item Introduced a PoC of a \textbf{\textcolor{fgRed}{privacy-preserving streaming platform}}.
         \begin{itemize}
-            \item Introduces $x4-5$ slowdown vs \textbf{vanilla Spark Streaming} (load $< 4$ MB per second).
+            \item Introduces $\times 4-5$ slowdown vs \textbf{vanilla Spark Streaming} (load $< 4$ MB per second).
             \item Requires \textbf{no changes} to the application source code.
             \item It is \textbf{reliable enough} to start trials in \textbf{\textcolor{fgRed}{production environments}}.
         \end{itemize}
