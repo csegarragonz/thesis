@@ -1,0 +1,57 @@
+\chapter{Related Work} \label{chap:related-work}
+
+In this Chapter we cover the related work that sets the current State-of-the-Art for privacy preserving stream processing engines of medical data.
+Together with each piece of work, we provide a brief description and argue why it has or has not been considered for our project.
+In \S\ref{sec:related:stream} we cover the most notable big data stream processing engines that relate with our system.
+Note that stream processing is a big field and it is out of the scope of this work to provide a detailed survey.
+In \S\ref{sec:related:privacy} we introduce relevant privacy-preserving processing engines: both stream and batch based.
+Lastly, in \S\ref{sec:related:cardiac} we cover other approaches at cardiac data monitoring.
+
+\section{Stream Processing Engines} \label{sec:related:stream}
+
+Stream processing has recently attracted a lot of attention from academia and industry~\cite{Koliousis2016,Miao2017,Venkataraman2017}.
+Apache Spark~\cite{Zaharia2012} is arguably the de-facto standard in this domain, by combining batch and stream processing with a unified API~\cite{ZahariaDStreams2012}.
+Apache Spark SQL~\cite{Armbrust2015} allows to process structured data by integrating relational processing with Spark's functional programming style.
+Structured streaming~\cite{Armbrust2018} leverages Spark SQL and it compares favorably against the discretized counterpart~\cite{ZahariaDStreams2012} in terms of performance. % approach used in this project. 
+However, the former lacks security or privacy guarantees, and hence it was not considered.
+Furthermore \sgxspark only has support for the \textit{Discretized Streams} API, and therefore we also rely on it.
+
+\section{Privacy-Preserving Computation} \label{sec:related:privacy}
+
+Opaque~\cite{Zheng2017} is a privacy-preserving distributed analytics system.
+It leverages Spark SQL and Intel SGX enclaves to perform computations over encrypted Spark DataFrames.
+In \texttt{encryption} mode, Opaque offers security guarantees similar to our system's.
+However, \emph{(1)} the Spark master must be located in the client side, for it must be trusted. 
+An scenario that does not fit in our multi-client setting.
+And \emph{(2)}, it requires changes to the application code, and hence is not transparent to the user.
+In \texttt{oblivious} mode, \emph{i.e.}, protecting against traffic pattern analysis attacks, it can be up to $46\times$ slower, a slow-down factor not tolerable for the real-time analytics in the scope of our system.
+
+SecureStreams~\cite{Havet2017} is a reactive framework that exploits Intel SGX to define dataflow processing by pipelining several independent components. 
+In order to use this framework, the user requires a good knowledge of the underlying implementation. 
+Moreover, applications must be written in the \textsc{Lua} programming language, hindering its applicability to legacy systems or third-party programs.
+
+\textsc{DPBSV}~\cite{Puthal2015} is a secure big data stream processing framework that focuses on securing data transmission from the sensors or clients to the \textit{Data Stream Manager (DSM)} or server. 
+Its security model requires a \textit{Public Key Infrastructure (PKI)} and a dynamic prime number generation technique to synchronously update the keys. 
+In spite of using trusted hardware on the DSM end for key generation and management, the server-side processes all the data in clear, making the framework not suitable for our security model. 
+
+\textsc{TaLoS}~\cite{Aublin2017} is a \textit{Transport Layer Security (TLS)}~\cite{Dierks2008} library that terminates connections by maintaining sensitive information inside enclaves. 
+The authors provide custom wrappers for the most common \textsc{TLS} API calls and securely store users and sessions' keys inside enclaves.
+The embedding with a native Spark, or SGX-Spark, application is not transparent to the end user and hence why we discard it.
+
+Lastly, homomorphic encryption~\cite{Gentry2009} does not rely on trusted execution environments and offers the promise of providing privacy-preserving computations over encrypted data.
+This is, it generates an encrypted result from two encrypted operands, corresponding to the encrypted value of operating both operands in plain text.
+The key feature of the scheme is that, at no point, neither the operands nor the result are processed in clear.
+While several works analyzed the feasibility of homomorphic encryption schemes in cloud environments~\cite{Tetali2013,Stephen2016}, the performance of homomorphic operations~\cite{Gottel2018} is far from being pragmatic.
+
+\section{Cardiac Monitoring Systems} \label{sec:related:cardiac}
+% \vs{briefly discuss \cite{Puthal:2015:DES:2847604.2848495}}
+% Talk about medical things
+For the specific problem of HRV analysis, while periodic monitoring solutions exist~\cite{Renevey2018}, they are focused on embedded systems.
+As such, since they off-load computation to third-party cloud services, these solutions simply overlook the privacy concerns that we consider.
+Similarly, another solution~\cite{VanZaen2019} uses convolutional networks for the detection of arrhythmias.
+However, the authors take no considerations with regard to data security and privacy.
+
+%To the best of our knowledge, there are no privacy-preserving real-time streaming systems specifically designed for  medical and cardiac data. 
+This work is one of the first attempts to building a privacy-preserving real-time streaming system specifically designed for  medical and cardiac data. 
+
+Our system fills the existing research gap by proposing a system that leverages Intel SGX enclaves to compute such analytics over public untrusted clouds without changing the existing Scala-based source code.

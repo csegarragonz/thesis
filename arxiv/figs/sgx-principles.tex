@@ -1,0 +1,33 @@
+\resizebox{\linewidth}{!}{
+\begin{tikzpicture}
+
+    % Main outline
+    %\draw[fill=green1] (0,0) rectangle (10, 1) node[pos=.5] {Privileged System Code, OS, VMM};
+    \draw[fill=gray!10] (0, 0) rectangle (10, 8.5);
+
+    % Unsecure Part
+    \node[align=center] at (2.25, 7.5) {\textbf{Untrusted Code}};
+    \draw[dashed, fill=white] (0.5, 0.5) rectangle (4, 7.0);
+    \node at (1.25, 1.25) {\includegraphics[width=25pt]{img/hacker.png}};
+    \draw[->,thick, decorate,decoration={snake, post=lineto, post length=1mm}] (2.25, 6.5) -- (2.25, 5.75) node[pos=.3,anchor=west] {\blackcircled{1}};
+    \node[align=center] at (2.25, 5.5) {\texttt{Create Enclave}};
+    \draw[->,thick, decorate,decoration={snake, post=lineto, post length=1mm}] (2.25, 5) -- (2.25, 4) node[pos=.5,anchor=west] {\blackcircled{2}};
+    \node[align=center] at (2.25, 3.5) {\texttt{Call Trusted} \\ \texttt{Function}};
+    \draw[->,thick, decorate,decoration={snake, post=lineto, post length=1mm}] (2.25, 3) -- (2.25, 2) node[pos=.3,anchor=west] {\blackcircled{7}};
+    \draw[->, very thick] (4, 5.25) -- (5.5, 5.25) node[pos=.5,anchor=south] {\blackcircled{3}};
+
+    % Secure Part
+    \node[align=center] at (7.75, 7.5) {\textbf{Trusted Code}};
+    \draw[fill=white,pattern=north west lines,pattern color=gray!50] (6, 0.5) rectangle (9.5, 7.0);
+    \node at (8.75, 1.25) {\includegraphics[width=25pt]{img/intel-sgx.png}};
+    \node[align=center] at (5.55, 6.5) {\small{Call} \\ \small{Gate}};
+    \draw[fill=gray!80] (5.5, 5.5) rectangle (6, 6.0);
+    \draw[fill=gray!80] (5.5, 5.0) rectangle (6, 5.5);
+    \draw[fill=gray!80] (5.5, 4.5) rectangle (6, 5.0);
+    \draw[rounded corners, dashed, fill=white] (6.5, 2.5) rectangle (9, 5.75);
+    \draw[->, very thick] (5.75, 5.25) -- (6.75, 5.25) node[pos=.5,anchor=south] {\blackcircled{4}};
+    \node[align=center] at (7.75, 5.25) {\texttt{Execute}};
+    \draw[->,thick, decorate,decoration={snake, post=lineto, post length=4mm}] (7.75, 5) -- (7.75, 3.25) node[pos=.5,anchor=west] {\blackcircled{5}};
+    \node[align=center] at (7.75, 3) {\texttt{Return}};
+    \draw[->, very thick] (6.75, 3) -- (4, 3) node[pos=.6, anchor=south] {\blackcircled{6}};
+\end{tikzpicture}}
